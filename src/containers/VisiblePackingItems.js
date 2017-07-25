@@ -2,14 +2,14 @@ import { connect } from 'react-redux'
 import { toggleTodo } from '../actions'
 import PackingList from '../components/PackingList'
 
-const getVisibleTodos = (todos, filter) => {
+const getVisibleTodos = (packingItems, filter) => {
   switch (filter) {
     case 'SHOW_ALL':
-      return todos
-    case 'SHOW_COMPLETED':
-      return todos.filter(t => t.completed)
+      return packingItems
+    case 'SHOW_PACKED':
+      return packingItems.filter(t => t.packed)
     case 'SHOW_ACTIVE':
-      return todos.filter(t => !t.completed)
+      return packingItems.filter(t => !t.packed)
     default:
       throw new Error('Unknown filter: ' + filter)
   }

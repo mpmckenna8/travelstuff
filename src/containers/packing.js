@@ -1,22 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const PackingItem = ({ onClick, packed, text }) => (
+const Pack_Item = ({ onClick, packed, text }) => (
   <li
     onClick={onClick}
     style={{
-      textDecoration: packed  ? 'line-through' : 'none'
+      textDeoration: packed ? 'line-through' : 'none'
     }}
   >
     {text}
   </li>
 )
 
-
-PackingItem.propTypes = {
+Pack_Item.propTypes = {
   onClick: PropTypes.func.isRequired,
   packed: PropTypes.bool.isRequired,
   text: PropTypes.string.isRequired
 }
 
-export default PackingItem
+export default Pack_Item

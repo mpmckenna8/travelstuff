@@ -15,13 +15,15 @@ const PackingList = ({ packingItems, onTodoClick }) => (
   </ul>
 )
 
+
 PackingList.propTypes = {
   packingItems: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
-    completed: PropTypes.bool.isRequired,
+    packed: PropTypes.bool.isRequired,
     text: PropTypes.string.isRequired
   }).isRequired).isRequired,
   onTodoClick: PropTypes.func.isRequired
 }
+
 
 export default PackingList

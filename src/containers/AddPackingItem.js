@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { addPackingItem } from '../actions'
 
 let AddPackingItem = ({ dispatch }) => {
-  let input
+  let input;
+  let count = 1;
 
   return (
     <div>
@@ -13,15 +14,29 @@ let AddPackingItem = ({ dispatch }) => {
           if (!input.value.trim()) {
             return
           }
-          dispatch(addPackingItem(input.value))
+          dispatch(addPackingItem(input.value, count.value))
           input.value = ''
         }}
       >
         <input
+          className="itemInName"
           ref={node => {
             input = node
           }}
         />
+
+
+      <input
+        className="quantin"
+        ref={node => {
+          count = node;
+        }}
+        type="number"
+        step="1"
+        defaultValue="1"
+        />
+
+
         <button type="submit">
           Add Packing item
         </button>
@@ -29,6 +44,8 @@ let AddPackingItem = ({ dispatch }) => {
     </div>
   )
 }
+
 AddPackingItem = connect()(AddPackingItem)
+
 
 export default AddPackingItem

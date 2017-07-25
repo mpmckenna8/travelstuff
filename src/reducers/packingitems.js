@@ -2,19 +2,21 @@ const packingItems = (state = [], action) => {
   switch (action.type) {
     case 'ADD_PACKING_ITEM':
       console.log('trying to add a packing item, action = ', action)
+
       return [
         ...state,
         {
           id: action.id,
           text: action.text,
-          completed: false
+          packed: false,
+          quantity: 1
         }
       ]
-    case 'TOGGLE_TODO':
+    case 'TOGGLE_PACKED':
       console.log('state of stuff = ', state, action)
       return state.map(packingItem =>
         (packingItem.id === action.index)
-          ? {...packingItem, completed: !packingItem.completed}
+          ? {...packingItem, packed: !packingItem.packed}
           : packingItem
       )
     default:
