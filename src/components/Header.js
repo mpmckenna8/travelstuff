@@ -5,7 +5,7 @@ import React from 'react'
 const Header = () => {
 
   return (
-    <div>Packing App</div>
+    <div>Packing Stuff</div>
   )
 }
 

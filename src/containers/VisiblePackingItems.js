@@ -7,9 +7,9 @@ const getVisibleTodos = (packingItems, filter) => {
     case 'SHOW_ALL':
       return packingItems
     case 'SHOW_PACKED':
-      return packingItems.filter(t => t.packed)
+      return packingItems.packingItems.filter(t => t.packed)
     case 'SHOW_ACTIVE':
-      return packingItems.filter(t => !t.packed)
+      return packingItems.packingItems.filter(t => !t.packed)
     default:
       throw new Error('Unknown filter: ' + filter)
   }

@@ -9,7 +9,8 @@ const packingItems = (state = [], action) => {
           id: action.id,
           text: action.text,
           packed: false,
-          quantity: 1
+          /*eslint radix: ["error", "as-needed"]*/
+          quantity: parseInt(action.quantity)
         }
       ]
     case 'TOGGLE_PACKED':
