@@ -5,10 +5,11 @@ import PackingItem from './PackingItem'
 
 
 const PackingList = ({ packingItems, onTodoClick }) => {
-  console.log(packingItems)
+  console.log('packitems', packingItems)
+
   return (
   <ul>
-    {packingItems.map(packingItem =>  {
+    {packingItems.items.map(packingItem =>  {
       console.log('packitem', packingItem)
       return  (<PackingItem
           key={packingItem.id}
@@ -23,12 +24,14 @@ const PackingList = ({ packingItems, onTodoClick }) => {
 
 
 PackingList.propTypes = {
-  packingItems: PropTypes.arrayOf(PropTypes.shape({
+  isFetching: PropTypes.bool,
+  didInvalidate: PropTypes.bool,
+  items: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     packed: PropTypes.bool.isRequired,
     text: PropTypes.string.isRequired,
     quantity: PropTypes.number
-  }).isRequired).isRequired,
+  }).isRequired),
   onTodoClick: PropTypes.func.isRequired
 }
 

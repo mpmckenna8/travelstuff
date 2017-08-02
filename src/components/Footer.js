@@ -16,6 +16,7 @@ const Footer = () => (
     <FilterLink filter="SHOW_PACKED">
       Packed
     </FilterLink>
+    <FilterLink filter="REQUEST_ITEMS">Refresh </FilterLink>
   </p>
 )
 

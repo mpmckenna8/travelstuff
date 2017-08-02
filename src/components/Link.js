@@ -1,7 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Link = ({ active, children, onClick }) => {
+const Link = ({ active, children, onClick, requestItems }) => {
+
+  if(children ==="Refresh"){
+    return (
+      <a href="#" onclick={e => {
+          e.preventDefault();
+          requestItems('all')
+        }}
+        >
+        {children}
+      </a>
+    )
+  }
   if (active) {
     return <span>{children}</span>
   }
@@ -22,7 +34,8 @@ const Link = ({ active, children, onClick }) => {
 Link.propTypes = {
   active: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  requestItems: PropTypes.func.isRequired
 }
 
 export default Link
