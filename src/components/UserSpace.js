@@ -4,23 +4,19 @@ import PropTypes from 'prop-types'
 
 
 class Form extends React.Component {
-
-  componentDidMount() {
-
-    if (this.props.userName) {
-      console.log('thres a username', this.props.userName)
-    }
-    console.log('mounted form ,', this)
-
-  }
   render(state) {
     console.log('current state of form: ', this, state);
 
     var userdisplay = this.props.userName;
 
+    var usernamediv = (<div></div>)
+    if(userdisplay){
+      usernamediv = <div>User: {userdisplay}</div>
+    }
+
   return (
     <div>
-    <div>welcome {userdisplay}</div>
+    {usernamediv}
         <div className="loginArea col-sm-6 col-sm-offset-3">
         <h4><span className="fa fa-sign-in"></span> Login</h4>
         <form id="loginform" method="POST" action="http://localhost:8080/auth/login" >
@@ -41,8 +37,11 @@ class Form extends React.Component {
 
   componentDidMount() {
 
-    console.log('form mounted')
   // Access the form element...
+  if (this.props.userName) {
+    console.log('thres a username', this.props.userName)
+  }
+  console.log('mounted form ,', this)
     var form = document.getElementById("loginform");
 
 
@@ -97,7 +96,7 @@ class Form extends React.Component {
 
 
     };
-}å
+}
 
 }
 

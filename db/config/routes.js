@@ -24,7 +24,7 @@ module.exports = function(app, passport) {
 
     });
 
-    // process the login form
+    // process the login form only really works from same domain
     // app.post('/login', do all our passport stuff here);
     // process the login form
     app.post('/login', passport.authenticate('local-login', {
@@ -54,15 +54,13 @@ module.exports = function(app, passport) {
     ));
 
 
-// secial login
-  app.post('/auth/login',
-            function(req, res){
+// secial login for my app
+  app.post('/auth/login', function(req, res){
               console.log('req coma through')
         //    console.log(JSON.stringify(req))
               console.log(req.headers)
               console.log(req.body)
               res.json({"userName": "test"})
-
               }
             );
 
@@ -118,6 +116,15 @@ module.exports = function(app, passport) {
         req.logout();
         res.redirect('/');
     });
+
+
+    app.get('/allitems', function(req, res){
+
+
+      res.send('need to query the db for all the items')
+
+    })
+
 };
 
 // route middleware to make sure a user is logged in

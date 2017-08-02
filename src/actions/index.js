@@ -6,7 +6,6 @@ export const ADD_PACKING_ITEM = 'ADD_PACKING_ITEM'
 export const TOGGLE_PACKED = 'TOGGLE_PACKED'
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
 
-
 export const SET_USER = "SET_USER"
 
 /*
@@ -23,12 +22,12 @@ export const VisibilityFilters = {
  * action creators
  */
 
-let dburl = "http://localhost:8080/db/";
+//let dburl = "http://localhost:8080/db/";
 
 
 
 export function logInUser() {
-
+  console.log('not implemented or even called i think')
 }
 
 export function setUser(userName){
@@ -38,6 +37,8 @@ export function setUser(userName){
     userName
   }
 }
+
+
 
 let nextPackItemID = 0;
 export function addPackingItem(text, quant) {

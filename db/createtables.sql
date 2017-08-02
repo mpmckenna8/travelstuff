@@ -4,17 +4,19 @@ create table users(
     email text,
     password text,
     photo text,
-    inventory text[],           -- to be a list of the items in the inventory, maybe should be a integer and reference a thing in items
+    inventory int[],           -- to be a list of the items in the inventory, maybe should be a integer and reference a thing in items
     inventoryquantity integer[],-- each thing should correspond to above to give the amount of it that there is.
     inventorydescription text[],
+    location text[],
     packs integer[]
 );
 
 create table items(
     p_id serial primary key,
     name text,
-    location text,
-    description text
+    description text,
+    weight double precision,
+    value double precision
 );
 
 create table places(

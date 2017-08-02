@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { toggleTodo } from '../actions'
 import PackingList from '../components/PackingList'
 
-const getVisibleTodos = (packingItems, filter) => {
+const getVisibleItems = (packingItems, filter) => {
   switch (filter) {
     case 'SHOW_ALL':
       return packingItems
@@ -17,7 +17,7 @@ const getVisibleTodos = (packingItems, filter) => {
 
 const mapStateToProps = state => {
   return {
-    packingItems: getVisibleTodos(state.packingItems, state.visibilityFilter)
+    packingItems: getVisibleItems(state.packingItems, state.visibilityFilter)
   }
 }
 
