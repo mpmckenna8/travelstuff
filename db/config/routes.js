@@ -118,10 +118,15 @@ module.exports = function(app, passport) {
     });
 
 
-    app.get('/allitems', function(req, res){
+    app.get('/items/*', function(req, res){
 
 
-      res.send('need to query the db for all the items')
+      res.json({data:{
+        items:[
+          {name:'bleep',
+            description:'boop'},
+          {name:"ipod", description:"antiquated"}
+        ]}})
 
     })
 
