@@ -46,7 +46,7 @@ client.connect(function(err) {
 
 
 // configuration ===============================================================
-require('./config/passport.js')(passport); // pass passport for configuration
+require('../db/config/passport.js')(passport); // pass passport for configuration
 
 //app.use(allowCrossDomain)
 
@@ -80,7 +80,7 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
-require('./config/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+require('../db/config/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 // launch the app and start listening on the port given above===================
 

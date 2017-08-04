@@ -1,4 +1,8 @@
 //all the routes for our application
+
+var express  = require('express');
+var path = require('path')
+
 module.exports = function(app, passport) {
 
     // =====================================
@@ -6,9 +10,9 @@ module.exports = function(app, passport) {
     // =====================================
     app.get('/', function(req, res) {
       //  res.render('index.ejs'); // load the index.ejs file
+      console.log('blah')
+      res.send('heyo')
     });
-
-
 
 
 
@@ -120,7 +124,6 @@ module.exports = function(app, passport) {
 
     app.get('/items/*', function(req, res){
 
-
       res.json({data:{
         items:[
           {name:'bleep',
@@ -129,6 +132,19 @@ module.exports = function(app, passport) {
         ]}})
 
     })
+
+
+    // ...
+    app.get('/static', function (req, res) {
+  // and drop 'public' in the middle of here
+      console.log('should send the public stuff from', path.join(__dirname, 'public') )
+
+
+      app.use(express.static(path.join(__dirname, 'public')))
+
+      res.sendFile(path.join(__dirname, '../../', 'public', 'index.html'))
+  })
+
 
 };
 
