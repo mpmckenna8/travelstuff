@@ -2,7 +2,9 @@
 
 import { combineReducers } from 'redux'
 
-import {SELECT_ITEM_CLASS, INVALIDATE_ITEM_CLASS, REQUEST_ITEMS, RECIEVE_ITEMS, ADD_ITEM} from '../actions/actions'
+import {SELECT_ITEM_CLASS, INVALIDATE_ITEM_CLASS, REQUEST_ITEMS, RECIEVE_ITEMS,
+  ADD_ITEM, ADD_ITEM_CLASS} from '../actions/actions'
+import {SET_USER} from '../actions/useracts.js'
 
 function selectedItemClass(state='all', action) {
   switch (action.type) {
@@ -38,6 +40,7 @@ function items(
         lastUpdatedAt: action.recievedAt
       })
     case ADD_ITEM:
+    // want to actually add the item to the db in the action not here
       console.log('addit act', action)
       console.log('addit state, ', state)
       return Object.assign({}, state, {
@@ -51,7 +54,6 @@ function items(
 
   }
 }
-
 
 
 
@@ -71,7 +73,7 @@ function itemsByType(state={}, action) {
       })
     case ADD_ITEM:{
       console.log('state in itemsByType ,', state)
-      console.log('action in additem, ', action)
+  //    console.log('action in additem, ', action)
 
       let newIt = {name:action.item.name,
                     description:action.item.description};
@@ -89,9 +91,36 @@ function itemsByType(state={}, action) {
   }
 }
 
+function user(state={name:"test"}, action) {
+
+  switch(action.type) {
+    case SET_USER:{
+      console.log('setting new user maybe', state, action)
+      state.name = action.name;
+      return Object.assign({}, state)
+    }
+    default:
+      return state;
+
+  }
+}
+
+
+function collections(state={bags:[{name:'all'}], locations:[]}, action) {
+  switch(action.type) {
+    case ADD_ITEM_CLASS:
+      state.bags.push(action['itemClass'])
+      return Object.assign({}, state)
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
   itemsByType,
-  selectedItemClass
+  selectedItemClass,
+  user,
+  collections
 })
 
 export default rootReducer;

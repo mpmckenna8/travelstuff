@@ -1,3 +1,6 @@
+-- creates the neccessary tables in our db for the inventory app
+-- to modify a table and add a column like category to items:
+-- ALTER TABLE items ADD COLUMN category text;
 create table users(
     u_id serial primary key,  --this is my pk
     name text,
@@ -16,9 +19,11 @@ create table items(
     name text,
     description text,
     weight double precision,
-    value double precision
+    value double precision,
+    category text
 );
 
+-- do lat lon when i want to do
 create table places(
     p_id serial primary key,
     name text,
@@ -27,13 +32,19 @@ create table places(
     description text
 );
 
+-- maybe do a parent thing too so packs can be in packs kind of.
 create table packs(
     site_id serial primary key,
     name text,
     photo text,
+    weight_capacity double precision,
+    volume_capacity double precision,
     p_id integer references places(p_id) -- this creates my one to many relationships
 );
 
-
-
-INSERT INTO users values (DEFAULT, 'test', 'test', '1', 'none.jpg', null, null, null);
+INSERT INTO places VALUES (DEFAULT,
+        'home',
+        'sf',
+        'usa', 'where i live');
+INSERT INTO packs VALUES (default, 'day pack', null, 100.00, 20.0, 1);
+INSERT INTO users values (DEFAULT, 'test', 'test', '1.0', 'none.jpg', null, null, null);

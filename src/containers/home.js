@@ -9,12 +9,12 @@ import VisibleItemList from './visibleItemList.js'
 class Home extends Component {
 
   render() {
-    console.log('this = ', this)
+  //  console.log('this = ', this)
 
 
     return (
       <div>
-      <h1>homepage</h1>
+      <h1>Main Item List</h1>
       <VisibleItemList>
       </VisibleItemList>
 

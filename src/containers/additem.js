@@ -15,7 +15,7 @@ class AddItem extends Component {
   addNewItem(thing){
     let dispatch = this.props.dispatch;
 
-    console.log('in the addNewItem functionthing', thing)
+//    console.log('in the addNewItem functionthing', thing)
     dispatch(addItem(thing, this.props.selectedItemClass))
 
   }
@@ -24,7 +24,8 @@ class AddItem extends Component {
     let input;
     let description = {value:""};
     let count = {value:1};
-
+    let weight = { value: 1.0 };
+    let category = {value: 'other'}
     return (
     <div>
     <div>New item Attributes</div>
@@ -37,7 +38,9 @@ class AddItem extends Component {
           let newit = {
                     name: input.value,
                     description: description.value,
-                    quantity: count
+                    quantity: count.value,
+                    weight: weight.value,
+                    category: document.getElementById('catSelect').value
                   }
 
           console.log('input is', input.value)
@@ -47,6 +50,8 @@ class AddItem extends Component {
         //  dispatch(addPackingItem(input.value, count.value))
           input.value = '';
           description.value = '';
+          weight.value = 1.0;
+          category.value = "Other"
 
         }}
       >
@@ -66,7 +71,8 @@ class AddItem extends Component {
                 description = node
               }}
             />
-
+            <br />
+            <label>Quantity:</label>
             <input
               className="quantin"
               ref={node => {
@@ -76,10 +82,29 @@ class AddItem extends Component {
               step="1"
               defaultValue="1"
             />
+            <br />
+            <label>weight:</label>
+            <input
+              className="weight"
+              ref={node => {
+                weight = node;
+              }}
+              type="number"
+              step=".1"
+              defaultValue="1"
+            />
+
 
 
               <br />
+                <select name="select" id="catSelect">
+                  <option value="clothing">Clothing</option>
+                  <option value="comestable" >Comestables</option>
+                  <option value="tool">Tools</option>
+                  <option value="other" defaultValue>other</option>
+                </select>
 
+                <br />
 
         <button type="submit">Add new item</button>
       </form>

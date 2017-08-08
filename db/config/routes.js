@@ -2,7 +2,9 @@
 
 var express  = require('express');
 var path = require('path')
+var item = require('./models/item.js')
 
+let getAllItems = require('../queries/getAllItems.js')
 module.exports = function(app, passport) {
 
     // =====================================
@@ -103,7 +105,7 @@ module.exports = function(app, passport) {
     // FACEBOOK ROUTES =====================
     // =====================================
     // route for facebook authentication and login
-    app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+  app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
 
     // handle the callback after facebook has authenticated the user
     app.get('/auth/facebook/callback',
@@ -122,16 +124,46 @@ module.exports = function(app, passport) {
     });
 
 
-    app.get('/items/*', function(req, res){
+  app.get('/items/all', function(req, res){
+      console.log('need to actually query db for items ')
 
-      res.json({data:{
+      var resData = {data:{
         items:[
           {name:'bleep',
             description:'boop'},
           {name:"ipod", description:"antiquated"}
-        ]}})
+        ]}}
+
+      getAllItems(function(err, dat) {
+        console.log(err)
+        console.log(dat)
+        resData.data.items = dat;
+
+        res.json(resData)
+      })
+
+
 
     })
+
+    app.post('/items/add', function(req, res){
+        console.log('need to add an item to the db')
+        var data = req.body;
+        var newitem = new item();
+        console.log(req.body);
+        console.log(Object.keys(req.body))
+        newitem.name = data.name;
+        newitem.description = data.description;
+        newitem.weight = data.weight;
+        newitem.category = data.category;
+        
+        newitem.save();
+        console.log('newitem should have been saved to db', newitem)
+
+        res.json({data:{
+          items:'tring to add'}})
+
+      })
 
 
     // ...

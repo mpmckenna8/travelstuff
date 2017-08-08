@@ -11,6 +11,8 @@ import {
 import Home from '../containers/home'
 import AddItem from '../containers/additem'
 import Footer from './footer'
+import Collections from '../containers/collections'
+import NewBag from '../containers/newBag'
 
 
 const App = ({params}) => {
@@ -20,15 +22,15 @@ const App = ({params}) => {
         <ul>
       <li><Link to="/">Home</Link></li>
       <li><Link to="/newitem">New Item</Link></li>
-      <li><Link to="/old-match">Old Match, to be redirected</Link></li>
-      <li><Link to="/will-not-match">Will Not Match</Link></li>
+      <li><Link to="/collections">Collections</Link></li>
+      <li><Link to="/newbag">New Bag</Link></li>
       <li><Link to="/also/will/not/match">Also Will Not Match</Link></li>
     </ul>
     <Switch>
       <Route path="/" exact component={Home}/>
       <Route path="/newitem" component={AddItem}/>
-      <Redirect from="/old-match" to="/will-match"/>
-      <Route path="/will-match" component={WillMatch}/>
+      <Route from="/collections" component={Collections}/>
+      <Route path="/newbag" component={NewBag}/>
       <Route component={NoMatch}/>
     </Switch>
     <Footer />

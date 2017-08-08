@@ -22,6 +22,20 @@ export function invalidateItemClass(itemClass) {
 }
 
 
+export const ADD_ITEM_CLASS = "ADD_ITEM_CLASS";
+
+// note in the db and display this will be collections or bags or something else
+export function addItemClass(newItemClass) {
+  console.log('also need to add bag to db')
+
+  return {
+    type: ADD_ITEM_CLASS,
+    itemClass: newItemClass
+  }
+
+}
+
+
 export const REQUEST_ITEMS = "REQUEST_ITEMS";
 
 export function requestItems(itemClass) {
@@ -91,8 +105,32 @@ export const fetchItemsIfNeeded = itemClass => (dispatch, getState) => {
 
 export const ADD_ITEM = "ADD_ITEM"
 
+function addItemToDb(item) {
+
+    console.log('need to do a post to the db in actions', item)
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost:8080/items/add', true);
+
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    xhr.setRequestHeader('Accept', '*/*');
+
+    // send the collected data as JSON
+    xhr.send(JSON.stringify(item));
+
+    xhr.onloadend = function () {
+      // done
+      console.log('sentit')
+
+    };
+
+
+}
+
 export const addItem = (item, className) => {
   console.log('need to add item', item, className)
+
+    addItemToDb(item)
 
   return {
     type: "ADD_ITEM",
