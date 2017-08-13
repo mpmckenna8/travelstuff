@@ -34,9 +34,10 @@ create table places(
 
 -- maybe do a parent thing too so packs can be in packs kind of.
 create table packs(
-    site_id serial primary key,
+    coll_id serial primary key,
     name text,
     photo text,
+    description text,
     weight_capacity double precision,
     volume_capacity double precision,
     p_id integer references places(p_id) -- this creates my one to many relationships

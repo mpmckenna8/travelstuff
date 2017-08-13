@@ -18,7 +18,8 @@ import NewBag from '../containers/newBag'
 const App = ({params}) => {
   return (
     <Router>
-      <div>
+      <div id="main">
+
         <ul>
       <li><Link to="/">Home</Link></li>
       <li><Link to="/newitem">New Item</Link></li>

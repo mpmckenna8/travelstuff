@@ -3,6 +3,8 @@
 var express  = require('express');
 var path = require('path')
 var item = require('./models/item.js')
+var Collection = require('./models/collection.js')
+
 
 let getAllItems = require('../queries/getAllItems.js')
 module.exports = function(app, passport) {
@@ -156,7 +158,7 @@ module.exports = function(app, passport) {
         newitem.description = data.description;
         newitem.weight = data.weight;
         newitem.category = data.category;
-        
+
         newitem.save();
         console.log('newitem should have been saved to db', newitem)
 
@@ -165,6 +167,21 @@ module.exports = function(app, passport) {
 
       })
 
+    app.post('/collections/add', function(req, res) {
+
+
+
+      var newCollection = new Collection(req.body);
+
+      console.log('trying to save ,', req.body);
+      newCollection.save(function(d){
+        console.log('thouls da done the insert of the collection')
+      })
+
+
+
+      res.json({data:'trying to save stuff'})
+    })
 
     // ...
     app.get('/static', function (req, res) {

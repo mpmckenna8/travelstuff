@@ -27,11 +27,35 @@ export const ADD_ITEM_CLASS = "ADD_ITEM_CLASS";
 // note in the db and display this will be collections or bags or something else
 export function addItemClass(newItemClass) {
   console.log('also need to add bag to db')
-
+  addBagToDb(newItemClass);
   return {
     type: ADD_ITEM_CLASS,
     itemClass: newItemClass
   }
+
+}
+
+
+function addBagToDb(newbag) {
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'http://localhost:8080/collections/add', true);
+
+  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  xhr.setRequestHeader('Accept', '*/*');
+
+//  newbag.description = 'a bag';
+
+  //newbag.weight_capacity = 20.0;
+  // send the collected data as JSON
+  xhr.send(JSON.stringify(newbag));
+
+  xhr.onloadend = function (res) {
+    // done
+    console.log('sent it of to db and got a res')
+    console.log(res)
+
+  };
 
 }
 
@@ -107,7 +131,7 @@ export const ADD_ITEM = "ADD_ITEM"
 
 function addItemToDb(item) {
 
-    console.log('need to do a post to the db in actions', item)
+  //  console.log('need to do a post to the db in actions', item)
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://localhost:8080/items/add', true);
@@ -120,7 +144,7 @@ function addItemToDb(item) {
 
     xhr.onloadend = function () {
       // done
-      console.log('sentit')
+      console.log('sent it of to db and got a res')
 
     };
 
@@ -128,9 +152,9 @@ function addItemToDb(item) {
 }
 
 export const addItem = (item, className) => {
-  console.log('need to add item', item, className)
+  console.log('adding item', item, className)
 
-    addItemToDb(item)
+  addItemToDb(item)
 
   return {
     type: "ADD_ITEM",
