@@ -101,6 +101,8 @@ class AddItem extends Component {
                   <option value="clothing">Clothing</option>
                   <option value="comestable" >Comestables</option>
                   <option value="tool">Tools</option>
+                  <option value="potion">Potion</option>
+
                   <option value="other" defaultValue>other</option>
                 </select>
 

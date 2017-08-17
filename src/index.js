@@ -3,8 +3,9 @@ import { createLogger } from 'redux-logger'
 import { createStore, applyMiddleware } from 'redux'
 import React from 'react'
 import { render } from 'react-dom'
-import { selectItemClass, fetchItems } from './actions/actions.js'
+import { selectItemClass, fetchItemsIfNeeded } from './actions/actions.js'
 import { setUser } from './actions/useracts.js'
+import { fetchBagsIfNeeded} from './actions/collectionactions.js'
 import rootReducer from './reducers'
 import Root from './components/root'
 
@@ -23,9 +24,11 @@ const store = createStore(
 
 store.dispatch(selectItemClass('all'))
 store
-  .dispatch(fetchItems('all'))
+  .dispatch(fetchItemsIfNeeded('all'))
   .then(() => console.log(store.getState()))
 
+
+store.dispatch(fetchBagsIfNeeded())
 store.dispatch(setUser('beebop'))
 
 render(

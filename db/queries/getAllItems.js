@@ -16,9 +16,12 @@ function getAllItems(cb){
       if(err){
         throw err;
         console.log('error with the db query', err)
+        client.end()
       }
   //    console.log(res.rows)
       cb(err, res.rows)
+
+
     })
 
 }

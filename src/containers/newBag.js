@@ -1,6 +1,6 @@
 // make a new bag containers
 import React, { Component } from 'react'
-import { addItemClass } from '../actions/actions'
+import { addItemClass } from '../actions/collectionactions'
 import { connect } from 'react-redux'
 
 
@@ -37,8 +37,8 @@ class AddBag extends Component {
   render() {
 
     let input = {value:''}
-    let weightCap = {value:10.0}
-    let description = {value:'a baggy'}
+//    let weightCap = {value:10.0}
+  //  let description = {value:'a baggy'}
 
     return (
       <div>
@@ -50,18 +50,14 @@ class AddBag extends Component {
           <input
             className="itemInName"
             name="name"
-            ref={node => {
-              input = node
-            }}
+
             />
           <br/>
 
             <label>description:</label>
               <input
                 className="itemInputDescription"
-                ref={node => {
-                  description = node
-                }}
+
                 name="description"
               />
               <br />
@@ -69,9 +65,7 @@ class AddBag extends Component {
             <label>Weight Capacity:</label>
             <input
               className="weight_cap"
-              ref={node => {
-                weightCap = node;
-              }}
+
               name = 'weightCap'
               type="number"
               step=".5"

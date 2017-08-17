@@ -21,7 +21,8 @@ function Collection(obj) {
       if(err){
         console.log('there was an err with the insertion', err)
       }
-        console.log('result of insertion = ', res)
+      client.end();
+      console.log('result of insertion = ', res)
     } )
 
   }

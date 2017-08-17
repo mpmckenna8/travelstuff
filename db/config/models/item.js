@@ -26,6 +26,7 @@ function Item() {
           console.log('there was an err with the insertion', err)
         }
         console.log('result of insertion = ', res)
+        client.end()
       } )
 
   }

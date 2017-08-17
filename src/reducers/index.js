@@ -2,9 +2,11 @@
 
 import { combineReducers } from 'redux'
 
+
 import {SELECT_ITEM_CLASS, INVALIDATE_ITEM_CLASS, REQUEST_ITEMS, RECIEVE_ITEMS,
-  ADD_ITEM, ADD_ITEM_CLASS} from '../actions/actions'
+  ADD_ITEM } from '../actions/actions'
 import {SET_USER} from '../actions/useracts.js'
+import { ADD_ITEM_CLASS, RECIEVE_BAGS} from '../actions/collectionactions'
 
 function selectedItemClass(state='all', action) {
   switch (action.type) {
@@ -74,9 +76,9 @@ function itemsByType(state={}, action) {
     case ADD_ITEM:{
       console.log('state in itemsByType ,', state)
   //    console.log('action in additem, ', action)
-
       let newIt = {name:action.item.name,
-                    description:action.item.description};
+                    description:action.item.description,
+                    category:action.item.category};
 
       let newArr = state.itemClass;
       console.log(newArr)
@@ -101,16 +103,23 @@ function user(state={name:"test"}, action) {
     }
     default:
       return state;
-
   }
 }
 
 
-function collections(state={bags:[{name:'all'}], locations:[]}, action) {
+function collections(state={bags:[{name:'all'}], locations:[], needsUpdate:true}, action) {
   switch(action.type) {
     case ADD_ITEM_CLASS:
       state.bags.push(action['itemClass'])
       return Object.assign({}, state)
+
+    case RECIEVE_BAGS:
+      let combBags = state.bags.concat(action.bags.data);
+      // maybe should check for duplicate bags
+      state.bags = combBags;
+      console.log('newbags', combBags)
+      return Object.assign({}, state)
+
     default:
       return state;
   }

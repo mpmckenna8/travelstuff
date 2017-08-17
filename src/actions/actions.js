@@ -22,44 +22,6 @@ export function invalidateItemClass(itemClass) {
 }
 
 
-export const ADD_ITEM_CLASS = "ADD_ITEM_CLASS";
-
-// note in the db and display this will be collections or bags or something else
-export function addItemClass(newItemClass) {
-  console.log('also need to add bag to db')
-  addBagToDb(newItemClass);
-  return {
-    type: ADD_ITEM_CLASS,
-    itemClass: newItemClass
-  }
-
-}
-
-
-function addBagToDb(newbag) {
-
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://localhost:8080/collections/add', true);
-
-  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  xhr.setRequestHeader('Accept', '*/*');
-
-//  newbag.description = 'a bag';
-
-  //newbag.weight_capacity = 20.0;
-  // send the collected data as JSON
-  xhr.send(JSON.stringify(newbag));
-
-  xhr.onloadend = function (res) {
-    // done
-    console.log('sent it of to db and got a res')
-    console.log(res)
-
-  };
-
-}
-
-
 export const REQUEST_ITEMS = "REQUEST_ITEMS";
 
 export function requestItems(itemClass) {

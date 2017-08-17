@@ -7,6 +7,9 @@ var Collection = require('./models/collection.js')
 
 
 let getAllItems = require('../queries/getAllItems.js')
+let getAllBags = require('../queries/allbags')
+
+
 module.exports = function(app, passport) {
 
     // =====================================
@@ -29,7 +32,6 @@ module.exports = function(app, passport) {
 
         // render the page and pass in any flash data if it exists
     //    res.render('login.ejs', { message: req.flash('loginMessage') });
-
     });
 
     // process the login form only really works from same domain
@@ -168,9 +170,6 @@ module.exports = function(app, passport) {
       })
 
     app.post('/collections/add', function(req, res) {
-
-
-
       var newCollection = new Collection(req.body);
 
       console.log('trying to save ,', req.body);
@@ -178,9 +177,16 @@ module.exports = function(app, passport) {
         console.log('thouls da done the insert of the collection')
       })
 
+      res.json({data:req.body})
+    })
 
 
-      res.json({data:'trying to save stuff'})
+    app.get('/collections/all', function(req, res) {
+
+      // need to query the db for all collections
+      getAllBags((err,bags) => res.send({data:bags}))
+
+    //  res.send({bags:[chromeoly]})
     })
 
     // ...

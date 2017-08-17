@@ -1,3 +1,61 @@
 .loginArea {
   display:none;
 }
+
+
+#main {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.headerLinkDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+}
+
+body {
+  color: pink;
+  background-color:black;
+}
+
+
+
+.itemdiv {
+  margin-left: 10px;
+
+}
+
+.itemdiv > a:link {
+  color: #ef3b2c;
+
+}
+
+a:visited {
+  color:orange;
+}
+
+.itemDeets {
+  display:flex;
+  flex-direction: row;
+  justify-content: baseline;
+  vertical-align: baseline;
+  padding: 10px;
+
+}
+
+.itemDeets > h4 {
+  padding: 5px;
+  vertical-align: baseline;
+}
+.itemDeets > p {
+  padding-top: 10px;
+  vertical-align: baseline;
+}
+
+.footerDiv {
+  background-color: #525252;
+  padding-top: 10px;
+}
