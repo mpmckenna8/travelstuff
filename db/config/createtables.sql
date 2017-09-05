@@ -11,8 +11,10 @@ create table users(
     inventoryquantity integer[],-- each thing should correspond to above to give the amount of it that there is.
     inventorydescription text[],
     location text[],
-    packs integer[]
+    userpacks integer[] -- should reference a thing in userpack
 );
+
+
 
 create table items(
     p_id serial primary key,
@@ -43,9 +45,25 @@ create table packs(
     p_id integer references places(p_id) -- this creates my one to many relationships
 );
 
+
+create table userpack(
+  up_id serial primary key,
+  packtype integer references packs(coll_id),
+  items integer[][] -- will use two numbers here, one refers to an item and another to the quantity
+);
+
+
+
 INSERT INTO places VALUES (DEFAULT,
         'home',
         'sf',
         'usa', 'where i live');
+
+
+
+
 INSERT INTO packs VALUES (default, 'day pack', null, 100.00, 20.0, 1);
-INSERT INTO users values (DEFAULT, 'test', 'test', '1.0', 'none.jpg', null, null, null);
+INSERT INTO users values (DEFAULT, 'test', 'test', '1.0', 'none.jpg', null, null, null, null, null);
+-- once there are items in there we also want to add some userpacks. the beolow will add
+-- INSERT INTO userpack VALUES(DEFAULT, 1, '{1,2}');
+-- INSERT INTO userpack VALUES(DEFAULT, 1, '{{ 1,2 }, {2,4}}');

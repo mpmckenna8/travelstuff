@@ -7,7 +7,7 @@ var conString = "postgres://matthewmckenna@localhost/auth";
 
 function getAllItems(cb){
 
-    var client = new pg.Client(conString);
+    let client = new pg.Client(conString);
     client.connect();
 
     let queryString = "SELECT * FROM items;"
@@ -20,7 +20,7 @@ function getAllItems(cb){
       }
   //    console.log(res.rows)
       cb(err, res.rows)
-
+      client.end()
 
     })
 

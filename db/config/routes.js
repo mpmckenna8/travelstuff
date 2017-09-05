@@ -8,6 +8,7 @@ var Collection = require('./models/collection.js')
 
 let getAllItems = require('../queries/getAllItems.js')
 let getAllBags = require('../queries/allbags')
+let updateItem = require('../queries/updateitem')
 
 
 module.exports = function(app, passport) {
@@ -178,6 +179,15 @@ module.exports = function(app, passport) {
       })
 
       res.json({data:req.body})
+
+    })
+
+    app.post('/items/edit', function(req, res) {
+
+      console.log('need to update item in db');
+      var updatedObj = req.body;
+      updateItem(updatedObj);
+      res.send('stil need to actually persist update, but new item got to server')
     })
 
 

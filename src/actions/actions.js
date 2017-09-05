@@ -113,6 +113,19 @@ function addItemToDb(item) {
 
 }
 
+export const EDIT_ITEM = "EDIT_ITEM"
+
+export const editItem = (newItem, currentCollection) => {
+  updateItemInDb(newItem)
+
+  return {
+    type: "EDIT_ITEM",
+    newItem: newItem,
+    currentCollection: currentCollection
+  }
+
+}
+
 export const addItem = (item, className) => {
   console.log('adding item', item, className)
 
@@ -123,4 +136,22 @@ export const addItem = (item, className) => {
     item,
     itemClass: className
   }
+}
+
+
+function updateItemInDb(item) {
+  let xhr = new XMLHttpRequest();
+
+  xhr.open('POST','http://localhost:8080/items/edit', true);
+
+  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8' )
+  xhr.send(JSON.stringify(item));
+
+  xhr.onloadend = function (res) {
+    // done
+    console.log('sent it of to db and got a res', res);
+
+  };
+
+
 }

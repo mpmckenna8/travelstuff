@@ -29,7 +29,9 @@ store
 
 
 store.dispatch(fetchBagsIfNeeded())
-store.dispatch(setUser('beebop'))
+store.dispatch(setUser('test'))
+
+
 
 render(
   <Root store={store} />,

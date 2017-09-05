@@ -1,5 +1,5 @@
-
-
+// need to be careful because there is another stylesheet in public
+// directory
 .loginArea {
   display:none;
 }
@@ -18,10 +18,14 @@
 
 }
 
+
+
 body {
   color: pink;
   background-color:black;
 }
+
+
 
 
 
@@ -31,8 +35,7 @@ body {
 }
 
 .itemdiv > a:link {
-  color: #ef3b2c;
-
+  color: #bcbddc;
 }
 
 a:visited {

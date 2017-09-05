@@ -1,6 +1,14 @@
 To describe the db backend for the app
 
-It's in a postgres database.
+It's in a postgres database. On my computer it's in a directory
+/Users/matthewmckenna/Documents/hub/postgresprac/dbdir
+
+and can be started with:
+
+
+    postgres -D ./
+
+
 
 Everything is served by a express server which can be run with the:
 
@@ -25,3 +33,8 @@ Once you have that going you should be able to add tables to your database by ru
     psql -d auth -f createtables.sql
 
 Then you should be good to go with a user called test
+
+
+For our little sample user to add items.
+
+UPDATE users SET inventory='{1,2,3,4,5}' WHERE u_id=1

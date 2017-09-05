@@ -4,7 +4,8 @@ import { combineReducers } from 'redux'
 
 
 import {SELECT_ITEM_CLASS, INVALIDATE_ITEM_CLASS, REQUEST_ITEMS, RECIEVE_ITEMS,
-  ADD_ITEM } from '../actions/actions'
+  ADD_ITEM, EDIT_ITEM } from '../actions/actions'
+
 import {SET_USER} from '../actions/useracts.js'
 import { ADD_ITEM_CLASS, RECIEVE_BAGS} from '../actions/collectionactions'
 
@@ -87,13 +88,27 @@ function itemsByType(state={}, action) {
 
       return Object.assign({}, state)
     }
+    case EDIT_ITEM:{
+      console.log('need to editItem with action = ', action)
+        console.log('state in here, ', state)
+        let edItem = state[action.currentCollection].items.find((d) => {
+          return d.p_id === action.newItem.p_id;
+
+        })
+
+        console.log('still need to update in the db')
+        edItem.description = action.newItem.description;
+
+      //  console.log(edItem);
+      return state;
+    }
     default:
       return state;
 
   }
 }
 
-function user(state={name:"test"}, action) {
+function user(state={name:"test", id: 1}, action) {
 
   switch(action.type) {
     case SET_USER:{

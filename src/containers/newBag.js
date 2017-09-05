@@ -24,8 +24,6 @@ class AddBag extends Component {
                       weight_capacity: formData.get('weightCap'),
                       description:formData.get('description')};
 
-
-
       if(!formobj.name){
         console.log('no name input found');
       }
@@ -50,14 +48,12 @@ class AddBag extends Component {
           <input
             className="itemInName"
             name="name"
-
             />
           <br/>
 
             <label>description:</label>
               <input
                 className="itemInputDescription"
-
                 name="description"
               />
               <br />
@@ -65,7 +61,6 @@ class AddBag extends Component {
             <label>Weight Capacity:</label>
             <input
               className="weight_cap"
-
               name = 'weightCap'
               type="number"
               step=".5"

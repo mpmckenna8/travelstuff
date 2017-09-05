@@ -35,8 +35,14 @@ function Item() {
 Item.findItemById = function(pid) {
   let queryString = "SELECT * FROM items WHERE p_id=$1"
 
-  client.query(queryString, [pid], function(err, res) {
+
+        var client = new pg.Client(conString);
+        client.connect();
+
+        client.query(queryString, [pid], function(err, res) {
       console.log(err, res)
+      client.end();
+
     }
   )
 }

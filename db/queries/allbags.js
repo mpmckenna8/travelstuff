@@ -16,9 +16,7 @@ function getAllBags(cb) {
       throw err
 
     }
-
     cb(err, res.rows)
-
     client.end();
   })
 }

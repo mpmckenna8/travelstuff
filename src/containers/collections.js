@@ -31,6 +31,8 @@ class Collections extends Component {
 }
 
 const Bag = (bagObj, key) => {
+
+    console.log('bagobj is ,', bagObj)
 //  console.log('bagobj = ', bagObj)
   return (<div> {bagObj.bagObj.name} </div>)
 }
