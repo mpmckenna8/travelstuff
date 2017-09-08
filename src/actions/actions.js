@@ -24,7 +24,8 @@ export function invalidateItemClass(itemClass) {
 
 export const REQUEST_ITEMS = "REQUEST_ITEMS";
 
-export function requestItems(itemClass) {
+export function requestItems(itemClass, userName) {
+
   return {
     type: REQUEST_ITEMS,
     itemClass
@@ -50,20 +51,23 @@ export function recieveItems(itemClass, json) {
 
 
 // a thunk action creator to fetch our items
-export function fetchItems(itemClass) {
+export function fetchItems(itemClass, userName) {
   // wierd thunk think is you do all the stuff in a callback like:
   return function(dispatch) {
     //updates state to show an api call happening
     dispatch(requestItems(itemClass))
-    let fetchUrl = 'http://localhost:8080/items/' + itemClass
+    let fetchUrl = 'http://localhost:8080/items/' +  userName;
     // we return our fetch promise and it's result
     return fetch(fetchUrl)
-      .then(res => res.json(),
-        error => console.log('an error happend with fetch', error))
+      .then(res => res.json())
+      //  error => console.log('an error happend with fetch', error))
       .then(json =>
           // handle the incoming new items:
           dispatch(recieveItems(itemClass, json))
         )
+        .catch(function(error) {
+          console.log('There has been a problem with your fetch operation which needs to be handeled better: ' + error.message);
+  });
 
   }
 }
@@ -71,6 +75,7 @@ export function fetchItems(itemClass) {
 const shouldFetchItems = (state, itemClass) => {
 
   const items = state.itemsByType[itemClass];
+  console.log(state.user)
 
   if(!items){
     return true
@@ -84,16 +89,20 @@ const shouldFetchItems = (state, itemClass) => {
 
 
 export const fetchItemsIfNeeded = itemClass => (dispatch, getState) => {
+//  console.log('state in fetch items if needed ,',  getState())
   if(shouldFetchItems(getState(),itemClass)) {
-    return dispatch(fetchItems(itemClass))
+    let username = getState().user.name;
+    return dispatch(fetchItems(itemClass, username))
   }
 }
 
 export const ADD_ITEM = "ADD_ITEM"
 
-function addItemToDb(item) {
+const addItemToDb = (item, userName, className='all' ) =>  {
 
-  //  console.log('need to do a post to the db in actions', item)
+    //console.log('really need to do a post to the db in actions', item, 'state is', getState())
+    let sendObj = {userName: userName,
+                    item: item }
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://localhost:8080/items/add', true);
@@ -102,7 +111,7 @@ function addItemToDb(item) {
     xhr.setRequestHeader('Accept', '*/*');
 
     // send the collected data as JSON
-    xhr.send(JSON.stringify(item));
+    xhr.send(JSON.stringify(sendObj));
 
     xhr.onloadend = function () {
       // done
@@ -110,8 +119,16 @@ function addItemToDb(item) {
 
     };
 
+    return {
+      type: "ADD_ITEM",
+      item,
+      itemClass: className
+    }
 
 }
+
+
+
 
 export const EDIT_ITEM = "EDIT_ITEM"
 
@@ -126,16 +143,18 @@ export const editItem = (newItem, currentCollection) => {
 
 }
 
-export const addItem = (item, className) => {
+
+
+
+// so I think the action thing isn't triggering the reducer i think because of the thunk, so I'll dispatch another thing
+export const addItem = (item, className) => (dispatch, getState) => {
+
+  console.log('getstate in additem, ', getState())
   console.log('adding item', item, className)
 
-  addItemToDb(item)
+  dispatch(addItemToDb(item, getState().user.name), className)
 
-  return {
-    type: "ADD_ITEM",
-    item,
-    itemClass: className
-  }
+
 }
 
 

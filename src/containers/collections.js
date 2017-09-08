@@ -14,11 +14,10 @@ class Collections extends Component {
   //  console.log('bagArray = ', bagArray)
     return (
       <div>
-
         <Link to='/'>backhome</Link>
 
-      <h3>Bags:</h3>
-        {bagArray.map((item,i) => {
+        <h3>Bags:</h3>
+          {bagArray.map((item,i) => {
       //    console.log(item)
           return(
             <Bag bagObj={item} key={i}></Bag>
@@ -32,7 +31,7 @@ class Collections extends Component {
 
 const Bag = (bagObj, key) => {
 
-    console.log('bagobj is ,', bagObj)
+//    console.log('bagobj is ,', bagObj)
 //  console.log('bagobj = ', bagObj)
   return (<div> {bagObj.bagObj.name} </div>)
 }

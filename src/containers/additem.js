@@ -28,8 +28,8 @@ class AddItem extends Component {
     let category = {value: 'other'}
     return (
     <div>
-    <div>New item Attributes</div>
-      <form
+    <div>Add new item</div>
+      <form id="newItemForm"
         onSubmit={e => {
           e.preventDefault()
           if (!input.value.trim()) {
@@ -102,7 +102,6 @@ class AddItem extends Component {
                   <option value="comestable" >Comestables</option>
                   <option value="tool">Tools</option>
                   <option value="potion">Potion</option>
-
                   <option value="other" defaultValue>other</option>
                 </select>
 

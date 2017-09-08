@@ -63,7 +63,11 @@ INSERT INTO places VALUES (DEFAULT,
 
 
 INSERT INTO packs VALUES (default, 'day pack', null, 100.00, 20.0, 1);
-INSERT INTO users values (DEFAULT, 'test', 'test', '1.0', 'none.jpg', null, null, null, null, null);
+
+-- MAKE SURE THERE'RE AT LEAST 6 items in the db to get this to work.
+INSERT INTO users values (DEFAULT, 'test', 'test', '1.0', 'none.jpg', '{1,2,3,4,5,6}', '{1,1,1,1,1,1}', null, null, '{1}');
 -- once there are items in there we also want to add some userpacks. the beolow will add
 -- INSERT INTO userpack VALUES(DEFAULT, 1, '{1,2}');
 -- INSERT INTO userpack VALUES(DEFAULT, 1, '{{ 1,2 }, {2,4}}');
+
+-- UPDATE users SET inventory='{1,2,3,4,5,6}', inventoryquantity='{1,1,1,1,1,1}' WHERE name='test';

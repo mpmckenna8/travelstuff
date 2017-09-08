@@ -44,7 +44,7 @@ function items(
       })
     case ADD_ITEM:
     // want to actually add the item to the db in the action not here
-      console.log('addit act', action)
+      console.log('add item act', action)
       console.log('addit state, ', state)
       return Object.assign({}, state, {
         isFetching:false,
@@ -75,7 +75,7 @@ function itemsByType(state={}, action) {
 
       })
     case ADD_ITEM:{
-      console.log('state in itemsByType ,', state)
+      console.log('state in ADD_ITEM itemsByType ,', state)
   //    console.log('action in additem, ', action)
       let newIt = {name:action.item.name,
                     description:action.item.description,
@@ -86,7 +86,7 @@ function itemsByType(state={}, action) {
       let tempstate = state;
       tempstate[action.itemClass].items.push(newIt)
 
-      return Object.assign({}, state)
+      return Object.assign({}, tempstate)
     }
     case EDIT_ITEM:{
       console.log('need to editItem with action = ', action)

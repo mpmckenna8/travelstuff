@@ -9,6 +9,8 @@ var Collection = require('./models/collection.js')
 let getAllItems = require('../queries/getAllItems.js')
 let getAllBags = require('../queries/allbags')
 let updateItem = require('../queries/updateitem')
+let getUserItems = require('../queries/useritems.js')
+let updateUserInventory = require('../queries/updateUserInventory.js')
 
 
 module.exports = function(app, passport) {
@@ -151,19 +153,51 @@ module.exports = function(app, passport) {
 
     })
 
+    app.get('/items/*', function(req, res){
+      //  console.log('need to actually query db for items for user ', req)
+        let userName = req.url//.path.split('/');
+        console.log('user: ', userName)//Object.keys(userName))
+
+        var resData = {data:{
+          items:[
+            {name:'bleep',
+              description:'boop'},
+            {name:"ipod", description:"antiquated"}
+          ]}}
+
+        getUserItems('test', function(err, dat) {
+          if(err) console.log(err)
+
+          console.log(dat)
+          resData.data.items = dat;
+
+          res.json(resData)
+        })
+
+
+
+      })
+
     app.post('/items/add', function(req, res){
-        console.log('need to add an item to the db')
-        var data = req.body;
+        console.log('adding an item to the db', req.body)
+        var userName = req.body.userName;
+        var data = req.body.item;
         var newitem = new item();
-        console.log(req.body);
-        console.log(Object.keys(req.body))
+      //  console.log(req.body);
+        //console.log(Object.keys(req.body))
+
         newitem.name = data.name;
         newitem.description = data.description;
         newitem.weight = data.weight;
         newitem.category = data.category;
+        quantity = data.quantity;
 
-        newitem.save();
-        console.log('newitem should have been saved to db', newitem)
+        newitem.save( (itemID) => {
+          console.log('need to pass this callback an item id so I can add it to the user inventory too', typeof itemID)
+          updateUserInventory(userName, itemID, quantity);
+
+        });
+
 
         res.json({data:{
           items:'tring to add'}})
@@ -175,6 +209,8 @@ module.exports = function(app, passport) {
 
       console.log('trying to save ,', req.body);
       newCollection.save(function(d){
+
+
         console.log('thouls da done the insert of the collection')
       })
 
@@ -198,6 +234,7 @@ module.exports = function(app, passport) {
 
     //  res.send({bags:[chromeoly]})
     })
+
 
     // ...
     app.get('/static', function (req, res) {
