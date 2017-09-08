@@ -27,8 +27,10 @@ function User(){
                     return console.error('error running query', err);
                 }
                 console.log(result.rows);
+                client.end()
                 //console.log(this.email);
             });
+
             client.query('SELECT * FROM users ORDER BY u_id desc limit 1', null, function(err, result){
 
                 if(err){
@@ -53,23 +55,8 @@ function User(){
               return true;
             }
 
-
-
-            //whenever we call 'save function' to object USER we call the insert query which will save it into the database.
-        //});
     };
-        //User.connect
 
-    //this.findById = function(u_id, callback){
-    //    console.log("we are in findbyid");
-    //    var user = new User();
-    //    user.email= 'carol';
-    //    user.password='gah';
-    //    console.log(user);
-    //
-    //    return callback(null, user);
-    //
-    //};
 
 }
 
@@ -149,6 +136,8 @@ User.findById = function(id, callback){
             console.log(user.email);
             return callback(null, user);
         }
+
+        client.end();
     });
 };
 

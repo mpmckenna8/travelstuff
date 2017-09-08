@@ -15,7 +15,7 @@ var pg           = require('pg');
 
 
 var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:3000/');
+    res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
 
@@ -46,7 +46,7 @@ client.connect(function(err) {
 
 
 // configuration ===============================================================
-require('./config/passport.js')(passport); // pass passport for configuration
+require('../db/config/passport.js')(passport); // pass passport for configuration
 
 //app.use(allowCrossDomain)
 
@@ -56,9 +56,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.all('/*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+
+  //intercepts OPTIONS method
+  if ('OPTIONS' === req.method) {
+    //respond with 200
+    res.send(200);
+  }
+  else {
+  //move on
+    next();
+  }
+
 });
 
 // set up our express application
@@ -80,7 +91,7 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
-require('./config/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+require('../db/config/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 // launch the app and start listening on the port given above===================
 

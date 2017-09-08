@@ -1,17 +1,49 @@
+import thunkMiddleware from 'redux-thunk'
+import { createLogger } from 'redux-logger'
+import { createStore, applyMiddleware } from 'redux'
 import React from 'react'
 import { render } from 'react-dom'
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import PackingApp from './reducers'
-import App from './components/App'
+import { selectItemClass, fetchItemsIfNeeded } from './actions/actions.js'
+import { setUser } from './actions/useracts.js'
+import { fetchBagsIfNeeded} from './actions/collectionactions.js'
+import rootReducer from './reducers'
+import Root from './components/root'
 
-let store = createStore(PackingApp)
+
+//console.log(process.env.NODE_ENV)
+
+const loggerMiddleware = createLogger()
+
+const store = createStore(
+  rootReducer,
+  applyMiddleware(
+    thunkMiddleware, // lets us dispatch() functions
+    loggerMiddleware // neat middleware that logs actions
+  )
+);
+
+store.dispatch(selectItemClass('all'))
+store
+  .dispatch(fetchItemsIfNeeded('all'))
+  .then(() => console.log(store.getState()))
 
 
-// main render function passing in the store to the Provider?
+store.dispatch(fetchBagsIfNeeded())
+store.dispatch(setUser('test'))
+
+
+
 render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <Root store={store} />,
   document.getElementById('root')
 )
+
+
+/*
+// can use to test reducer, below does an example get all items call
+
+store.dispatch(selectItemClass('all'))
+store
+  .dispatch(fetchItems('all'))
+  .then(() => console.log(store.getState()))
+*/

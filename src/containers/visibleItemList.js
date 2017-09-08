@@ -1,0 +1,98 @@
+import React, {Component} from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+
+// visible itemlist to go here interacting with reducer
+class VisibleItemList  extends Component  {
+  componentDidMount() {
+  //const {selectedItemClass } = this.props
+    console.log('mounted visible item list, thisprops = ', this.props)
+
+  }
+
+  render() {
+//    console.log('rerendering maybe list changed')
+    let itemarray = this.props.itemsByType[this.props.selectedItemClass]
+    var itemCats = {};
+  //  console.log(itemarray);
+
+    if(itemarray) {
+      itemCats = categorizeItems(itemarray.items)
+    }
+
+    let catArray = Object.keys(itemCats).sort();
+  //  console.log('itemarray', catArray.sort())
+
+    return (
+      <div className="itemListDiv">
+        {
+          catArray.map((category, i) => {
+            return (
+              <div key={i}>
+                <h2>
+                  {category}
+                </h2>
+                {itemCats[category].map( (item, i )  => {
+                  return (
+                    <div key={i} className="itemdiv">
+                      <Link to={"item/" + item.p_id}>{item.name}</Link> </div>
+                  )
+                })
+              }
+              </div>
+            )
+          })
+        }
+
+      </div>
+
+    )
+  }
+}
+
+
+const mapStateToProps = state => {
+  return state;
+
+}
+
+export default connect(mapStateToProps)(VisibleItemList)
+
+
+// takes our array of items and returns an object with each key being a category
+// and the value being an array of items in that category
+function categorizeItems(itemarray) {
+  var itemCats = {};
+
+  for ( let o of itemarray ) {
+  //  console.log(o.category === null)
+    if(itemCats[o.category]) {
+        itemCats[o.category].push(o)
+    }
+    else {
+      if(o.category === null) {
+          if(itemCats['other']){
+            itemCats['other'].push(o)
+          }
+          else itemCats['other'] = [o];
+      }
+      else{
+        if(o.category === 'comestable') {
+          if(itemCats['comestables']){
+            itemCats['comestables'].push(o)
+          }
+          else{
+            itemCats['comestables'] = [o]
+          }
+
+        }
+        else itemCats[o.category] = [o];
+      }
+    }
+  }
+  return itemCats;
+
+}
+//    {itemarray.map(item => (
+//      <p>item.name</p>
+//    ))}

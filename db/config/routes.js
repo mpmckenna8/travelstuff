@@ -1,4 +1,18 @@
 //all the routes for our application
+
+var express  = require('express');
+var path = require('path')
+var item = require('./models/item.js')
+var Collection = require('./models/collection.js')
+
+
+let getAllItems = require('../queries/getAllItems.js')
+let getAllBags = require('../queries/allbags')
+let updateItem = require('../queries/updateitem')
+let getUserItems = require('../queries/useritems.js')
+let updateUserInventory = require('../queries/updateUserInventory.js')
+
+
 module.exports = function(app, passport) {
 
     // =====================================
@@ -6,9 +20,9 @@ module.exports = function(app, passport) {
     // =====================================
     app.get('/', function(req, res) {
       //  res.render('index.ejs'); // load the index.ejs file
+      console.log('blah')
+      res.send('heyo')
     });
-
-
 
 
 
@@ -21,7 +35,6 @@ module.exports = function(app, passport) {
 
         // render the page and pass in any flash data if it exists
     //    res.render('login.ejs', { message: req.flash('loginMessage') });
-
     });
 
     // process the login form only really works from same domain
@@ -99,7 +112,7 @@ module.exports = function(app, passport) {
     // FACEBOOK ROUTES =====================
     // =====================================
     // route for facebook authentication and login
-    app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+  app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
 
     // handle the callback after facebook has authenticated the user
     app.get('/auth/facebook/callback',
@@ -118,12 +131,122 @@ module.exports = function(app, passport) {
     });
 
 
-    app.get('/allitems', function(req, res){
+  app.get('/items/all', function(req, res){
+      console.log('need to actually query db for items ')
+
+      var resData = {data:{
+        items:[
+          {name:'bleep',
+            description:'boop'},
+          {name:"ipod", description:"antiquated"}
+        ]}}
+
+      getAllItems(function(err, dat) {
+        console.log(err)
+        console.log(dat)
+        resData.data.items = dat;
+
+        res.json(resData)
+      })
 
 
-      res.send('need to query the db for all the items')
 
     })
+
+    app.get('/items/*', function(req, res){
+      //  console.log('need to actually query db for items for user ', req)
+        let userName = req.url//.path.split('/');
+        console.log('user: ', userName)//Object.keys(userName))
+
+        var resData = {data:{
+          items:[
+            {name:'bleep',
+              description:'boop'},
+            {name:"ipod", description:"antiquated"}
+          ]}}
+
+        getUserItems('test', function(err, dat) {
+          if(err) console.log(err)
+
+          console.log(dat)
+          resData.data.items = dat;
+
+          res.json(resData)
+        })
+
+
+
+      })
+
+    app.post('/items/add', function(req, res){
+        console.log('adding an item to the db', req.body)
+        var userName = req.body.userName;
+        var data = req.body.item;
+        var newitem = new item();
+      //  console.log(req.body);
+        //console.log(Object.keys(req.body))
+
+        newitem.name = data.name;
+        newitem.description = data.description;
+        newitem.weight = data.weight;
+        newitem.category = data.category;
+        quantity = data.quantity;
+
+        newitem.save( (itemID) => {
+          console.log('need to pass this callback an item id so I can add it to the user inventory too', typeof itemID)
+          updateUserInventory(userName, itemID, quantity);
+
+        });
+
+
+        res.json({data:{
+          items:'tring to add'}})
+
+      })
+
+    app.post('/collections/add', function(req, res) {
+      var newCollection = new Collection(req.body);
+
+      console.log('trying to save ,', req.body);
+      newCollection.save(function(d){
+
+
+        console.log('thouls da done the insert of the collection')
+      })
+
+      res.json({data:req.body})
+
+    })
+
+    app.post('/items/edit', function(req, res) {
+
+      console.log('need to update item in db');
+      var updatedObj = req.body;
+      updateItem(updatedObj);
+      res.send('stil need to actually persist update, but new item got to server')
+    })
+
+
+    app.get('/collections/all', function(req, res) {
+
+      // need to query the db for all collections
+      getAllBags((err,bags) => res.send({data:bags}))
+
+    //  res.send({bags:[chromeoly]})
+    })
+
+
+    // ...
+    app.get('/static', function (req, res) {
+  // and drop 'public' in the middle of here
+      console.log('should send the public stuff from', path.join(__dirname, 'public') )
+
+
+      app.use(express.static(path.join(__dirname, 'public')))
+
+      res.sendFile(path.join(__dirname, '../../', 'public', 'index.html'))
+  })
+
 
 };
 
