@@ -14,28 +14,34 @@ class VisibleItemList  extends Component  {
 //    console.log('rerendering maybe list changed')
     let itemarray = this.props.itemsByType[this.props.selectedItemClass]
     var itemCats = {};
-  //  console.log(itemarray);
+    console.log('really itemarray', itemarray);
 
     if(itemarray) {
       itemCats = categorizeItems(itemarray.items)
     }
 
     let catArray = Object.keys(itemCats).sort();
-  //  console.log('itemarray', catArray.sort())
+    console.log('item categories', catArray.sort())
 
     return (
       <div className="itemListDiv">
         {
           catArray.map((category, i) => {
             return (
-              <div key={i}>
+              <div key={i} >
                 <h2>
                   {category}
                 </h2>
                 {itemCats[category].map( (item, i )  => {
                   return (
                     <div key={i} className="itemdiv">
-                      <Link to={"item/" + item.p_id}>{item.name}</Link> </div>
+                      <div className="itemNameDiv">
+                        <Link to={"item/" + item.p_id}>{item.name}</Link>
+                      </div>
+                        <div className="itemQuantDiv">
+                          {item.quantity}
+                        </div>
+                    </div>
                   )
                 })
               }

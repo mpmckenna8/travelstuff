@@ -4,6 +4,11 @@
   display:none;
 }
 
+div {
+  border: medium dashed #15f524;
+  padding: 10px;
+}
+
 
 #main {
   display: flex;
@@ -31,6 +36,8 @@ body {
 
 .itemdiv {
   margin-left: 10px;
+  flex-direction: row;
+  display: flex;
 
 }
 
@@ -40,6 +47,14 @@ body {
 
 a:visited {
   color:orange;
+}
+
+.itemNameDiv {
+  flex: 3;
+}
+
+.itemQuantDiv {
+  flex:2;
 }
 
 .itemDeets {

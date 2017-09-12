@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { addItem } from '../actions/actions'
 import { connect } from 'react-redux'
 
+import AddExistingItemList from "./addExistingItemList.js"
+
 
 class AddItem extends Component {
 
@@ -26,9 +28,10 @@ class AddItem extends Component {
     let count = {value:1};
     let weight = { value: 1.0 };
     let category = {value: 'other'}
+
     return (
     <div>
-    <div>Add new item</div>
+    <div>Add custom new item</div>
       <form id="newItemForm"
         onSubmit={e => {
           e.preventDefault()
@@ -109,6 +112,11 @@ class AddItem extends Component {
 
         <button type="submit">Add new item</button>
       </form>
+      <div>
+        <div>Add existing item</div>
+        <AddExistingItemList/>
+      </div>
+
     </div>
     )
   }
@@ -117,7 +125,7 @@ class AddItem extends Component {
 function mapStateToProps(state) {
 
   const { selectedItemClass, itemsByType} = state
-  console.log(itemsByType)
+  //console.log(itemsByType)
   const {
     isFetching,
     lastUpdated,

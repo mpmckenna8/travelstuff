@@ -11,13 +11,11 @@ class Home extends Component {
   render() {
   //  console.log('this = ', this)
 
-
     return (
-      <div>
-      <h1>Main Item List</h1>
+      <div className="homeDiv" >
+      <h1>Inventory</h1>
       <VisibleItemList>
       </VisibleItemList>
-
       </div>
     )
   }

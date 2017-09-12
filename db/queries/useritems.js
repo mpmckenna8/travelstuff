@@ -29,16 +29,28 @@ function userItems(username, cb) {
     }
 
     console.log('inventory is', res.rows[0].inventory)
-    let inventory = res.rows[0].inventory
+    let inventory = res.rows[0].inventory;
+
+    let quantities = res.rows[0].inventoryquantity;
 
     console.log(inventory.toString())
+
+
     itemqueryString = itemqueryString + inventory.toString() + ');'
     client.query(itemqueryString, (err,res) => {
       if(err) {
         console.log("error in item query un useritems", err)
         throw err
       }
+
+      for( i in res.rows ) {
+        console.log('in the row iterator,', i)
+        res.rows[i].quantity = quantities[i]
+      }
+
       cb(err, res.rows)
+
+
       client.end();
     })
   })

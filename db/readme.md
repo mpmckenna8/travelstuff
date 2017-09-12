@@ -37,4 +37,4 @@ Then you should be good to go with a user called test
 
 For our little sample user to add items.
 
-UPDATE users SET inventory='{1,2,3,4,5}' WHERE u_id=1
+UPDATE users SET inventory='{1,2,3,4,5}' WHERE u_id=1;

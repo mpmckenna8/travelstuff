@@ -40,6 +40,7 @@ function items(
         isFetching:false,
         didInvalidate:false,
         items: action.items,
+        user: action.user,
         lastUpdatedAt: action.recievedAt
       })
     case ADD_ITEM:
@@ -84,7 +85,8 @@ function itemsByType(state={}, action) {
       let newArr = state.itemClass;
       console.log(newArr)
       let tempstate = state;
-      tempstate[action.itemClass].items.push(newIt)
+      tempstate[action.itemClass].items.push(newIt);
+
 
       return Object.assign({}, tempstate)
     }

@@ -36,12 +36,13 @@ export function requestItems(itemClass, userName) {
 
 export const RECIEVE_ITEMS = "RECIEVE_ITEMS";
 
-export function recieveItems(itemClass, json) {
+export function recieveItems(itemClass, json, userName) {
 
   console.log('recieved json = ', json);
 
   return {
     type: RECIEVE_ITEMS,
+    user: userName,
     itemClass,
     items: json.data.items.map(child => child),
     recievedAt: Date.now()
@@ -49,13 +50,16 @@ export function recieveItems(itemClass, json) {
 }
 
 
-
 // a thunk action creator to fetch our items
 export function fetchItems(itemClass, userName) {
   // wierd thunk think is you do all the stuff in a callback like:
   return function(dispatch) {
     //updates state to show an api call happening
-    dispatch(requestItems(itemClass))
+    dispatch(requestItems(itemClass));
+
+    if(itemClass === 'db') {
+      userName = 'all'
+    }
     let fetchUrl = 'http://localhost:8080/items/' +  userName;
     // we return our fetch promise and it's result
     return fetch(fetchUrl)
@@ -63,7 +67,7 @@ export function fetchItems(itemClass, userName) {
       //  error => console.log('an error happend with fetch', error))
       .then(json =>
           // handle the incoming new items:
-          dispatch(recieveItems(itemClass, json))
+          dispatch(recieveItems(itemClass, json, userName))
         )
         .catch(function(error) {
           console.log('There has been a problem with your fetch operation which needs to be handeled better: ' + error.message);
@@ -71,6 +75,9 @@ export function fetchItems(itemClass, userName) {
 
   }
 }
+
+
+
 
 const shouldFetchItems = (state, itemClass) => {
 
@@ -88,13 +95,24 @@ const shouldFetchItems = (state, itemClass) => {
 }
 
 
-export const fetchItemsIfNeeded = itemClass => (dispatch, getState) => {
-//  console.log('state in fetch items if needed ,',  getState())
+
+
+export const fetchItemsIfNeeded = (itemClass, userName) => (dispatch, getState) => {
+  console.log('state in fetch items if needed for ,', itemClass,  getState())
+
+
   if(shouldFetchItems(getState(),itemClass)) {
     let username = getState().user.name;
     return dispatch(fetchItems(itemClass, username))
   }
 }
+
+
+
+
+
+
+
 
 export const ADD_ITEM = "ADD_ITEM"
 
@@ -105,6 +123,7 @@ const addItemToDb = (item, userName, className='all' ) =>  {
                     item: item }
 
     var xhr = new XMLHttpRequest();
+
     xhr.open('POST', 'http://localhost:8080/items/add', true);
 
     xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
@@ -156,6 +175,7 @@ export const addItem = (item, className) => (dispatch, getState) => {
 
 
 }
+
 
 
 function updateItemInDb(item) {
