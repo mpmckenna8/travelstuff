@@ -6,11 +6,15 @@ import React, { Component } from 'react'
 
 import {connect} from 'react-redux';
 
+import { Link } from 'react-router-dom'
 
 
 class AddExistingItemList extends Component {
 
   render() {
+
+
+
         let dbItems = [] //this.props.itemsByType.db;
         console.log('db items to map', this.props.itemsByType.db);
         if(this.props.itemsByType.db) {
@@ -21,7 +25,8 @@ class AddExistingItemList extends Component {
       return (
         <div>
           { dbItems.map( (item,i) => {
-              return (<div key={i}>{item.name}</div>)
+              return (<div key={item.p_id}>
+                <Link to={"addexistingitem/" + item.p_id}>{item.name}</Link></div>)
             })
           }
         blah

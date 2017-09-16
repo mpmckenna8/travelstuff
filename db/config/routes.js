@@ -178,6 +178,14 @@ module.exports = function(app, passport) {
 
       })
 
+      app.post('/existingitem', function(req, res) {
+        console.log('got a req to add existing item, ', req);
+        let data = req.body;
+        // need to update
+        updateUserInventory(data.user, data.item.p_id, parseInt(data.item.quantity));
+        res.send('errr for some reason its adding two things')
+      })
+
     app.post('/items/add', function(req, res){
         console.log('adding an item to the db', req.body)
         var userName = req.body.userName;

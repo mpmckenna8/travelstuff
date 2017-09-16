@@ -4,7 +4,7 @@ import { combineReducers } from 'redux'
 
 
 import {SELECT_ITEM_CLASS, INVALIDATE_ITEM_CLASS, REQUEST_ITEMS, RECIEVE_ITEMS,
-  ADD_ITEM, EDIT_ITEM } from '../actions/actions'
+  ADD_ITEM, EDIT_ITEM, ADD_EXISTING_ITEM} from '../actions/actions'
 
 import {SET_USER} from '../actions/useracts.js'
 import { ADD_ITEM_CLASS, RECIEVE_BAGS} from '../actions/collectionactions'
@@ -59,6 +59,7 @@ function items(
   }
 }
 
+let tempPid = 1000000;
 
 
 function itemsByType(state={}, action) {
@@ -80,12 +81,16 @@ function itemsByType(state={}, action) {
   //    console.log('action in additem, ', action)
       let newIt = {name:action.item.name,
                     description:action.item.description,
-                    category:action.item.category};
+                    category:action.item.category,
+                    quantity:action.item.quantity,
+                    p_id: tempPid};
 
       let newArr = state.itemClass;
       console.log(newArr)
       let tempstate = state;
       tempstate[action.itemClass].items.push(newIt);
+
+      tempPid = tempPid + 1;
 
 
       return Object.assign({}, tempstate)
@@ -102,6 +107,13 @@ function itemsByType(state={}, action) {
         edItem.description = action.newItem.description;
 
       //  console.log(edItem);
+      return Object.assign({}, state);
+    }
+    case "ADD_EXISTING_ITEM": {
+      console.log('need to update this state for this existing item, dont want 2 but do want to add to specify collection if selected', state)
+
+      state.all.items.push(action.newItem);
+
       return state;
     }
     default:

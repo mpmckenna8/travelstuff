@@ -143,7 +143,7 @@ class SingleItem extends Component {
     }
 
     const thispagelink = '/item/' + currentItem.p_id;
-    let clickcount =1;
+    let clickcount = 1;
     //document.getElementById('canceler').className
     console.log('currentItem = ', currentItem)
 

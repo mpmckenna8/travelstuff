@@ -1,5 +1,11 @@
 
-import fetch from 'isomorphic-fetch'
+import fetch from 'isomorphic-fetch';
+
+const urlStart = "http://localhost:8080/"
+
+
+// need to think or implement a better way to do this
+let username = 'test';
 
 // actions to get items
 // itemclass will basically be how to query items from the server
@@ -102,7 +108,7 @@ export const fetchItemsIfNeeded = (itemClass, userName) => (dispatch, getState) 
 
 
   if(shouldFetchItems(getState(),itemClass)) {
-    let username = getState().user.name;
+    username = getState().user.name;
     return dispatch(fetchItems(itemClass, username))
   }
 }
@@ -177,6 +183,18 @@ export const addItem = (item, className) => (dispatch, getState) => {
 }
 
 
+export const ADD_EXISTING_ITEM = "ADD_EXISTING_ITEM";
+
+export const addExistingItem = (newItem, collection, username) => {
+
+  addExistingItemToDb(newItem, username);
+  return {
+    type: ADD_EXISTING_ITEM,
+    newItem: newItem,
+    itemClass: collection
+  }
+}
+
 
 function updateItemInDb(item) {
   let xhr = new XMLHttpRequest();
@@ -192,5 +210,22 @@ function updateItemInDb(item) {
 
   };
 
+
+}
+
+
+function addExistingItemToDb(item, user) {
+  let xhr = new XMLHttpRequest();
+  let sendjson = {item:item, user: user}
+  let urlend = urlStart + "existingitem"
+  xhr.open('POST', urlend, true);
+
+  xhr.setRequestHeader("Content-Type", 'application/json; charset=UTF-8');
+
+  xhr.send(JSON.stringify(sendjson));
+
+  xhr.onloadend = function(res) {
+    console.log('sent data off and got res,', res)
+  }
 
 }
