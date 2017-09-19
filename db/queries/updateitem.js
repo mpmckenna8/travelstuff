@@ -18,6 +18,8 @@ function updateItem(newItem) {
     function( err, res) {
       if(err) { console.log('there was an error updateing the thing', err );}
       console.log('updated item in db ', res)
+      client.end()
+
     });
 
 

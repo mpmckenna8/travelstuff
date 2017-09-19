@@ -158,6 +158,8 @@ const addItemToDb = (item, userName, className='all' ) =>  {
 export const EDIT_ITEM = "EDIT_ITEM"
 
 export const editItem = (newItem, currentCollection) => {
+
+
   updateItemInDb(newItem)
 
   return {
@@ -167,6 +169,41 @@ export const editItem = (newItem, currentCollection) => {
   }
 
 }
+
+export const editItemQuantity = (item, currentCollection, userName) => {
+
+  updateQuantityDb(item, currentCollection, userName);
+  return {
+    type: "EDIT_ITEM",
+    newItem: item,
+    currentCollection: currentCollection
+  }
+}
+
+
+function updateQuantityDb(item, currentCollection, userName) {
+
+  console.log('need to do an endpoint for quantity for ,', item)
+  let xhr = new XMLHttpRequest();
+
+  let updateData = {item: item, collection:currentCollection, user: userName};
+
+
+
+  xhr.open('POST','http://localhost:8080/items/editquant', true);
+
+  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8' )
+  xhr.send(JSON.stringify(updateData));
+
+  xhr.onloadend = function (res) {
+    // done
+    console.log('sent it of to db and got a res', res);
+
+  };
+
+
+}
+
 
 
 
@@ -188,11 +225,14 @@ export const ADD_EXISTING_ITEM = "ADD_EXISTING_ITEM";
 export const addExistingItem = (newItem, collection, username) => {
 
   addExistingItemToDb(newItem, username);
+
+
   return {
     type: ADD_EXISTING_ITEM,
     newItem: newItem,
     itemClass: collection
   }
+
 }
 
 

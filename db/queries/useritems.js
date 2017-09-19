@@ -45,7 +45,15 @@ function userItems(username, cb) {
 
       for( i in res.rows ) {
         console.log('in the row iterator,', i)
-        res.rows[i].quantity = quantities[i]
+        let itemIndex = inventory.findIndex(function(d) {
+          return res.rows[i].p_id === d;
+        })
+
+        console.log('user items with quants, ', res.rows)
+
+        res.rows[i].quantity = quantities[itemIndex];
+
+
       }
 
       cb(err, res.rows)

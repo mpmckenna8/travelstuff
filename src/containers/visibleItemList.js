@@ -2,11 +2,39 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
+import {editItemQuantity} from '../actions/actions'
+
 // visible itemlist to go here interacting with reducer
 class VisibleItemList  extends Component  {
   componentDidMount() {
   //const {selectedItemClass } = this.props
-    console.log('mounted visible item list, thisprops = ', this.props)
+    console.log('mounted visible item list, thisprops = ', this.props);
+
+  }
+
+  incrementItemQuantity(item) {
+
+    console.log('increment item quant', this.props)
+    item.quantity = item.quantity + 1;
+
+    let currentCollection = this.props.selectedItemClass;
+
+    this.props.dispatch(editItemQuantity(item, this.props.selectedItemClass, this.props.user.name))
+
+
+
+
+  }
+
+  decrementItemQuantity(item) {
+    console.log('dec item quant', item);
+
+    item.quantity = item.quantity - 1;
+
+    let currentCollection = this.props.selectedItemClass;
+
+    this.props.dispatch(editItemQuantity(item, this.props.selectedItemClass, this.props.user.name))
+
 
   }
 
@@ -39,7 +67,17 @@ class VisibleItemList  extends Component  {
                         <Link to={"item/" + item.p_id}>{item.name}</Link>
                       </div>
                         <div className="itemQuantDiv">
+                          <div>
+                            <button onClick={(e) => {
+                                this.decrementItemQuantity(item);
+                              } }>-</button>
                           {item.quantity}
+                          <button onClick={(e) => {
+                              this.incrementItemQuantity(item);
+                            }}>+</button>
+
+                        </div>
+
                         </div>
                     </div>
                   )

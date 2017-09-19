@@ -103,8 +103,9 @@ function itemsByType(state={}, action) {
 
         })
 
-        console.log('still need to update in the db')
+      //  console.log('still need to update in the db')
         edItem.description = action.newItem.description;
+        edItem = action.newItem
 
       //  console.log(edItem);
       return Object.assign({}, state);

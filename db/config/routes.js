@@ -12,6 +12,7 @@ let updateItem = require('../queries/updateitem')
 let getUserItems = require('../queries/useritems.js')
 let updateUserInventory = require('../queries/updateUserInventory.js')
 
+let updateInventoryQuantity = require('../queries/updateUserInventoryQuantity.js')
 
 module.exports = function(app, passport) {
 
@@ -153,6 +154,18 @@ module.exports = function(app, passport) {
 
     })
 
+    app.post('/items/editquant', function(req, res) {
+      console.log('need to figure out how to update item', req.body)
+
+      let data = req.body;
+
+      updateInventoryQuantity(data.user, data.item)
+
+      res.send('hope it worked')
+    })
+
+
+
     app.get('/items/*', function(req, res){
       //  console.log('need to actually query db for items for user ', req)
         let userName = req.url//.path.split('/');
@@ -177,6 +190,9 @@ module.exports = function(app, passport) {
 
 
       })
+
+
+
 
       app.post('/existingitem', function(req, res) {
         console.log('got a req to add existing item, ', req);

@@ -16,10 +16,13 @@ function updateUserInventory(userName, newItemId, quantity=1) {
 
   let queryStr = 'UPDATE users SET inventory=array_append(inventory, $2), inventoryquantity=array_append(inventoryquantity, $3) WHERE name=$1 RETURNING inventory';
 
+
   client.query(queryStr, [userName, newItemId, quantity],
     function( err, res) {
       if(err) { console.log('there was an error updateing the thing', err )}
       console.log('updated userinventory in db ', res)
+
+      client.end();
     });
 
 
