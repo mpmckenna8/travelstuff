@@ -26,7 +26,7 @@ const App = ({params}) => {
         <HeaderLinks></HeaderLinks>
     <Switch>
       <Route path="/" exact component={Home}/>
-        <Route path="/addexistingitem/:idnum" component={AddExistingItem}/>
+      <Route path="/addexistingitem/:idnum" component={AddExistingItem}/>
 
       <Route path="/newitem" component={AddItem}/>
       <Route from="/collections" component={Collections}/>

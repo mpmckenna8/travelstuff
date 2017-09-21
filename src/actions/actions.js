@@ -160,7 +160,11 @@ export const EDIT_ITEM = "EDIT_ITEM"
 export const editItem = (newItem, currentCollection) => {
 
 
-  updateItemInDb(newItem)
+  updateItemInDb(newItem);
+
+  if(newItem.quantityChanged) {
+    console.log('still need to update item in db')
+  }
 
   return {
     type: "EDIT_ITEM",

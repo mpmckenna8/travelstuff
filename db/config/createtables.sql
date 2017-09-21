@@ -62,7 +62,7 @@ INSERT INTO places VALUES (DEFAULT,
 
 
 
-INSERT INTO packs VALUES (default, 'day pack', null, 100.00, 20.0, 1);
+INSERT INTO packs VALUES (default, 'day pack', null,'suitcase for holding stuff', 20.0, 1);
 
 -- MAKE SURE THERE'RE AT LEAST 6 items in the db to get this to work.
 INSERT INTO users values (DEFAULT, 'test', 'test', '1.0', 'none.jpg', '{1,2,3,4,5,6}', '{1,1,1,1,1,1}', null, null, '{1}');

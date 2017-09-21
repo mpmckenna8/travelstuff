@@ -1,5 +1,10 @@
 To describe the db backend for the app
 
+I think I wanted to kind of follow this for how to do it:
+http://uitblog.com/postgres-with-passport/
+
+
+
 It's in a postgres database. On my computer it's in a directory
 /Users/matthewmckenna/Documents/hub/postgresprac/dbdir
 
@@ -42,26 +47,3 @@ UPDATE users SET inventory='{1,2,3,4,5}' WHERE u_id=1;
 
 
 The authentication idea is basically using passport with node.  Should allow user to log in with some third party ids.
-
-
-
-
-Basic flow so far:
-
-user loads page:
-  Sees main inventory for test user and is logged in as test user to explore and try out the app.
-  - src/index.js has all of its stuff fired;
-    - The redux store is created, and a few actions are fired.
-      - selectItemClass is set to all
-      - fetchItemsIfNeeded is called with itemClass=all and userName=test
-        - once that's done the same action is called with itemClass=db and user=test
-      - fetBagsIfNeeded is called and gets all of the bags from the db and stores them in collection.bags of the redux store
-    - Renders the Root compmonet and gives it the store as the prop
-      - Root component is in src/compnents/root.js
-  - src/compnents/root.js
-      - 
-  - src/components/app.js
-    - has the main routing and directs the user to the default page which is /containers/home.js
-
-
-IF user clicks

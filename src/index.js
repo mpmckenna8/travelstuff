@@ -6,6 +6,8 @@ import { render } from 'react-dom'
 import { selectItemClass, fetchItemsIfNeeded } from './actions/actions.js'
 import { setUser } from './actions/useracts.js'
 import { fetchBagsIfNeeded} from './actions/collectionactions.js'
+
+
 import rootReducer from './reducers'
 import Root from './components/root'
 
@@ -22,36 +24,28 @@ const store = createStore(
   )
 );
 
-store.dispatch(selectItemClass('all'));
 
+store.dispatch(setUser('test'))
+
+store.dispatch(selectItemClass('all'));
 
 
 store.dispatch(fetchItemsIfNeeded('all', 'test'))
   .then(() => {
-
     console.log('doing/did fetch items if needed', store.getState())
-    store.dispatch(fetchItemsIfNeeded('db', 'test'))
+
+    store.dispatch(fetchItemsIfNeeded('db', 'test')).then(() => {
+
+    })
   }
 
   )
 
 
-//store.dispatch(fetchBagsIfNeeded())
-store.dispatch(setUser('test'))
-
+store.dispatch(fetchBagsIfNeeded())
 
 
 render(
   <Root store={store} />,
   document.getElementById('root')
 )
-
-
-/*
-// can use to test reducer, below does an example get all items call
-
-store.dispatch(selectItemClass('all'))
-store
-  .dispatch(fetchItems('all'))
-  .then(() => console.log(store.getState()))
-*/

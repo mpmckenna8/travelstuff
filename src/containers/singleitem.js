@@ -42,8 +42,6 @@ class SingleItem extends Component {
 
     let editsaveButton = document.getElementById('editsave')
 
-    editsaveButton.innerText = "Edit";
-    editsaveButton.onclick = null;
 
 
     // reput all the stuff where it should be.
@@ -51,6 +49,8 @@ class SingleItem extends Component {
   saveChanges(inputDivs, currentItem) {
 
     let savingItem = currentItem;
+
+    savingItem.quantityChanged = false;
 
     for( let o of inputDivs) {
 
@@ -70,12 +70,23 @@ class SingleItem extends Component {
       else if(o.className.includes('weight')){
         savingItem.weight = o.querySelector('input').value;
       }
+      else if(o.className.includes('quantity')) {
+
+
+        savingItem.quantity = o.querySelector('input').value;
+
+        if(savingItem.quanity != currentItem.quantity) {
+          savingItem.quantityChanged = true;
+        }
+      }
 
 
     }
 
     console.log('item to be saved now', savingItem)
     this.props.dispatch(editItem(savingItem, this.props.selectedItemClass))
+    this.props.history.push('../');
+
   }
 
 
@@ -192,9 +203,19 @@ function cancelEdit(catdiv, value) {
 
 
 function ItemView({currentItem}) {
+
+  console.log(currentItem, 'item to get rendered')
   return (
     <div>
   <h2 className="itemHeader">{currentItem.name}</h2>
+
+
+    <div className="itemDeets quantity" >
+      <h4>Quantity:  </h4>
+      <span><p>{currentItem.quantity}</p></span>
+    </div>
+
+
   <div className="itemDeets description" >
     <h4>Description:</h4>
     <span>

@@ -49,12 +49,10 @@ function userItems(username, cb) {
           return res.rows[i].p_id === d;
         })
 
-        console.log('user items with quants, ', res.rows)
-
         res.rows[i].quantity = quantities[itemIndex];
 
-
       }
+      //    console.log('user items with quants, ', res.rows)
 
       cb(err, res.rows)
 

@@ -17,7 +17,9 @@ export const fetchBagsIfNeeded = () => (dispatch, getState) => {
 // for now gets all bags, in future only user appropriate bags hopefully
 export const FETCH_BAGS = "FETCH_BAGS";
 export const fetchBags = () => {
+
 console.log("need to fetch the bags",{'name': 'getall the bags'} )
+
   return function(dispatch) {
     let fetchUrl = 'http://localhost:8080/collections/all'
     dispatch(requestBags())
@@ -49,7 +51,6 @@ export const recieveBags = function(bags) {
   return {
     type:RECIEVE_BAGS,
     bags: bags
-
   }
 
 }
@@ -66,6 +67,8 @@ export function addItemClass(newItemClass) {
   }
 
 }
+
+
 
 
 function addBagToDb(newbag) {
@@ -88,5 +91,10 @@ function addBagToDb(newbag) {
     console.log(res)
 
   };
+
+  return {
+    type:"ADD_BAG_TO_DB",
+    mesg: "maybe worked"
+  }
 
 }
