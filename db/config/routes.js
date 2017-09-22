@@ -10,6 +10,8 @@ let getAllItems = require('../queries/getAllItems.js')
 let getAllBags = require('../queries/allbags')
 let updateItem = require('../queries/updateitem')
 let getUserItems = require('../queries/useritems.js')
+let getUserBags = require('../queries/userbags')
+
 let updateUserInventory = require('../queries/updateUserInventory.js')
 
 let updateInventoryQuantity = require('../queries/updateUserInventoryQuantity.js')
@@ -144,7 +146,7 @@ module.exports = function(app, passport) {
 
       getAllItems(function(err, dat) {
         console.log(err)
-        console.log(dat)
+      //  console.log(dat)
         resData.data.items = dat;
 
         res.json(resData)
@@ -166,9 +168,11 @@ module.exports = function(app, passport) {
 
 
 
+
+
     app.get('/items/*', function(req, res){
       //  console.log('need to actually query db for items for user ', req)
-        let userName = req.url//.path.split('/');
+        let userName = req.url.split('/')[2];
         console.log('user: ', userName)//Object.keys(userName))
 
         var resData = {data:{
@@ -178,20 +182,32 @@ module.exports = function(app, passport) {
             {name:"ipod", description:"antiquated"}
           ]}}
 
-        getUserItems('test', function(err, dat) {
+        getUserItems(userName, function(err, dat) {
           if(err) console.log(err)
+          console.log('sending user items', dat)
 
-          console.log(dat)
-          resData.data.items = dat;
+          resData.data = dat;
 
-          res.json(resData)
+          getUserBags(dat.packs, (err, bagdata) => {
+
+            console.log('userbags', bagdata);
+
+            resData.data.bags = bagdata;
+
+            res.json(resData)
+
+          })
+
         })
 
+})
 
+app.get('/userpacks', function(req, res) {
 
-      })
+  console.log('need to get packs,', req.body)
 
-
+  res.json({status:'working on getting them items'})
+})
 
 
       app.post('/existingitem', function(req, res) {

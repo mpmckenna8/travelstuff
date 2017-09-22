@@ -28,10 +28,12 @@ function userItems(username, cb) {
       throw err
     }
 
-    console.log('inventory is', res.rows[0].inventory)
+  //  console.log('inventory is', res.rows[0].inventory)
     let inventory = res.rows[0].inventory;
 
     let quantities = res.rows[0].inventoryquantity;
+
+    let userPacks = res.rows[0].userpacks
 
     console.log(inventory.toString())
 
@@ -44,7 +46,7 @@ function userItems(username, cb) {
       }
 
       for( i in res.rows ) {
-        console.log('in the row iterator,', i)
+      //  console.log('in the row iterator,', i)
         let itemIndex = inventory.findIndex(function(d) {
           return res.rows[i].p_id === d;
         })
@@ -54,7 +56,9 @@ function userItems(username, cb) {
       }
       //    console.log('user items with quants, ', res.rows)
 
-      cb(err, res.rows)
+      var finalData = {items:res.rows, packs: userPacks};
+
+      cb(err, finalData)
 
 
       client.end();
