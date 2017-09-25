@@ -36,6 +36,8 @@ function items(
         didInvalidate:false
       })
     case RECIEVE_ITEMS:
+
+    console.log('recieved items in reducer', action.items)
       return Object.assign({}, state, {
         isFetching:false,
         didInvalidate:false,
@@ -67,9 +69,37 @@ function itemsByType(state={}, action) {
     case INVALIDATE_ITEM_CLASS:
     case RECIEVE_ITEMS:
       console.log('recieved items in itemsByType')
+
+      console.log('action in recieve items itemsByType,', action);
+
+      let userPacks =  {};
+
+
+
+      for( let i in action.userPacks) {
+        console.log('pack to set up', i);
+        let userpack = action.userPacks[i];
+
+        for( let q in userpack.items) {
+          let o = userpack.items[q]
+          let bagitem = Object.assign({},action.items.find(function(d) {
+            console.log('setting up bag', o[0], d.p_id)
+            return d.p_id === o[0];
+          }) )
+
+        bagitem.quantity = o[1];
+        console.log('itemin pack', bagitem);
+        userpack.items[q] = bagitem
+
+      }
+        userPacks[action.userPacks[i].up_id] = userpack;
+      }
+
+      console.log('itemclass aray thing, ', {[action.itemClass]: "blah"})
+
       return Object.assign({}, state, {
         [action.itemClass]: items(state[action.itemClass], action)
-      })
+      }, userPacks)
     case REQUEST_ITEMS:
       console.log('request items',state)
       return Object.assign({}, state, {
@@ -98,17 +128,17 @@ function itemsByType(state={}, action) {
     case EDIT_ITEM:{
       console.log('need to editItem with action = ', action)
         console.log('state in here, ', state)
-        let edItem = state[action.currentCollection].items.find((d) => {
+        let tempstate = state;
+        let edItem = tempstate[action.currentCollection].items.findIndex((d) => {
           return d.p_id === action.newItem.p_id;
-
         })
 
       //  console.log('still need to update in the db')
-        edItem.description = action.newItem.description;
-        edItem = action.newItem
+      //  edItem.description = action.newItem.description;
+        tempstate[action.currentCollection].items[edItem] = action.newItem
 
       //  console.log(edItem);
-      return Object.assign({}, state);
+      return Object.assign({}, tempstate);
     }
     case "ADD_EXISTING_ITEM": {
       console.log('need to update this state for this existing item, dont want 2 but do want to add to specify collection if selected', state)
@@ -137,18 +167,41 @@ function user(state={name:"test", id: 1}, action) {
 }
 
 
-function collections(state={bags:[{name:'all'}], locations:[], needsUpdate:true}, action) {
+function collections(state={bags:[{name:'all'}], allBags:[], locations:[], needsUpdate:true}, action) {
   switch(action.type) {
     case ADD_ITEM_CLASS:
+      console.log('additem class thing,', action)
       state.bags.push(action['itemClass'])
       return Object.assign({}, state)
 
     case RECIEVE_BAGS:
-      let combBags = state.bags.concat(action.bags.data);
+
+    //  console.log('recived some bags, ', action.bags)
+
+      let combBags = state.allBags.concat(action.bags.data);
       // maybe should check for duplicate bags
-      state.bags = combBags;
-      console.log('newbags', combBags)
+      state.allBags = combBags;
+    //  console.log('newbags', combBags)
       return Object.assign({}, state)
+
+    case "RECIEVE_USER_BAGS":
+      console.log('getting user bags,', action)
+      return state;
+    case RECIEVE_ITEMS:
+      console.log('should have new items and baggies for user maybe', action.userPacks)
+      let userpacksnamed = action.userPacks.map(function(d) {
+         d.name = d.description;
+         return d;
+      })
+
+      console.log(userpacksnamed, 'state in collections after new items')
+
+      state.bags = state.bags.concat(userpacksnamed)
+
+      //console.log()
+
+
+      return Object.assign({}, state);
 
     default:
       return state;
