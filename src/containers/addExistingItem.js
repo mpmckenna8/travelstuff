@@ -6,8 +6,6 @@ import { Link } from 'react-router-dom';
 import {addExistingItem} from "../actions/actions"
 
 //import ItemView from '../components/itemView.js'
-
-
 class AddExistingItem extends Component {
   addToInventory(item) {
     console.log('need to add item to thing', item);

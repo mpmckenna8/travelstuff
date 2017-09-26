@@ -1,6 +1,7 @@
 
 import fetch from 'isomorphic-fetch';
 
+
 const urlStart = "http://localhost:8080/"
 
 
@@ -43,16 +44,23 @@ export function requestItems(itemClass, userName) {
 export const RECIEVE_ITEMS = "RECIEVE_ITEMS";
 
 export function recieveItems(itemClass, json, userName) {
-
   console.log('recieved json = ', json);
+//  return function(dispatch) {
+  let userBags = [];
+  if(json.data.bags) {
+    console.log('request user packs, this=', json.data);
+      userBags = json.data.bags
+  }
 
   return {
     type: RECIEVE_ITEMS,
     user: userName,
     itemClass,
     items: json.data.items.map(child => child),
-    recievedAt: Date.now()
+    recievedAt: Date.now(),
+    userPacks: userBags
   }
+//}
 }
 
 
@@ -105,7 +113,6 @@ const shouldFetchItems = (state, itemClass) => {
 
 export const fetchItemsIfNeeded = (itemClass, userName) => (dispatch, getState) => {
   console.log('state in fetch items if needed for ,', itemClass,  getState())
-
 
   if(shouldFetchItems(getState(),itemClass)) {
     username = getState().user.name;
@@ -177,6 +184,7 @@ export const editItem = (newItem, currentCollection) => {
 export const editItemQuantity = (item, currentCollection, userName) => {
 
   updateQuantityDb(item, currentCollection, userName);
+
   return {
     type: "EDIT_ITEM",
     newItem: item,
@@ -201,7 +209,7 @@ function updateQuantityDb(item, currentCollection, userName) {
 
   xhr.onloadend = function (res) {
     // done
-    console.log('sent it of to db and got a res', res);
+    console.log('sent it of to db to edit quantity and got a res', res);
 
   };
 
@@ -219,7 +227,6 @@ export const addItem = (item, className) => (dispatch, getState) => {
   console.log('adding item', item, className)
 
   dispatch(addItemToDb(item, getState().user.name), className)
-
 
 }
 

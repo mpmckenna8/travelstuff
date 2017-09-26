@@ -43,7 +43,6 @@ class SingleItem extends Component {
     let editsaveButton = document.getElementById('editsave')
 
 
-
     // reput all the stuff where it should be.
   }
   saveChanges(inputDivs, currentItem) {
@@ -88,7 +87,6 @@ class SingleItem extends Component {
     this.props.history.push('../');
 
   }
-
 
 
   editMode(editBool, currentItem) {
@@ -190,7 +188,6 @@ class SingleItem extends Component {
 }
 
 function mapStateToProps(state) {
-
   return state;
 }
 

@@ -47,7 +47,7 @@ export function requestBags(){
 export const RECIEVE_BAGS = "RECIEVE_BAGS"
 
 export const recieveBags = function(bags) {
-  console.log(bags)
+  console.log('recieved the bags from req i think,', bags)
   return {
     type:RECIEVE_BAGS,
     bags: bags
@@ -66,6 +66,24 @@ export function addItemClass(newItemClass) {
     itemClass: newItemClass
   }
 
+}
+
+
+export function fetchPacks(userPacks) {
+  console.log('fetching user packs')
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'http://localhost:8080/userpacks', true);
+
+  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  xhr.setRequestHeader('Accept', '*/*');
+
+  xhr.send({userpacks: userPacks})
+
+
+  xhr.onloadend = function(res) {
+
+    console.log('res from userpacks,', res)
+  }
 }
 
 

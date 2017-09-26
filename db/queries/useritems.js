@@ -54,7 +54,8 @@ function userItems(username, cb) {
         res.rows[i].quantity = quantities[itemIndex];
 
       }
-      //    console.log('user items with quants, ', res.rows)
+
+      console.log('user items with quants, ', res.rows)
 
       var finalData = {items:res.rows, packs: userPacks};
 

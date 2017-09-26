@@ -8,7 +8,7 @@ import {editItemQuantity} from '../actions/actions'
 class VisibleItemList  extends Component  {
   componentDidMount() {
   //const {selectedItemClass } = this.props
-    console.log('mounted visible item list, thisprops = ', this.props);
+  //  console.log('mounted visible item list, thisprops = ', this.props);
 
   }
 
@@ -42,7 +42,7 @@ class VisibleItemList  extends Component  {
 //    console.log('rerendering maybe list changed')
     let itemarray = this.props.itemsByType[this.props.selectedItemClass]
     var itemCats = {};
-    console.log('really itemarray', itemarray);
+  //  console.log('really itemarray', itemarray);
 
     if(itemarray) {
       itemCats = categorizeItems(itemarray.items)

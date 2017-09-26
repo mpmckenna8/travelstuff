@@ -11,6 +11,7 @@ let getAllBags = require('../queries/allbags')
 let updateItem = require('../queries/updateitem')
 let getUserItems = require('../queries/useritems.js')
 let getUserBags = require('../queries/userbags')
+const editUserPackQuantity = require('../queries/editUserPackQuantity');
 
 let updateUserInventory = require('../queries/updateUserInventory.js')
 
@@ -156,15 +157,24 @@ module.exports = function(app, passport) {
 
     })
 
-    app.post('/items/editquant', function(req, res) {
+  app.post('/items/editquant', function(req, res) {
       console.log('need to figure out how to update item', req.body)
 
       let data = req.body;
 
-      updateInventoryQuantity(data.user, data.item)
+      if( data.collection === 'all') {
 
-      res.send('hope it worked')
-    })
+        updateInventoryQuantity(data.user, data.item)
+
+      }
+      else {
+        console.log('need to actually update the userpack');
+        editUserPackQuantity(data);
+
+      }
+
+      res.send('Item quantity should be updated')
+  })
 
 
 
@@ -184,16 +194,17 @@ module.exports = function(app, passport) {
 
         getUserItems(userName, function(err, dat) {
           if(err) console.log(err)
-          console.log('sending user items', dat)
+
+          //console.log('sending user items', dat)
 
           resData.data = dat;
 
           getUserBags(dat.packs, (err, bagdata) => {
 
-            console.log('userbags', bagdata);
+          //  console.log('userbags', bagdata);
 
             resData.data.bags = bagdata;
-
+            console.log('stuff from the user items get', JSON.stringify(resData))
             res.json(resData)
 
           })
@@ -210,13 +221,13 @@ app.get('/userpacks', function(req, res) {
 })
 
 
-      app.post('/existingitem', function(req, res) {
+  app.post('/existingitem', function(req, res) {
         console.log('got a req to add existing item, ', req);
         let data = req.body;
         // need to update
         updateUserInventory(data.user, data.item.p_id, parseInt(data.item.quantity));
         res.send('errr for some reason its adding two things')
-      })
+  })
 
     app.post('/items/add', function(req, res){
         console.log('adding an item to the db', req.body)
@@ -250,8 +261,6 @@ app.get('/userpacks', function(req, res) {
       console.log('trying to save ,', req.body);
       newCollection.save(function(d){
 
-
-        console.log('thouls da done the insert of the collection')
       })
 
       res.json({data:req.body})
@@ -263,7 +272,8 @@ app.get('/userpacks', function(req, res) {
       console.log('need to update item in db');
       var updatedObj = req.body;
       updateItem(updatedObj);
-      res.send('stil need to actually persist update, but new item got to server')
+      res.send('stil need to actually persist update, but new item got to server');
+
     })
 
 
