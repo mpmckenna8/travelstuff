@@ -44,7 +44,7 @@ class VisibleItemList  extends Component  {
     var itemCats = {};
   //  console.log('really itemarray', itemarray);
 
-    if(itemarray) {
+    if(itemarray.items) {
       itemCats = categorizeItems(itemarray.items)
     }
 

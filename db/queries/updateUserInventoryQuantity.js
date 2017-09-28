@@ -9,8 +9,6 @@ var conString = "postgres://matthewmckenna@localhost/auth";
 let queryString = "select * from users where name=$1"
 
 
-let updateString = 'UPDATE users SET inventoryquantity=$1 where name=$1';
-
 
 function updateUserInventoryQuantity(userName, item) {
 

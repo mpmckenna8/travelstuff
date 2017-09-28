@@ -83,3 +83,18 @@ a:visited {
 .itemViewing {
   display: none;
 }
+
+.bagdeetDiv {
+  display: flex;
+  flex-direction: row;
+  vertical-align: baseline;
+}
+
+.bagInfoHeader {
+  width: 10%;
+
+}
+
+.bagDetails {
+  margin-top: 1.75%;
+}

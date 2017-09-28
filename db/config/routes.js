@@ -12,6 +12,8 @@ let updateItem = require('../queries/updateitem')
 let getUserItems = require('../queries/useritems.js')
 let getUserBags = require('../queries/userbags')
 const editUserPackQuantity = require('../queries/editUserPackQuantity');
+const addUserBag = require('../queries/addUserBag')
+
 
 let updateUserInventory = require('../queries/updateUserInventory.js')
 
@@ -156,6 +158,20 @@ module.exports = function(app, passport) {
 
 
     })
+
+  app.post('/userbag/add', function(req, res) {
+    let data = req.body;
+
+    console.log('need to update in db, ', data)
+
+    addUserBag(data, function(bag_id) {
+      console.log('bag_id = ', bag_id)
+      res.send('need to actually update still')
+
+    })
+  })
+
+
 
   app.post('/items/editquant', function(req, res) {
       console.log('need to figure out how to update item', req.body)

@@ -4,6 +4,8 @@ import { addItemClass } from '../actions/collectionactions'
 import { connect } from 'react-redux'
 
 
+import AddExistingBagList from './addExistingBagList';
+
 class AddBag extends Component {
 
 
@@ -73,6 +75,10 @@ class AddBag extends Component {
             <button type="submit">Add new bag</button>
 
         </form>
+
+        <AddExistingBagList></AddExistingBagList>
+
+
 
 
       </div>

@@ -50,7 +50,6 @@ function userItems(username, cb) {
         let itemIndex = inventory.findIndex(function(d) {
           return res.rows[i].p_id === d;
         })
-
         res.rows[i].quantity = quantities[itemIndex];
 
       }

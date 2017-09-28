@@ -16,6 +16,7 @@ import HeaderLinks from './headerlinks.js'
 import Collections from '../containers/collections'
 import NewBag from '../containers/newBag'
 import AddExistingItem from '../containers/addExistingItem';
+import AddExistingBag from '../containers/addExistingBag'
 
 
 const App = ({params}) => {
@@ -27,7 +28,7 @@ const App = ({params}) => {
     <Switch>
       <Route path="/" exact component={Home}/>
       <Route path="/addexistingitem/:idnum" component={AddExistingItem}/>
-
+      <Route path="/addexistingbag/:idnum" component={AddExistingBag}/>
       <Route path="/newitem" component={AddItem}/>
       <Route from="/collections" component={Collections}/>
       <Route path="/newbag" component={NewBag}/>

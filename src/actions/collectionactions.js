@@ -86,8 +86,38 @@ export function fetchPacks(userPacks) {
   }
 }
 
+export function addNewUserBag(newBag, userName) {
+
+  addUserBagToDb(newBag, userName);
+
+  return {
+    type:"ADD_NEW_USER_BAG",
+    newBag: newBag
+  }
+
+}
 
 
+function addUserBagToDb(newBag, userName) {
+  let data = {
+    bagInfo: newBag,
+    userName
+  }
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'http://localhost:8080/userbag/add', true);
+
+  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  xhr.setRequestHeader('Accept', '*/*');
+
+  xhr.send(JSON.stringify(data));
+
+  console.log('tried to add to db, , ', newBag, userName)
+
+  xhr.onloadend = function(res) {
+    console.log('sent newbag')
+  }
+
+}
 
 function addBagToDb(newbag) {
 

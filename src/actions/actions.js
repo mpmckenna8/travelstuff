@@ -78,7 +78,6 @@ export function fetchItems(itemClass, userName) {
     // we return our fetch promise and it's result
     return fetch(fetchUrl)
       .then(res => res.json())
-      //  error => console.log('an error happend with fetch', error))
       .then(json =>
           // handle the incoming new items:
           dispatch(recieveItems(itemClass, json, userName))
