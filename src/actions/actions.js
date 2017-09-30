@@ -45,7 +45,7 @@ export const RECIEVE_ITEMS = "RECIEVE_ITEMS";
 
 export function recieveItems(itemClass, json, userName) {
   console.log('recieved json = ', json);
-//  return function(dispatch) {
+
   let userBags = [];
   if(json.data.bags) {
     console.log('request user packs, this=', json.data);
@@ -128,11 +128,12 @@ export const fetchItemsIfNeeded = (itemClass, userName) => (dispatch, getState) 
 
 export const ADD_ITEM = "ADD_ITEM"
 
-const addItemToDb = (item, userName, className='all' ) =>  {
+const addItemToDb = (item, userName, className ) =>  {
 
     //console.log('really need to do a post to the db in actions', item, 'state is', getState())
     let sendObj = {userName: userName,
-                    item: item }
+                    item: item,
+                    className}
 
     var xhr = new XMLHttpRequest();
 
@@ -183,13 +184,15 @@ export const editItem = (newItem, currentCollection) => {
 export const editItemQuantity = (item, currentCollection, userName) => {
 
   updateQuantityDb(item, currentCollection, userName);
-
+  console.log('dont know why action dont return', item)
   return {
     type: "EDIT_ITEM",
     newItem: item,
     currentCollection: currentCollection
   }
 }
+
+
 
 
 function updateQuantityDb(item, currentCollection, userName) {
@@ -225,9 +228,13 @@ export const addItem = (item, className) => (dispatch, getState) => {
   console.log('getstate in additem, ', getState())
   console.log('adding item', item, className)
 
-  dispatch(addItemToDb(item, getState().user.name), className)
+
+
+  dispatch( addItemToDb(item, getState().user.name), className.toString)
 
 }
+
+
 
 
 export const ADD_EXISTING_ITEM = "ADD_EXISTING_ITEM";
@@ -277,5 +284,30 @@ function addExistingItemToDb(item, user) {
   xhr.onloadend = function(res) {
     console.log('sent data off and got res,', res)
   }
+
+}
+
+
+export const addItemToPack = (item, itemClass, userName) => {
+
+  console.log('need to additem to userpack, ', item)
+
+var url = 'http://localhost:8080/items/addtobag'
+  fetch(url, {
+//credentials: 'include', //pass cookies, for authentication
+method: 'post',
+headers: {
+'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+'Content-Type': 'application/json; charset=UTF-8'
+},
+body: JSON.stringify({item: item, userName:userName, itemClass: itemClass})
+});
+
+
+    return {
+      type:"ADD_ITEM_TO_PACK",
+      item,
+      itemClass: itemClass
+    }
 
 }

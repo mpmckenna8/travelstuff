@@ -17,6 +17,7 @@ import Collections from '../containers/collections'
 import NewBag from '../containers/newBag'
 import AddExistingItem from '../containers/addExistingItem';
 import AddExistingBag from '../containers/addExistingBag'
+import UserBag from '../containers/userbag';
 
 
 const App = ({params}) => {
@@ -33,6 +34,7 @@ const App = ({params}) => {
       <Route from="/collections" component={Collections}/>
       <Route path="/newbag" component={NewBag}/>
       <Route path="/item/:idnum" component={SingleItem}/>
+      <Route path="/userbag/:idnum" component={UserBag}/>
       <Route component={NoMatch}/>
     </Switch>
     <Footer />

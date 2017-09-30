@@ -67,11 +67,20 @@ let tempPid = 1000000;
 function itemsByType(state={}, action) {
   switch (action.type) {
     case INVALIDATE_ITEM_CLASS:
-    case RECIEVE_ITEMS:
-//      console.log('recieved items in itemsByType')
+    case 'ADD_ITEM_TO_PACK':
+      let tempState = state;
+      let temItem = Object.assign({}, action.item);
+      temItem['quantity'] = 1;
 
-//      console.log('action in recieve items itemsByType,', action);
+      console.log('item trying to add', temItem)
+      tempState[action.itemClass].items.push(temItem);
+      return Object.assign({}, tempState)
+
+    case RECIEVE_ITEMS:
+      console.log('recieved items in itemsByType of type', action.itemClass )
+      console.log('action in recieve items itemsByType,', action);
       let userPacks =  {};
+
 
       for( let i in action.userPacks) {
       //  console.log('pack to set up', i);
@@ -91,6 +100,8 @@ function itemsByType(state={}, action) {
       }
         userPacks[action.userPacks[i].up_id] = userpack;
       }
+
+
 
       console.log('itemclass aray thing, ', {[action.itemClass]: "blah"})
 
@@ -112,10 +123,8 @@ function itemsByType(state={}, action) {
                     quantity:action.item.quantity,
                     p_id: tempPid};
 
-      let newArr = state.itemClass;
-      console.log(newArr)
       let tempstate = state;
-      tempstate[action.itemClass].items.push(newIt);
+      tempstate[action.itemClass.toString()].items.push(newIt);
 
       tempPid = tempPid + 1;
 

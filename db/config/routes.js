@@ -12,7 +12,8 @@ let updateItem = require('../queries/updateitem')
 let getUserItems = require('../queries/useritems.js')
 let getUserBags = require('../queries/userbags')
 const editUserPackQuantity = require('../queries/editUserPackQuantity');
-const addUserBag = require('../queries/addUserBag')
+const addUserBag = require('../queries/addUserBag');
+const addItemToBag = require('../queries/addItemToBag')
 
 
 let updateUserInventory = require('../queries/updateUserInventory.js')
@@ -164,10 +165,9 @@ module.exports = function(app, passport) {
 
     console.log('need to update in db, ', data)
 
-    addUserBag(data, function(bag_id) {
-      console.log('bag_id = ', bag_id)
-      res.send('need to actually update still')
-
+      addUserBag(data, function(bag_id) {
+        console.log('bag_id = ', bag_id)
+        res.send('need to actually update still')
     })
   })
 
@@ -259,11 +259,18 @@ app.get('/userpacks', function(req, res) {
         newitem.category = data.category;
         quantity = data.quantity;
 
+        if(req.body.className === 'all') {
+
         newitem.save( (itemID) => {
           console.log('need to pass this callback an item id so I can add it to the user inventory too', typeof itemID)
           updateUserInventory(userName, itemID, quantity);
 
         });
+
+        }
+        else {
+          console.log('need to add item to specific userbag')
+        }
 
 
         res.json({data:{
@@ -290,6 +297,17 @@ app.get('/userpacks', function(req, res) {
       updateItem(updatedObj);
       res.send('stil need to actually persist update, but new item got to server');
 
+    })
+
+    app.post('/items/addtobag', function(req, res) {
+
+      let data = req.body;
+
+      addItemToBag(data);
+      console.log('need to add item to bag from still', data)
+
+
+      res.send('hooba')
     })
 
 

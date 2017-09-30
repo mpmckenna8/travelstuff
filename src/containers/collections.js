@@ -1,7 +1,6 @@
 // collections component here
 
 import React, {Component} from 'react'
-//import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -32,8 +31,11 @@ class Collections extends Component {
 const Bag = (bagObj, key) => {
 
 //    console.log('bagobj is ,', bagObj)
-//  console.log('bagobj = ', bagObj)
-  return (<div> {bagObj.bagObj.name} </div>)
+  console.log('bagobj = ', bagObj)
+  return (<div> <Link to={ '/userbag/' +  bagObj.bagObj.up_id }  >
+                  {bagObj.bagObj.name}
+                  </Link>
+          </div>)
 }
 
 
