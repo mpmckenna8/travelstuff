@@ -124,7 +124,7 @@ function itemsByType(state={}, action) {
                     p_id: tempPid};
 
       let tempstate = state;
-      tempstate[action.itemClass.toString()].items.push(newIt);
+      tempstate['all'].items.push(newIt);
 
       tempPid = tempPid + 1;
 

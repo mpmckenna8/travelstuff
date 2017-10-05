@@ -19,7 +19,7 @@ class Home extends Component {
     return (
       <div className="homeDiv" >
         <h1>Inventory</h1>
-        <select onChange={(val) => {
+        <select defaultValue={itemclass}   onChange={(val) => {
 
               console.log('need to dispach change of bag ', val.target.value)
               let newClass = 'all'
@@ -31,14 +31,14 @@ class Home extends Component {
                   }).up_id
               }
 
-
               console.log('change selectedItemClass to ', newClass)
 
               this.props.dispatch(selectItemClass(newClass))
           }}>
           {baggies.map((bag, i) => {
             console.log(i)
-            return (<option key={i} value={bag.up_id || 'all'} selected={ (itemclass === bag.name )}>{bag.name}</option>)
+            return (<option key={i} value={bag.up_id || 'all'} >
+                      {bag.name}</option>)
           })}
 
 

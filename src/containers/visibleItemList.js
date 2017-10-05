@@ -39,11 +39,11 @@ class VisibleItemList  extends Component  {
   }
 
   render() {
-//    console.log('rerendering maybe list changed')
-    let itemarray = this.props.itemsByType[this.props.selectedItemClass]
+    console.log('rerendering maybe list changed', this)
+    let itemarray = (this.props.selectedItemClass === 'all') ? this.props.itemsByType[this.props.selectedItemClass] : this.props.collections.bags.find( (d) => d.up_id === parseInt(this.props.selectedItemClass ) )
+    console.log(itemarray);
     var itemCats = {};
   //  console.log('really itemarray', itemarray);
-
     if(itemarray.items) {
       itemCats = categorizeItems(itemarray.items)
     }

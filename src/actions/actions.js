@@ -109,10 +109,8 @@ const shouldFetchItems = (state, itemClass) => {
 
 
 
-
 export const fetchItemsIfNeeded = (itemClass, userName) => (dispatch, getState) => {
   console.log('state in fetch items if needed for ,', itemClass,  getState())
-
   if(shouldFetchItems(getState(),itemClass)) {
     username = getState().user.name;
     return dispatch(fetchItems(itemClass, username))
@@ -122,18 +120,14 @@ export const fetchItemsIfNeeded = (itemClass, userName) => (dispatch, getState) 
 
 
 
-
-
-
-
 export const ADD_ITEM = "ADD_ITEM"
 
-const addItemToDb = (item, userName, className ) =>  {
+const addItemToDb = (item, userName, className = 'all') =>  {
 
     //console.log('really need to do a post to the db in actions', item, 'state is', getState())
     let sendObj = {userName: userName,
                     item: item,
-                    className}
+                    className: className }
 
     var xhr = new XMLHttpRequest();
 

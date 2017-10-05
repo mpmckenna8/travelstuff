@@ -10,16 +10,30 @@ import { Link } from 'react-router-dom'
 
 
 class AddExistingItemList extends Component {
+  itemsUserDontHave() {
+
+      let itemsList = []
+      if(this.props.itemsByType.db) {
+        itemsList = this.props.itemsByType.db.items;
+        if ( this.props.itemsByType.all ) {
+
+          let userItems = this.props.itemsByType.all.items;
+
+          itemsList = itemsList.filter( function(d) {
+          //  console.log(( userItems.findIndex( (q) => q.p_id === d.p_id ) ))
+            return !( userItems.findIndex( (q) => (q.p_id === d.p_id) ) >= 0 )
+          })
+        }
+      }
+    return itemsList
+  }
 
   render() {
 
+        console.log('hopefully items user dont have', this.itemsUserDontHave())
 
-
-        let dbItems = [] //this.props.itemsByType.db;
+        let dbItems = this.itemsUserDontHave() //this.props.itemsByType.db;
         console.log('db items to map', this.props.itemsByType.db);
-        if(this.props.itemsByType.db) {
-          dbItems = this.props.itemsByType.db.items
-        }
 
 
       return (
