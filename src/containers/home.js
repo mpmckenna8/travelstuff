@@ -21,24 +21,24 @@ class Home extends Component {
         <h1>Inventory</h1>
         <select defaultValue={itemclass}   onChange={(val) => {
 
-              console.log('need to dispach change of bag ', val.target.value)
+        //      console.log('need to dispach change of bag ', val.target.value)
               let newClass = 'all'
               if(val.target.value !== 'all') {
                   newClass = this.props.collections.bags.find((d) => {
 
-                    console.log(d, val.target.value)
+              //      console.log(d, val.target.value)
                     return d.up_id == val.target.value
                   }).up_id
               }
 
-              console.log('change selectedItemClass to ', newClass)
+          //    console.log('change selectedItemClass to ', newClass)
 
               this.props.dispatch(selectItemClass(newClass))
           }}>
           {baggies.map((bag, i) => {
-            console.log(i)
+          //  console.log(i)
             return (<option key={i} value={bag.up_id || 'all'} >
-                      {bag.name}</option>)
+                        {bag.name}</option>)
           })}
 
 

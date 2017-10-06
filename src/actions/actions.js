@@ -93,9 +93,8 @@ export function fetchItems(itemClass, userName) {
 
 
 const shouldFetchItems = (state, itemClass) => {
-
   const items = state.itemsByType[itemClass];
-  console.log(state.user)
+//  console.log(state.user)
 
   if(!items){
     return true
@@ -104,19 +103,17 @@ const shouldFetchItems = (state, itemClass) => {
     return false;
   }
   return items.didInvalidate;
-
 }
 
 
 
 export const fetchItemsIfNeeded = (itemClass, userName) => (dispatch, getState) => {
-  console.log('state in fetch items if needed for ,', itemClass,  getState())
+//  console.log('state in fetch items if needed for ,', itemClass,  getState())
   if(shouldFetchItems(getState(),itemClass)) {
     username = getState().user.name;
     return dispatch(fetchItems(itemClass, username))
   }
 }
-
 
 
 

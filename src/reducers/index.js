@@ -115,7 +115,7 @@ function itemsByType(state={}, action) {
 
       })
     case ADD_ITEM:{
-      console.log('state in ADD_ITEM itemsByType ,', state)
+  //    console.log('state in ADD_ITEM itemsByType ,', state)
   //    console.log('action in additem, ', action)
       let newIt = {name:action.item.name,
                     description:action.item.description,
@@ -132,8 +132,8 @@ function itemsByType(state={}, action) {
       return Object.assign({}, tempstate)
     }
     case EDIT_ITEM:{
-      console.log('need to editItem with action = ', action)
-        console.log('state in here, ', state)
+    //  console.log('need to editItem with action = ', action)
+    //    console.log('state in here, ', state)
         let tempstate = state;
         let edItem = tempstate[action.currentCollection].items.findIndex((d) => {
           return d.p_id === action.newItem.p_id;
@@ -199,7 +199,7 @@ function collections(state={bags:[{name:'all'}], allBags:[], locations:[], needs
       return Object.assign({}, state);
 
     case "RECIEVE_USER_BAGS":
-      console.log('recieved user bags')
+    //  console.log('recieved user bags')
       return state;
     case RECIEVE_ITEMS:
       let userpacksnamed = action.userPacks.map(function(d) {
