@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import {editItemQuantity} from '../actions/actions'
+import categorizeItems from '../helpers/categorize.js'
 
 // visible itemlist to go here interacting with reducer
 class VisibleItemList  extends Component  {
@@ -101,42 +102,3 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps)(VisibleItemList)
-
-
-// takes our array of items and returns an object with each key being a category
-// and the value being an array of items in that category
-function categorizeItems(itemarray) {
-  var itemCats = {};
-
-  for ( let o of itemarray ) {
-  //  console.log(o.category === null)
-    if(itemCats[o.category]) {
-        itemCats[o.category].push(o)
-    }
-    else {
-      if(o.category === null) {
-          if(itemCats['other']){
-            itemCats['other'].push(o)
-          }
-          else itemCats['other'] = [o];
-      }
-      else{
-        if(o.category === 'comestable') {
-          if(itemCats['comestables']){
-            itemCats['comestables'].push(o)
-          }
-          else{
-            itemCats['comestables'] = [o]
-          }
-
-        }
-        else itemCats[o.category] = [o];
-      }
-    }
-  }
-  return itemCats;
-
-}
-//    {itemarray.map(item => (
-//      <p>item.name</p>
-//    ))}

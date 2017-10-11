@@ -101,8 +101,6 @@ function itemsByType(state={}, action) {
         userPacks[action.userPacks[i].up_id] = userpack;
       }
 
-
-
       console.log('itemclass aray thing, ', {[action.itemClass]: "blah"})
 
       return Object.assign({}, state, {
@@ -213,7 +211,25 @@ function collections(state={bags:[], allBags:[], locations:[], needsUpdate:true}
 
 
       return Object.assign({}, state);
+    case "EDIT_ITEM":
+      let currentItems = [];
+      let itemIndex = -1;
+      let currentItem = {}
+      if(action.currentCollection !== 'all') {
+        console.log(action)
+      //  itemIndex = state.bags.find((d) => d.up_id === action.currentCollection)
+        currentItems = state.bags.find( (d) => {
+          console.log('thing in state of bags, ',d)
 
+          return d.up_id.toString() === action.currentCollection });
+
+        console.log('current items in bag edit, ', currentItems)
+        //.items.findIndex(action.newItem.p_id).toString();
+      //  currentItem = state.bags.find( (d) => d.up_id === action.currentCollection).items[itemIndex]
+
+      }
+      console.log('newstate is, ', state.bags)
+      return Object.assign({}, state)
     default:
       return state;
   }

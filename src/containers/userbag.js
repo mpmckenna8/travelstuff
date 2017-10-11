@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
 
+import categorizeItems from '../helpers/categorize.js'
 import {selectItemClass, editItemQuantity, addItemToPack} from '../actions/actions'
 
 class UserBag extends Component {
@@ -42,22 +43,36 @@ class UserBag extends Component {
   }
   incrementItemQuantity(item) {
 
+    console.log('increment item quant', this.props)
+    item.quantity = item.quantity + 1;
+
+    let currentCollection = this.props.selectedItemClass;
+
+    this.props.dispatch(editItemQuantity(item, this.props.selectedItemClass, this.props.user.name))
+
+
+  }
+  decrementItemQuantity(item) {
+
+        item.quantity = item.quantity - 1;
+
+        let currentCollection = this.props.selectedItemClass;
+
+        this.props.dispatch(editItemQuantity(item, this.props.selectedItemClass, this.props.user.name))
+
+
+  }
+  addItemToBag(item) {
+
     let upItem = item;
     upItem.quantity = 1;
     console.log('need to edit up ', upItem);
     this.props.dispatch(addItemToPack(upItem, this.props.selectedItemClass, this.props.user.name))
 
-  }
-  decrementItemQuantity(item) {
-
-    console.log('need to edit ', item);
-    let upItem = item
-    upItem.quantity = 1;
-    this.props.dispatch(addItemToPack(upItem, this.props.selectedItemClass, this.props.user.name))
 
   }
   render() {
-    let currentBag = {name:'none yet', description:'none found'}
+    let currentBag = {name:'none yet', description:'none found', items:[]}
     console.log('items not yet in bag, ', this.props);
 
     let bagId = 0;
@@ -71,7 +86,10 @@ class UserBag extends Component {
 
     currentBag = this.props.collections.bags.find((d) => {
       return d.up_id === parseInt(bagId)
-    }) || currentBag
+    }) || currentBag;
+
+
+
 
     console.log('current baggie', currentBag);
 
@@ -90,10 +108,15 @@ class UserBag extends Component {
     availableItems = categorizeItems(addableItems);
     let catArray = Object.keys(availableItems).sort();
 
+    let bagItems = categorizeItems(currentBag.items);
+
+    let bagCats = Object.keys(bagItems).sort();
+
     return (
       <div>
         <h3>{currentBag.description}</h3>
-        Show the bag and potential items from all of user inventory
+        <div className="potentialList">
+        Items not yet in this bag:
         {catArray.map((category, i) => {
           return (
             <div key={i} >
@@ -111,7 +134,7 @@ class UserBag extends Component {
 
                           0
                         <button onClick={(e) => {
-                            this.incrementItemQuantity(item);
+                            this.addItemToBag(item);
                           }}>+</button>
                       </div>
 
@@ -123,6 +146,46 @@ class UserBag extends Component {
             </div>
           )
         })}
+        </div>
+
+        <div>
+          Items in bag:
+        {
+          bagCats.map((category, i) => {
+            return (
+              <div key={i} >
+                <h2>
+                  {category}
+                </h2>
+                {bagItems[category].map( (item, i )  => {
+                  return (
+                    <div key={i} className="itemdiv">
+                      <div className="itemNameDiv">
+                        <Link to={"item/" + item.p_id}>{item.name}</Link>
+                      </div>
+                        <div className="itemQuantDiv">
+                          <div>
+                            <button onClick={(e) => {
+                                this.decrementItemQuantity(item);
+                              } }>-</button>
+                          {item.quantity}
+                          <button onClick={(e) => {
+                              this.incrementItemQuantity(item);
+                            }}>+</button>
+
+                        </div>
+
+                        </div>
+                    </div>
+                  )
+                })
+              }
+              </div>
+            )
+          })
+        }
+
+        </div>
       </div>)
   }
 
@@ -132,38 +195,6 @@ const mapStateToProps = state => {
   return state;
 }
 
-function categorizeItems(itemarray) {
-  var itemCats = {};
-
-  for ( let o of itemarray ) {
-  //  console.log(o.category === null)
-    if(itemCats[o.category]) {
-        itemCats[o.category].push(o)
-    }
-    else {
-      if(o.category === null) {
-          if(itemCats['other']){
-            itemCats['other'].push(o)
-          }
-          else itemCats['other'] = [o];
-      }
-      else{
-        if(o.category === 'comestable') {
-          if(itemCats['comestables']){
-            itemCats['comestables'].push(o)
-          }
-          else{
-            itemCats['comestables'] = [o]
-          }
-
-        }
-        else itemCats[o.category] = [o];
-      }
-    }
-  }
-  return itemCats;
-
-}
 
 
 export default connect(mapStateToProps)(UserBag);
