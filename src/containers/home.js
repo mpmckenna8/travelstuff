@@ -2,6 +2,8 @@
 import React, { Component } from 'react'
  //import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom';
+
 // can't get this to work but haven had probs yet
 //import { withRouter } from 'react-router-dom'
 import VisibleItemList from './visibleItemList.js'
@@ -16,9 +18,16 @@ class Home extends Component {
 
   let itemclass = this.props.selectedItemClass;
 
+  let editLink = "/newitem"
+
+  if( itemclass != 'all' ) {
+    editLink = '/userbag/' + itemclass;
+  }
+
     return (
       <div className="homeDiv" >
         <h1>Inventory</h1>
+
         <select defaultValue={itemclass}   onChange={(val) => {
 
         //      console.log('need to dispach change of bag ', val.target.value)
@@ -35,6 +44,7 @@ class Home extends Component {
 
               this.props.dispatch(selectItemClass(newClass))
           }}>
+          <option value="all" >All</option>
           {baggies.map((bag, i) => {
           //  console.log(i)
             return (<option key={i} value={bag.up_id || 'all'} >
@@ -44,6 +54,8 @@ class Home extends Component {
 
 
         </select>
+
+        <span> <Link to={editLink}>add items</Link></span>
         <VisibleItemList>
         </VisibleItemList>
       </div>

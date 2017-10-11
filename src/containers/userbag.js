@@ -57,7 +57,9 @@ class UserBag extends Component {
 
   }
   render() {
+    let currentBag = {name:'none yet', description:'none found'}
     console.log('items not yet in bag, ', this.props);
+
     let bagId = 0;
 
     if(this.props.match.params.idnum) {
@@ -67,10 +69,11 @@ class UserBag extends Component {
 
   //  console.log('this thing', bagId, this.props.collections.bags.find((d) => { return d.up_id === parseInt(bagId); }))
 
-    let currentBag = this.props.collections.bags.find((d) => {
+    currentBag = this.props.collections.bags.find((d) => {
       return d.up_id === parseInt(bagId)
-    })
+    }) || currentBag
 
+    console.log('current baggie', currentBag);
 
     let availableItems = Object.assign([], this.props.itemsByType.all.items.map((d) => {
       let item = d;
@@ -88,7 +91,9 @@ class UserBag extends Component {
     let catArray = Object.keys(availableItems).sort();
 
     return (
-      <div>Show the bag and potential items from all of user inventory
+      <div>
+        <h3>{currentBag.description}</h3>
+        Show the bag and potential items from all of user inventory
         {catArray.map((category, i) => {
           return (
             <div key={i} >

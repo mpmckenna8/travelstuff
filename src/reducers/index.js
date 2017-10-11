@@ -173,7 +173,7 @@ function user(state={name:"test", id: 1}, action) {
 }
 
 
-function collections(state={bags:[{name:'all'}], allBags:[], locations:[], needsUpdate:true}, action) {
+function collections(state={bags:[], allBags:[], locations:[], needsUpdate:true}, action) {
   switch(action.type) {
     case 'ADD_NEW_USER_BAG':
       let newUserBag = {
@@ -189,8 +189,7 @@ function collections(state={bags:[{name:'all'}], allBags:[], locations:[], needs
       return Object.assign({}, state)
 
     case RECIEVE_BAGS:
-
-      console.log('recived some bags, ', action.bags)
+    //  console.log('recived some bags, ', action.bags)
 
       let combBags = state.allBags.concat(action.bags.data);
       // maybe should check for duplicate bags
