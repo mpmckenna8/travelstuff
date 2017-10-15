@@ -39,6 +39,10 @@ userBags([1,2], function(err, d) {
 
 */
 
+userBags([1,2], function(err, d) {
+  console.log('got d')
+})
+
 
 
 module.exports = userBags;
