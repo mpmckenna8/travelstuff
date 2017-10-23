@@ -22,6 +22,12 @@ class AddItem extends Component {
 
   }
 
+  toggleCategoryTextInput(value) {
+        ( value === "other" ) ?
+            document.body.getElementsByClassName('categoryText')[0].style.display = 'block' :
+            document.body.getElementsByClassName('categoryText')[0].style.display = 'none'
+  }
+
   render(){
     let input;
     let description = {value:""};
@@ -45,6 +51,15 @@ class AddItem extends Component {
                     weight: weight.value,
                     category: document.getElementById('catSelect').value
                   }
+
+          if(newit.category === "other") {
+            let customCategory = document.body.getElementsByClassName('categoryText')[0].value;
+            if( customCategory !== "") {
+              newit.category = customCategory;
+            }
+          }
+
+
 
           console.log('input is', input.value)
 
@@ -100,13 +115,21 @@ class AddItem extends Component {
 
 
               <br />
-                <select name="select" id="catSelect">
+                <select name="select" defaultValue="other" id="catSelect" onChange={(e) => {
+                  //  console.log('e is', e.target.value);
+                    this.toggleCategoryTextInput(e.target.value)
+
+                  }}>
                   <option value="clothing">Clothing</option>
                   <option value="comestable" >Comestables</option>
                   <option value="tool">Tools</option>
                   <option value="potion">Potion</option>
-                  <option value="other" defaultValue>other</option>
+                  <option value="other">other</option>
                 </select>
+
+                <input type="text" className="categoryText" placeholder="add custom category">
+
+                </input>
 
                 <br />
 

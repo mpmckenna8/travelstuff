@@ -6,6 +6,8 @@ import {Link} from 'react-router-dom'
 import categorizeItems from '../helpers/categorize.js'
 import {selectItemClass, editItemQuantity, addItemToPack} from '../actions/actions'
 
+
+
 class UserBag extends Component {
   itemsNotInBag() {
 
@@ -71,6 +73,29 @@ class UserBag extends Component {
 
 
   }
+  changeFilter(filterValue) {
+    console.log('change filter,', filterValue);
+    // need to hide or show: potentialList and included
+
+  //  document.body.
+    if(filterValue === 'all') {
+      console.log('set display of both to true');
+      document.body.getElementsByClassName('included')[0].style.display = 'flex'
+      document.body.getElementsByClassName('potentialList')[0].style.display = 'flex';
+    }
+    else if(filterValue === 'possible') {
+
+      document.body.getElementsByClassName('included')[0].style.display = 'none'
+      document.body.getElementsByClassName('potentialList')[0].style.display = 'flex';
+    }
+    else if(filterValue === 'inbag') {
+      document.body.getElementsByClassName('included')[0].style.display = 'flex';
+      document.body.getElementsByClassName('potentialList')[0].style.display = 'none';
+
+
+    }
+
+  }
   render() {
     let currentBag = {name:'none yet', description:'none found', items:[]}
     console.log('items not yet in bag, ', this.props);
@@ -87,8 +112,6 @@ class UserBag extends Component {
     currentBag = this.props.collections.bags.find((d) => {
       return d.up_id === parseInt(bagId)
     }) || currentBag;
-
-
 
 
     console.log('current baggie', currentBag);
@@ -115,6 +138,13 @@ class UserBag extends Component {
     return (
       <div>
         <h3>{currentBag.description}</h3>
+        <select defaultValue="all" className="filterSelect" onChange={(e) => {
+            this.changeFilter(e.target.value);
+          }} >
+          <option value="all">All</option>
+          <option value="possible">Items not in bag</option>
+          <option value="inbag">Items included in bag</option>
+        </select>
         <div className="potentialList">
         Items not yet in this bag:
         {catArray.map((category, i) => {
@@ -148,7 +178,7 @@ class UserBag extends Component {
         })}
         </div>
 
-        <div>
+        <div className="included">
           Items in bag:
         {
           bagCats.map((category, i) => {
