@@ -4,10 +4,12 @@ import { combineReducers } from 'redux'
 
 
 import {SELECT_ITEM_CLASS, INVALIDATE_ITEM_CLASS, REQUEST_ITEMS, RECIEVE_ITEMS,
-  ADD_ITEM, EDIT_ITEM, ADD_EXISTING_ITEM} from '../actions/actions'
+  ADD_ITEM, EDIT_ITEM} from '../actions/actions'
 
 import {SET_USER} from '../actions/useracts.js'
 import { ADD_ITEM_CLASS, RECIEVE_BAGS} from '../actions/collectionactions'
+
+import user from './user_reducer.js'
 
 function selectedItemClass(state='all', action) {
   switch (action.type) {
@@ -157,18 +159,7 @@ function itemsByType(state={}, action) {
   }
 }
 
-function user(state={name:"test", id: 1}, action) {
 
-  switch(action.type) {
-    case SET_USER:{
-      console.log('setting new user maybe', state, action)
-      state.name = action.name;
-      return Object.assign({}, state)
-    }
-    default:
-      return state;
-  }
-}
 
 
 function collections(state={bags:[], allBags:[], locations:[], needsUpdate:true}, action) {
@@ -188,8 +179,11 @@ function collections(state={bags:[], allBags:[], locations:[], needsUpdate:true}
 
     case RECIEVE_BAGS:
     //  console.log('recived some bags, ', action.bags)
+    let combBags = []
 
-      let combBags = state.allBags.concat(action.bags.data);
+      if (action.bags){
+        combBags = state.allBags.concat(action.bags.data);
+      }
       // maybe should check for duplicate bags
       state.allBags = combBags;
     //  console.log('newbags', combBags)
@@ -213,13 +207,12 @@ function collections(state={bags:[], allBags:[], locations:[], needsUpdate:true}
       return Object.assign({}, state);
     case "EDIT_ITEM":
       let currentItems = [];
-      let itemIndex = -1;
-      let currentItem = {}
+
       if(action.currentCollection !== 'all') {
-        console.log(action)
+    //    console.log(action)
       //  itemIndex = state.bags.find((d) => d.up_id === action.currentCollection)
         currentItems = state.bags.find( (d) => {
-          console.log('thing in state of bags, ',d)
+      //    console.log('thing in state of bags, ',d)
 
           return d.up_id.toString() === action.currentCollection });
 
@@ -234,6 +227,10 @@ function collections(state={bags:[], allBags:[], locations:[], needsUpdate:true}
       return state;
   }
 }
+
+
+
+
 
 const rootReducer = combineReducers({
   itemsByType,
