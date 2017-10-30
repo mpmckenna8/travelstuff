@@ -282,9 +282,10 @@ app.get('/userpacks', function(req, res) {
       var newCollection = new Collection(req.body);
 
       console.log('trying to save ,', req.body);
-      newCollection.save(function(d){
+        newCollection.save(function(d){
 
-      })
+            console.log('saved a collection, ', d)
+        })
 
       res.json({data:req.body})
 

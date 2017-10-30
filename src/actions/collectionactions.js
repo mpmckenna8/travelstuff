@@ -114,7 +114,7 @@ function addUserBagToDb(newBag, userName) {
   console.log('tried to add to db, , ', newBag, userName)
 
   xhr.onloadend = function(res) {
-    console.log('sent newbag')
+    console.log('sent newbag and got response,', res)
   }
 
 }

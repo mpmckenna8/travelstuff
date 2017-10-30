@@ -6,19 +6,10 @@ import { combineReducers } from 'redux'
 import {SELECT_ITEM_CLASS, INVALIDATE_ITEM_CLASS, REQUEST_ITEMS, RECIEVE_ITEMS,
   ADD_ITEM, EDIT_ITEM} from '../actions/actions'
 
-import {SET_USER} from '../actions/useracts.js'
 import { ADD_ITEM_CLASS, RECIEVE_BAGS} from '../actions/collectionactions'
 
 import user from './user_reducer.js'
-
-function selectedItemClass(state='all', action) {
-  switch (action.type) {
-    case SELECT_ITEM_CLASS:
-      return action.itemClass
-    default:
-      return state;
-  }
-}
+import selectedItemClass from './selected_item_class_reducer.js'
 
 
 function items(
@@ -173,14 +164,14 @@ function collections(state={bags:[], allBags:[], locations:[], needsUpdate:true}
       }
        state.bags.push(newUserBag)
        return Object.assign({}, state)
+
     case ADD_ITEM_CLASS:
       state.bags.push(action['itemClass'])
       return Object.assign({}, state)
 
     case RECIEVE_BAGS:
-    //  console.log('recived some bags, ', action.bags)
-    let combBags = []
-
+      console.log('recived some bags, ', action.bags)
+      let combBags = []
       if (action.bags){
         combBags = state.allBags.concat(action.bags.data);
       }
@@ -190,21 +181,18 @@ function collections(state={bags:[], allBags:[], locations:[], needsUpdate:true}
       return Object.assign({}, state);
 
     case "RECIEVE_USER_BAGS":
-    //  console.log('recieved user bags')
+      console.log('recieved user bags dont think this really happens')
       return state;
     case RECIEVE_ITEMS:
       let userpacksnamed = action.userPacks.map(function(d) {
          d.name = d.description;
          return d;
       })
-
       console.log(userpacksnamed, 'state in collections after new items')
       state.bags = state.bags.concat(userpacksnamed)
 
-      //console.log()
-
-
       return Object.assign({}, state);
+
     case "EDIT_ITEM":
       let currentItems = [];
 

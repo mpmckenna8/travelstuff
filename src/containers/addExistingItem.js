@@ -1,7 +1,6 @@
 // a little page to add an existing item in db to inventory given the item
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom';
 
 import {addExistingItem} from "../actions/actions"
 
@@ -56,12 +55,12 @@ const mapStateToProps = state => {
     dbItems:[],
     user: state.user
   }
-
   if(state.itemsByType.db){
     dbItems.dbItems = state.itemsByType.db.items;
   }
 
   return dbItems;
+  
 }
 
 export default connect(mapStateToProps)(AddExistingItem)

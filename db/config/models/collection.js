@@ -23,6 +23,7 @@ function Collection(obj) {
       }
       client.end();
       console.log('result of insertion = ', res)
+      cb(res.rows)
     } )
 
   }

@@ -7,7 +7,7 @@ function user(state={name:"test", id: 1}, action) {
 
   switch(action.type) {
     case SET_USER:{
-      console.log('setting new user maybe', state, action)
+  //    console.log('setting new user maybe', state, action)
       state.name = action.name;
       return Object.assign({}, state)
     }

@@ -9,30 +9,44 @@ import {selectItemClass, editItemQuantity, addItemToPack} from '../actions/actio
 
 
 class UserBag extends Component {
+  // this function returns all items not in the current bag as in
+  // selectedItemClass
   itemsNotInBag() {
 
       let itemsList = []
+      // if we've gotten all the items initialized go!
       if(this.props.itemsByType.all) {
         itemsList = this.props.itemsByType.all.items;
         console.log('itemlister, ', itemsList)
+
+
         console.log('bagitems , ', this.props.collections.bags.find((d) => {
-          return (d.up_id == this.props.selectedItemClass)
+          return (d.up_id.toString() === this.props.selectedItemClass)
         }) )
 
         if ( this.props.collections.bags.find((d) => {
-          return (d.up_id == this.props.selectedItemClass)
-        }) ) {
+                return (d.up_id.toString() === this.props.selectedItemClass)
+            }) )
+            {
 
-          let itemBag = this.props.collections.bags.find((d) => {
-            return (d.up_id == this.props.selectedItemClass)
-          }).items;
+              let itemBag = this.props.collections.bags.find((d) => {
+                return (d.up_id.toString() ===  this.props.selectedItemClass)
+              });
 
-          console.log('itemlister later, ', itemsList)
+              if(itemBag) {
+                itemBag = itemBag.items
+              };
+//          console.log('itemlister later, ', itemsList)
 
           itemsList = itemsList.filter( function(d) {
-          console.log('index of item, ', ( itemBag.findIndex( (q) => q.p_id === d.p_id ) ))
-            return !( itemBag.findIndex( (q) => q.p_id === d.p_id ) >= 0 )
-          })
+
+/*
+          console.log('index of item, ',
+                        ( itemBag.findIndex( (q) => q.p_id === d.p_id ) )
+                      )
+*/
+                            return !( itemBag.findIndex( (q) => q.p_id === d.p_id ) >= 0 )
+                      })
         }
       }
 
@@ -161,7 +175,6 @@ class UserBag extends Component {
                     </div>
                       <div className="itemQuantDiv">
                         <div>
-
                           0
                         <button onClick={(e) => {
                             this.addItemToBag(item);
