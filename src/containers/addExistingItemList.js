@@ -29,9 +29,7 @@ class AddExistingItemList extends Component {
   }
 
   render() {
-
         console.log('hopefully items user dont have', this.itemsUserDontHave())
-
         let dbItems = this.itemsUserDontHave() //this.props.itemsByType.db;
         console.log('db items to map', this.props.itemsByType.db);
 

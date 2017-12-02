@@ -59,9 +59,7 @@ class AddItem extends Component {
             }
           }
 
-
-
-          console.log('input is', input.value)
+//          console.log('input is', input.value)
 
           this.addNewItem(newit)
       //    dispatch(addItem(input.value, this.props.selectedItemClass))

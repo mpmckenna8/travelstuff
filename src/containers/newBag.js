@@ -14,13 +14,14 @@ class AddBag extends Component {
     e.preventDefault()
     console.log('this', this)
     let dispatch = this.props.dispatch;
-
       let form = document.getElementById('bagForm');
       let formData = new FormData(form)
-      console.log('formdata = ', formData.keys())
+    //  console.log('formdata = ', formData.keys())
+      /*
       for(let i of formData.keys()) {
         console.log('formkey: ', i)
       }
+      */
   //    need to build up the bag object to be sent
       let formobj = {name: formData.get('name'),
                       weight_capacity: formData.get('weightCap'),
@@ -42,44 +43,61 @@ class AddBag extends Component {
 
     return (
       <div>
-        need a form to add bags
+
+        <h3>Add a new bag</h3>
+
         <form onSubmit={this.formsub.bind(this)}
               id="bagForm"
               name="bagform">
-        <label>Name:</label>
-          <input
-            className="itemInName"
-            name="name"
-            />
-          <br/>
+        <div className="bagformdiv">
+          <div className="baglabeldiv">
 
-            <label>description:</label>
+          <label className="bagformlabel">Name:</label>
+          </div>
+          <div className="baginputdiv">
+
+            <input
+              className="itemInName baginput"
+              name="name"
+              />
+          </div>
+        </div>
+          <br/>
+            <div className="bagformdiv">
+              <div className="baglabeldiv">
+
+                <label className="bagformlabel">description:</label>
+              </div>
+            <div className="baginputdiv">
               <input
-                className="itemInputDescription"
+                className="itemInputDescription baginput"
                 name="description"
               />
+            </div>
+
+            </div>
               <br />
+            <div className="bagformdiv">
+              <div className="baglabeldiv">
+                <label className="bagformlabel">Weight Capacity:</label>
+              </div>
+              <div className="baginputdiv">
 
-            <label>Weight Capacity:</label>
-            <input
-              className="weight_cap"
-              name = 'weightCap'
-              type="number"
-              step=".5"
-              defaultValue="10"
-            />
-
-
+                <input
+                  className="weight_cap baginput"
+                  name = 'weightCap'
+                  type="number"
+                  step=".5"
+                  defaultValue="10"
+                  />
+              </div>
+          </div>
               <br />
-
             <button type="submit">Add new bag</button>
 
         </form>
 
         <AddExistingBagList></AddExistingBagList>
-
-
-
 
       </div>
     )

@@ -3,9 +3,9 @@ import React from 'react'
 import {
   BrowserRouter as Router,
   Route,
-  Link,
+//  Link,
   Switch,
-  Redirect
+//  Redirect
 } from 'react-router-dom'
 
 import Home from '../containers/home'
@@ -43,9 +43,7 @@ const App = ({params}) => {
   )
 }
 
-
-
-const WillMatch = () => <h3>Matched!</h3>
+//const WillMatch = () => <h3>Matched!</h3>
 
 const NoMatch = ({ location }) => (
   <div>

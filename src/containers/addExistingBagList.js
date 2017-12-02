@@ -6,13 +6,13 @@ import { Link } from 'react-router-dom';
 class AddExistingBagList extends Component {
   render() {
 
-    console.log('things to look at here, ', this.props)
+//    console.log('things to look at here, ', this.props)
     let existingBags = this.props.collections.allBags || [];
 
     return (
       <div>Make list of bags
         {existingBags.map( (bag, i) => {
-          console.log('existing bag,', bag)
+      //    console.log('existing bag,', bag)
           return (<div key={i}> <Link to={"/addexistingBag/"+ bag.coll_id} >{bag.name} </Link></div>)
         })}
 

@@ -20,7 +20,7 @@ class Home extends Component {
 
   let editLink = "/newitem"
 
-  if( itemclass != 'all' ) {
+  if( itemclass !== 'all' ) {
     editLink = '/userbag/' + itemclass;
   }
 

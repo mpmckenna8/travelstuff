@@ -106,3 +106,20 @@ a:visited {
 .bagDetails {
   margin-top: 1.75%;
 }
+
+.baglabeldiv {
+  flex: 1;
+}
+
+.baginputdiv {
+  flex: 4;
+}
+
+.bagformdiv {
+  display: flex;
+  flex-direction:row;
+}
+
+.baginput {
+  width: 100%
+}

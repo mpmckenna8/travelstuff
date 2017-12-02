@@ -3,7 +3,7 @@
 import { combineReducers } from 'redux'
 
 
-import {SELECT_ITEM_CLASS, INVALIDATE_ITEM_CLASS, REQUEST_ITEMS, RECIEVE_ITEMS,
+import { INVALIDATE_ITEM_CLASS, REQUEST_ITEMS, RECIEVE_ITEMS,
   ADD_ITEM, EDIT_ITEM} from '../actions/actions'
 
 import { ADD_ITEM_CLASS, RECIEVE_BAGS} from '../actions/collectionactions'
@@ -29,7 +29,6 @@ function items(
         didInvalidate:false
       })
     case RECIEVE_ITEMS:
-
   //  console.log('recieved items in reducer', action.items)
       return Object.assign({}, state, {
         isFetching:false,
@@ -119,7 +118,6 @@ function itemsByType(state={}, action) {
 
       tempPid = tempPid + 1;
 
-
       return Object.assign({}, tempstate)
     }
     case EDIT_ITEM:{
@@ -129,20 +127,17 @@ function itemsByType(state={}, action) {
         let edItem = tempstate[action.currentCollection].items.findIndex((d) => {
           return d.p_id === action.newItem.p_id;
         })
-
       //  console.log('still need to update in the db')
       //  edItem.description = action.newItem.description;
-        tempstate[action.currentCollection].items[edItem] = action.newItem
-
+        tempstate[action.currentCollection].items[edItem] = action.newItem;
       //  console.log(edItem);
       return Object.assign({}, tempstate);
     }
     case "ADD_EXISTING_ITEM": {
       console.log('need to update this state for this existing item, dont want 2 but do want to add to specify collection if selected', state)
-
       state.all.items.push(action.newItem);
 
-      return state;
+      return Object.assign({},state);
     }
     default:
       return state;
@@ -166,6 +161,7 @@ function collections(state={bags:[], allBags:[], locations:[], needsUpdate:true}
        return Object.assign({}, state)
 
     case ADD_ITEM_CLASS:
+      console.log('itemclass adding', action['itemClass'])
       state.bags.push(action['itemClass'])
       return Object.assign({}, state)
 
