@@ -42,7 +42,7 @@ store.dispatch(fetchItemsIfNeeded('all', 'test'))
   )
 
 
-store.dispatch(fetchBagsIfNeeded())
+//store.dispatch(fetchBagsIfNeeded())
 
 
 render(

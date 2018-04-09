@@ -44,6 +44,7 @@ For our little sample user to add items.
 
 UPDATE users SET inventory='{1,2,3,4,5}' WHERE u_id=1;
 
+INSERT into userpack VALUES (0, 'DAYPACK', 1, '{1,1}');
 
 
 The authentication idea is basically using passport with node.  Should allow user to log in with some third party ids.

@@ -33,7 +33,6 @@ module.exports = function(app, passport) {
 
 
 
-
     // =====================================
     // LOGIN ===============================
     // =====================================
@@ -215,9 +214,10 @@ module.exports = function(app, passport) {
 
           resData.data = dat;
 
+
           getUserBags(dat.packs, (err, bagdata) => {
 
-          //  console.log('userbags', bagdata);
+            console.log('trying to get userbags', bagdata);
 
             resData.data.bags = bagdata;
             console.log('stuff from the user items get', JSON.stringify(resData))

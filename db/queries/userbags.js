@@ -4,7 +4,6 @@ let pg = require('pg');
 
 var conString = "postgres://matthewmckenna@localhost/auth";
 
-
  // select * from items where p_id in (1,2,4);
 
 // id's should be a array of integers and an optional callback
@@ -19,10 +18,11 @@ function userBags(ids, cb) {
 
   client.query(queryString, [bagsString],function(err, res) {
     if(err) {
+      console.log('err querying for userbags')
       throw err
 
     }
-    //console.log('query result from userbags = ', res)
+    console.log('query result from userbags = ', res.rows)
     if(cb) {
       cb(err, res.rows)
     }

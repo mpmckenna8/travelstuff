@@ -13,7 +13,7 @@ function addItemToBag(data) {
   var itemInfo = [ parseInt(data.item.p_id), parseInt(data.item.quantity) ]
   let packId = parseInt(data.itemClass);
 
-  console.log(itemInfo, packId)
+  console.log('in additemtobag, ', itemInfo, packId)
   let updateString = "UPDATE userpack SET items=items || $1 WHERE up_id=$2 returning items";
 
   client.query(updateString, [ [itemInfo], packId], function(err, res) {

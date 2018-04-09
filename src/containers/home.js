@@ -13,7 +13,7 @@ import {selectItemClass} from '../actions/actions'
 class Home extends Component {
 
   render() {
-    console.log('this in home = ', this)
+  //  console.log('this in home = ', this)
   let baggies = this.props.collections.bags || [];
 
   let itemclass = this.props.selectedItemClass;
@@ -24,12 +24,11 @@ class Home extends Component {
     editLink = '/userbag/' + itemclass;
   }
 
-    return (
+  return (
       <div className="homeDiv" >
         <h1>Inventory</h1>
 
         <select defaultValue={itemclass}   onChange={(val) => {
-
         //      console.log('need to dispach change of bag ', val.target.value)
               let newClass = 'all'
               if(val.target.value !== 'all') {
@@ -50,8 +49,6 @@ class Home extends Component {
             return (<option key={i} value={bag.up_id || 'all'} >
                         {bag.name}</option>)
           })}
-
-
 
         </select>
 

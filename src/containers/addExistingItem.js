@@ -14,14 +14,12 @@ class AddExistingItem extends Component {
     // need to to a whole add exiting item action
     this.props.dispatch(addExistingItem(item, 'all', this.props.user.name));
   //  document.querySelector('#homelink').click();
-
     console.log(this)
     this.props.history.push('../');
   }
 
   render() {
     console.log('props in addexiting item', this.props);
-
     let currentItemId = this.props.match.params.idnum;
 
     let currentItem = this.props.dbItems.find(function(d) {
@@ -48,9 +46,7 @@ class AddExistingItem extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('setting up state in add existing item');
 //  console.log('this in map,', this, state)
-
   let dbItems = {
     dbItems:[],
     user: state.user
@@ -58,19 +54,14 @@ const mapStateToProps = state => {
   if(state.itemsByType.db){
     dbItems.dbItems = state.itemsByType.db.items;
   }
-
   return dbItems;
-  
 }
 
 export default connect(mapStateToProps)(AddExistingItem)
 
 
-
 function ItemView({currentItem}) {
-
   console.log('currentItem in the view ', currentItem);
-
 
   return (
     <div>
