@@ -8,9 +8,10 @@ class AddExistingBagList extends Component {
 
 //    console.log('things to look at here, ', this.props)
     let existingBags = this.props.collections.allBags || [];
+    console.log('existing baglist this.props = ', this.props)
 
     return (
-      <div>Make list of bags
+      <div>Existing bags:
         {existingBags.map( (bag, i) => {
       //    console.log('existing bag,', bag)
           return (<div key={i}> <Link to={"/addexistingBag/"+ bag.coll_id} >{bag.name} </Link></div>)

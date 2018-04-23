@@ -69,25 +69,21 @@ function itemsByType(state={}, action) {
       return Object.assign({}, tempState)
 
     case RECIEVE_ITEMS:
-      console.log('recieved items in itemsByType of type', action.itemClass )
-      console.log('action in recieve items itemsByType,', action);
+//      console.log('action in recieve items itemsByType,', action);
       let userPacks =  {};
-
-
       for( let i in action.userPacks) {
       //  console.log('pack to set up', i);
         let userpack = action.userPacks[i];
-        console.log('userpacks')
+  //      console.log('userpacks')
         for( let q in userpack.items) {
           let o = userpack.items[q]
-
           let bagitem = Object.assign({}, action.items.find(function(d) {
-            console.log('setting up bag', o[0], d.p_id)
+//            console.log('setting up bag', o[0], d.p_id)
             return d.p_id === o[0];
           }) )
 
         bagitem.quantity = o[1];
-        console.log('itemin pack', bagitem);
+//      console.log('itemin pack', bagitem);
         userpack.items[q] = bagitem
 
       }
@@ -116,6 +112,27 @@ function itemsByType(state={}, action) {
       tempstate['all'].items.push(newIt);
 
       tempPid = tempPid + 1;
+
+      return Object.assign({}, tempstate)
+    }
+    case "ADD_ITEM_RESPONSE":{
+
+      console.log('item id', action);
+      let itemname = action.item.name;
+
+    let tempstate = state;
+    let allitems = tempstate['all'].items;
+
+    let itemIndex = allitems.findIndex((d) => {
+        return d.name = itemname
+  //    return d.name = action.newItem.name
+    })
+
+
+    console.log('item index = ', itemIndex)
+      tempstate['all'].items[itemIndex].p_id = action.itemID.data.item_id;
+
+      console.log('all items after update', tempstate['all'].items)
 
       return Object.assign({}, tempstate)
     }
@@ -156,12 +173,11 @@ function collections(state={bags:[], allBags:[], locations:[], needsUpdate:true}
       }
        state.bags.push(newUserBag)
        return Object.assign({}, state)
-
     case ADD_ITEM_CLASS:
       console.log('itemclass adding', action['itemClass'])
       state.bags.push(action['itemClass']);
+      state.allBags.push(action['itemClass']);
       return Object.assign({}, state)
-
     case RECIEVE_BAGS:
       console.log('recived some bags, ', action.bags)
       let combBags = []
@@ -190,6 +206,7 @@ function collections(state={bags:[], allBags:[], locations:[], needsUpdate:true}
 
     case "EDIT_ITEM":
       let currentItems = [];
+      console.log('dont know if editing items really works')
 
       if(action.currentCollection !== 'all') {
     //    console.log(action)
@@ -206,6 +223,17 @@ function collections(state={bags:[], allBags:[], locations:[], needsUpdate:true}
       }
       console.log('newstate is, ', state.bags)
       return Object.assign({}, state)
+    case "ADD_BAG_TO_DB":
+      console.log('need to add the bag to the list of stuff too', action);
+      return state;
+    case "ADDED_BAG_TO_DB":
+      console.log('need to update the bag id', action)
+
+      let mobags = state.allBags.concat([action.newbag.data]);
+      state.allBags = mobags;
+      console.log('current bag', action.newbag.data)
+      return Object.assign({}, state)
+      //curbag.coll_id = action.data.coll_id
     default:
       return state;
   }

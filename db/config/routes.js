@@ -27,7 +27,7 @@ module.exports = function(app, passport) {
     // =====================================
     app.get('/', function(req, res) {
       //  res.render('index.ejs'); // load the index.ejs file
-      console.log('blah')
+      console.log('blah default thing')
       res.send('heyo')
     });
 
@@ -265,6 +265,11 @@ app.get('/userpacks', function(req, res) {
           console.log('need to pass this callback an item id so I can add it to the user inventory too', typeof itemID)
           updateUserInventory(userName, itemID, quantity);
 
+          res.json({data:{
+            newItem: newitem,
+            item_id: itemID,
+            items:'tring to add'}})
+
         });
 
         }
@@ -273,8 +278,7 @@ app.get('/userpacks', function(req, res) {
         }
 
 
-        res.json({data:{
-          items:'tring to add'}})
+
 
       })
 
@@ -282,12 +286,13 @@ app.get('/userpacks', function(req, res) {
       var newCollection = new Collection(req.body);
 
       console.log('trying to save ,', req.body);
-        newCollection.save(function(d){
+      newCollection.save(function(d){
 
             console.log('saved a collection, ', d)
-        })
+          res.json({data:d[0]})
 
-      res.json({data:req.body})
+      })
+
 
     })
 
@@ -315,9 +320,13 @@ app.get('/userpacks', function(req, res) {
     app.get('/collections/all', function(req, res) {
 
       // need to query the db for all collections
-      getAllBags((err,bags) => res.send({data:bags}))
+      getAllBags((err,bags) => {
+        console.log('all bags: ', bags)
+        res.send({
+          data:bags
+          }
+        )})
 
-    //  res.send({bags:[chromeoly]})
     })
 
 

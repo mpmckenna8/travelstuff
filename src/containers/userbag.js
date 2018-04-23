@@ -7,12 +7,10 @@ import categorizeItems from '../helpers/categorize.js'
 import {selectItemClass, editItemQuantity, addItemToPack} from '../actions/actions'
 
 
-
 class UserBag extends Component {
   // this function returns all items not in the current bag as in
   // selectedItemClass
   itemsNotInBag() {
-
       let itemsList = []
       // if we've gotten all the items initialized go!
       if(this.props.itemsByType.all) {
@@ -36,17 +34,10 @@ class UserBag extends Component {
               if(itemBag) {
                 itemBag = itemBag.items
               };
-//          console.log('itemlister later, ', itemsList)
-
+//        console.log('itemlister later, ', itemsList)
           itemsList = itemsList.filter( function(d) {
-
-/*
-          console.log('index of item, ',
-                        ( itemBag.findIndex( (q) => q.p_id === d.p_id ) )
-                      )
-*/
                             return !( itemBag.findIndex( (q) => q.p_id === d.p_id ) >= 0 )
-                      })
+                  })
         }
       }
 
@@ -58,14 +49,10 @@ class UserBag extends Component {
     return finalList;
   }
   incrementItemQuantity(item) {
-
     console.log('increment item quant', this.props)
     item.quantity = item.quantity + 1;
-
     let currentCollection = this.props.selectedItemClass;
-
     this.props.dispatch(editItemQuantity(item, this.props.selectedItemClass, this.props.user.name))
-
 
   }
   decrementItemQuantity(item) {
@@ -79,12 +66,10 @@ class UserBag extends Component {
 
   }
   addItemToBag(item) {
-
     let upItem = item;
     upItem.quantity = 1;
     console.log('need to edit up ', upItem);
     this.props.dispatch(addItemToPack(upItem, this.props.selectedItemClass, this.props.user.name))
-
 
   }
   changeFilter(filterValue) {
@@ -98,7 +83,6 @@ class UserBag extends Component {
       document.body.getElementsByClassName('potentialList')[0].style.display = 'flex';
     }
     else if(filterValue === 'possible') {
-
       document.body.getElementsByClassName('included')[0].style.display = 'none'
       document.body.getElementsByClassName('potentialList')[0].style.display = 'flex';
     }
@@ -121,19 +105,15 @@ class UserBag extends Component {
       this.props.dispatch(selectItemClass(bagId))
     }
 
-  //  console.log('this thing', bagId, this.props.collections.bags.find((d) => { return d.up_id === parseInt(bagId); }))
-
     currentBag = this.props.collections.bags.find((d) => {
       return d.up_id === parseInt(bagId)
     }) || currentBag;
-
 
     console.log('current baggie', currentBag);
 
     let availableItems = Object.assign([], this.props.itemsByType.all.items.map((d) => {
       let item = d;
     //  console.log( 'item = ', item)
-    //  let onbagID = this.props.match
       let subquant = {}
       return item;
     })
@@ -142,6 +122,7 @@ class UserBag extends Component {
     let addableItems = this.itemsNotInBag();
 
     console.log('available items for this bag', addableItems)
+
     availableItems = categorizeItems(addableItems);
     let catArray = Object.keys(availableItems).sort();
 
@@ -151,7 +132,7 @@ class UserBag extends Component {
 
     return (
       <div>
-        <h3>{currentBag.description}</h3>
+        <h3>{currentBag.name}</h3>
         <select defaultValue="all" className="filterSelect" onChange={(e) => {
             this.changeFilter(e.target.value);
           }} >
@@ -227,7 +208,6 @@ class UserBag extends Component {
             )
           })
         }
-
         </div>
       </div>)
   }

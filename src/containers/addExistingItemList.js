@@ -36,13 +36,12 @@ class AddExistingItemList extends Component {
 
       return (
         <div>
+          <h3>List of items not in inventory:</h3>
           { dbItems.map( (item,i) => {
               return (<div key={item.p_id}>
                 <Link to={"addexistingitem/" + item.p_id}>{item.name}</Link></div>)
             })
           }
-        blah
-          list of db items with
         </div>
     )
   }

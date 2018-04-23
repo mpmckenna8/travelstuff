@@ -24,7 +24,6 @@ div {
 }
 
 
-
 body {
   color: pink;
   background-color:black;
@@ -36,6 +35,11 @@ body {
 
 .included {
   flex-direction: column;
+}
+
+.wideInput {
+  flex: 1;
+  margin: 10px;
 }
 
 
@@ -122,4 +126,24 @@ a:visited {
 
 .baginput {
   width: 100%
+}
+
+.addItemDiv {
+  display: flex;
+}
+
+.addInput {
+  flex: 7
+}
+
+.addLabel {
+  flex:1;
+}
+
+.categoryText {
+  flex: 5;
+}
+
+.addSelect {
+  flex: 5;
 }

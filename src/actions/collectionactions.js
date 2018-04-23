@@ -39,6 +39,7 @@ console.log("need to fetch the bags",{'name': 'getall the bags'} )
 export const REQUEST_BAGS = "REQUEST_BAGS";
 
 export function requestBags(){
+  console.log('requesting bags')
   return {
     type:REQUEST_BAGS
   }
@@ -59,8 +60,33 @@ export const ADD_ITEM_CLASS = "ADD_ITEM_CLASS";
 
 // note in the db and display this will be collections or bags or something else
 export function addItemClass(newItemClass) {
-  console.log('also need to add bag to db')
-  addBagToDb(newItemClass);
+  console.log('also need to add bag to db', newItemClass)
+
+
+  return function (dispatch) {
+    dispatch(addBagToDb(newItemClass));
+
+    return fetch('http://localhost:8080/collections/add', {
+      body: JSON.stringify(newItemClass),
+      method: "POST",
+      headers: {
+        'content-type': 'application/json',
+        'accept': '*/*'
+
+      }
+
+    }).then(
+      response => response.json(),
+      error => console.log('there was an error in the add itemclass call thing to db, ', error)
+    ).then(
+      json => {
+        return dispatch(badAddedToDB(json))
+      }
+    )
+
+
+  }
+
   return {
     type: ADD_ITEM_CLASS,
     itemClass: newItemClass
@@ -68,6 +94,15 @@ export function addItemClass(newItemClass) {
 
 }
 
+function badAddedToDB(newbag) {
+
+  console.log('added new bag to db', newbag)
+  return {
+    type:"ADDED_BAG_TO_DB",
+    mesg: "maybe worked",
+    newbag: newbag
+  }
+}
 
 export function fetchPacks(userPacks) {
   console.log('fetching user packs')
@@ -121,14 +156,13 @@ function addUserBagToDb(newBag, userName) {
 
 function addBagToDb(newbag) {
 
+/* weird comments because of the headers
   var xhr = new XMLHttpRequest();
   xhr.open('POST', 'http://localhost:8080/collections/add', true);
 
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  xhr.setRequestHeader('Accept', '*/*');
 
 //  newbag.description = 'a bag';
-
   //newbag.weight_capacity = 20.0;
   // send the collected data as JSON
   xhr.send(JSON.stringify(newbag));
@@ -138,11 +172,17 @@ function addBagToDb(newbag) {
     console.log('sent it of to db and got a res')
     console.log(res)
 
+
   };
+
+*/
+console.log('new bag added to db', newbag)
+
 
   return {
     type:"ADD_BAG_TO_DB",
-    mesg: "maybe worked"
+    mesg: "maybe worked",
+    newbag: newbag
   }
 
 }

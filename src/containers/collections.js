@@ -18,7 +18,7 @@ class Collections extends Component {
 
         <h3>Bags:</h3>
           {bagArray.map((item,i) => {
-            console.log('dispatch = ', this.props.dispatch)
+        //    console.log('dispatch = ', this.props.dispatch)
         //    this.props.dispatch(selectItemClass(item.up_id))
           return(
             <Bag bagObj={item} dispatch={this.props.dispatch} key={i} ></Bag>

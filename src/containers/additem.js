@@ -68,29 +68,33 @@ class AddItem extends Component {
           description.value = '';
           weight.value = 1.0;
           category.value = "Other"
-
         }}
       >
-
-        <label>Name:</label>
+      <div className="addItemDiv">
+        <label className="addLabel">Name:</label>
           <input
-            className="itemInName"
+            className="itemInName addInput"
             ref={node => {
               input = node
             }}
             />
+      </div>
           <br />
-          <label>description:</label>
+      <div className="addItemDiv">
+          <label className="addLabel">description:</label>
             <input
-              className="itemInputDescription"
+              className="itemInputDescription addInput"
               ref={node => {
                 description = node
               }}
             />
+      </div>
+
             <br />
-            <label>Quantity:</label>
+      <div className="addItemDiv">
+            <label className="addLabel">Quantity:</label>
             <input
-              className="quantin"
+              className="quantin addInput"
               ref={node => {
                 count = node;
               }}
@@ -98,36 +102,41 @@ class AddItem extends Component {
               step="1"
               defaultValue="1"
             />
+      </div>
+
             <br />
-            <label>weight:</label>
+      <div className="addItemDiv">
+
+            <label className="addLabel">weight:</label>
             <input
-              className="weight"
+              className="weight addInput"
               ref={node => {
                 weight = node;
               }}
               type="number"
               step=".1"
               defaultValue="1"
+
             />
-
-
-
+      </div>
               <br />
-                <select name="select" defaultValue="other" id="catSelect" onChange={(e) => {
+      <div className="addItemDiv">
+              <label className="addLabel">Category:</label>
+              <select name="select" defaultValue="other" className="addSelect" id="catSelect" onChange={(e) => {
                   //  console.log('e is', e.target.value);
                     this.toggleCategoryTextInput(e.target.value)
-
                   }}>
                   <option value="clothing">Clothing</option>
-                  <option value="comestable" >Comestables</option>
+                  <option value="comestible" >Comestibles</option>
                   <option value="tool">Tools</option>
                   <option value="potion">Potion</option>
                   <option value="other">other</option>
-                </select>
+              </select>
 
-                <input type="text" className="categoryText" placeholder="add custom category">
+              <input type="text" className="categoryText" placeholder="add custom category">
 
-                </input>
+              </input>
+      </div>
 
                 <br />
 

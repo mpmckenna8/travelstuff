@@ -23,6 +23,12 @@ Trying to build up the db backend in
 The database structure: see db/createtables.sql file to see structure
 
 
+todos:
+Fix adding items to collections so they are in arrays.
+restyle:
+  add item page
+clean up logging
+
 
 Basic flow so far:
 

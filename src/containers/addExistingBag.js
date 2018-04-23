@@ -7,16 +7,22 @@ import {addNewUserBag} from '../actions/collectionactions';
 
 
 class AddExistingBag extends Component {
+  constructor(props) {
+  super(props);
+  console.log('constructing add initial bag thing');
 
+  this.state = {
+  //  color: props.initialColor
+  };
+  }
   addBag(bagger) {
   //  console.log('need to add bag', bagger);
     let userDescription = document.getElementById('userBagDesc');
     bagger.userDescription = userDescription.value;
-    console.log('userdescription', bagger, this.props.user.name)
+
+    console.log('trying to add bag, bagger=', bagger, '; username = ', this.props.user.name)
 
     this.props.dispatch(addNewUserBag(bagger, this.props.user.name))
-
-
 
   }
   render() {
@@ -44,8 +50,8 @@ class AddExistingBag extends Component {
               </div>
 
               <div className="bagdeetDiv">
-                <h4 className="bagInfoHeader">Custom Description</h4>
-                <input id="userBagDesc" type="text"/>
+                <h4 className="bagInfoHeader">Custom bag name:</h4>
+                <input id="userBagDesc" type="text" className="wideInput"/>
               </div>
               <button onClick={(e) => {this.addBag(bagInfo)}}>Add bag</button>
             </div>)

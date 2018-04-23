@@ -44,11 +44,11 @@ export function requestItems(itemClass, userName) {
 export const RECIEVE_ITEMS = "RECIEVE_ITEMS";
 
 export function recieveItems(itemClass, json, userName) {
-  console.log('recieved json = ', json);
+//  console.log('recieved items json = ', json);
 
   let userBags = [];
   if(json.data.bags) {
-    console.log('request user packs, this=', json.data);
+    console.log('request user packs, json.data =', json.data);
       userBags = json.data.bags
   }
 
@@ -119,36 +119,6 @@ export const fetchItemsIfNeeded = (itemClass, userName) => (dispatch, getState) 
 
 export const ADD_ITEM = "ADD_ITEM"
 
-const addItemToDb = (item, userName, className = 'all') =>  {
-
-    //console.log('really need to do a post to the db in actions', item, 'state is', getState())
-    let sendObj = {userName: userName,
-                    item: item,
-                    className: className }
-
-    var xhr = new XMLHttpRequest();
-
-    xhr.open('POST', 'http://localhost:8080/items/add', true);
-
-    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-    xhr.setRequestHeader('Accept', '*/*');
-
-    // send the collected data as JSON
-    xhr.send(JSON.stringify(sendObj));
-
-    xhr.onloadend = function () {
-      // done
-      console.log('sent it of to db and got a res')
-
-    };
-
-    return {
-      type: "ADD_ITEM",
-      item,
-      itemClass: className
-    }
-
-}
 
 
 
@@ -228,6 +198,50 @@ export const addItem = (item, className) => (dispatch, getState) => {
 
 
 
+const addItemToDb = (item, userName, className = 'all') =>  (dispatch,getstate) => {
+
+    //console.log('really need to do a post to the db in actions', item, 'state is', getState())
+    let sendObj = {userName: userName,
+                    item: item,
+                    className: className }
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('POST', 'http://localhost:8080/items/add', true);
+
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    xhr.setRequestHeader('Accept', '*/*');
+
+    // send the collected data as JSON
+    xhr.send(JSON.stringify(sendObj));
+
+    xhr.onloadend = function (a, b) {
+      // done
+      console.log('sent it of to db and got a res', a, 'b = ', b, this)
+      dispatch(itemAddDBresponse(this, item))
+    };
+
+    return {
+      type: "ADD_ITEM",
+      item,
+      itemClass: className
+    }
+
+}
+
+export const itemAddDBresponse = ( res, item ) => {
+
+  console.log('got response, ', res)
+  let itemID = JSON.parse(res.response)
+  return {
+    type:"ADD_ITEM_RESPONSE",
+    itemID: itemID,
+    item: item
+  }
+}
+
+
+
 export const ADD_EXISTING_ITEM = "ADD_EXISTING_ITEM";
 
 export const addExistingItem = (newItem, collection, username) => {
@@ -258,7 +272,6 @@ function updateItemInDb(item) {
 
   };
 
-
 }
 
 
@@ -283,16 +296,16 @@ export const addItemToPack = (item, itemClass, userName) => {
 
   console.log('need to additem to userpack, ', item)
 
-var url = 'http://localhost:8080/items/addtobag'
+  var url = 'http://localhost:8080/items/addtobag'
   fetch(url, {
-//credentials: 'include', //pass cookies, for authentication
-method: 'post',
-headers: {
-'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
-'Content-Type': 'application/json; charset=UTF-8'
-},
-body: JSON.stringify({item: item, userName:userName, itemClass: itemClass})
-});
+    //credentials: 'include', //pass cookies, for authentication
+    method: 'post',
+    headers: {
+    'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+    'Content-Type': 'application/json; charset=UTF-8'
+    },
+    body: JSON.stringify({item: item, userName:userName, itemClass: itemClass})
+    });
 
 
     return {
