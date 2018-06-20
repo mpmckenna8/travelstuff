@@ -58,8 +58,7 @@ class AddItem extends Component {
               newit.category = customCategory;
             }
           }
-
-//          console.log('input is', input.value)
+          console.log('new item form submitted, input.value is = ', input.value)
 
           this.addNewItem(newit)
       //    dispatch(addItem(input.value, this.props.selectedItemClass))
@@ -130,14 +129,13 @@ class AddItem extends Component {
                   <option value="comestible" >Comestibles</option>
                   <option value="tool">Tools</option>
                   <option value="potion">Potion</option>
+                  <option value="electronics">Electronics</option>
                   <option value="other">other</option>
               </select>
-
               <input type="text" className="categoryText" placeholder="add custom category">
 
               </input>
       </div>
-
                 <br />
 
         <button type="submit">Add new item</button>
@@ -146,14 +144,12 @@ class AddItem extends Component {
         <div>Add existing item</div>
         <AddExistingItemList/>
       </div>
-
     </div>
     )
   }
 }
 
 function mapStateToProps(state) {
-
   const { selectedItemClass, itemsByType} = state
   //console.log(itemsByType)
   const {

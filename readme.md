@@ -4,7 +4,6 @@ Right now just an inventory thing.
 
 
 
-
 The server for the db backend is using node and postgres.  right now that dir
 is:
 
@@ -27,7 +26,13 @@ todos:
 Fix adding items to collections so they are in arrays.
 restyle:
   add item page
+  editing item PAGE
+
 clean up logging
+
+
+A good example of a thunk to do async things is in addItemClass in the file collectionactions.js
+
 
 
 Basic flow so far:
@@ -39,7 +44,7 @@ user loads page:
       - selectItemClass is set to all
       - fetchItemsIfNeeded is called with itemClass=all and userName=test
         - once that's done the same action is called with itemClass=db and user=test
-      - fetBagsIfNeeded is called and gets all of the bags from the db and stores them in collection.bags of the redux store
+      - fetchBagsIfNeeded is called and gets all of the bags from the db and stores them in collection.bags of the redux store
     - Renders the Root compmonet and gives it the store as the prop
       - Root component is in src/components/root.js
   - src/compnents/root.js

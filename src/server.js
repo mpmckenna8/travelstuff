@@ -77,9 +77,9 @@ app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 
 
-// required for passport
+// required for passport, probably good to use an env variable for the secret if releasing to the wild.
 app.use(session({
-  secret: 'ilovescotchscotchyscotchscotch',
+  secret: 'electroblubugaloo',
   resave: false,
   saveUninitialized: false,
   cookie: { secure: false }

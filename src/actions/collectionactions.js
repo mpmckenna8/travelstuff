@@ -62,7 +62,6 @@ export const ADD_ITEM_CLASS = "ADD_ITEM_CLASS";
 export function addItemClass(newItemClass) {
   console.log('also need to add bag to db', newItemClass)
 
-
   return function (dispatch) {
     dispatch(addBagToDb(newItemClass));
 
@@ -72,9 +71,7 @@ export function addItemClass(newItemClass) {
       headers: {
         'content-type': 'application/json',
         'accept': '*/*'
-
       }
-
     }).then(
       response => response.json(),
       error => console.log('there was an error in the add itemclass call thing to db, ', error)
@@ -84,18 +81,17 @@ export function addItemClass(newItemClass) {
       }
     )
 
-
   }
 
-  return {
+  let addItemEvent = {
     type: ADD_ITEM_CLASS,
     itemClass: newItemClass
   }
 
+  return addItemEvent
 }
 
 function badAddedToDB(newbag) {
-
   console.log('added new bag to db', newbag)
   return {
     type:"ADDED_BAG_TO_DB",
@@ -108,15 +104,10 @@ export function fetchPacks(userPacks) {
   console.log('fetching user packs')
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'http://localhost:8080/userpacks', true);
-
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
   xhr.setRequestHeader('Accept', '*/*');
-
   xhr.send({userpacks: userPacks})
-
-
   xhr.onloadend = function(res) {
-
     console.log('res from userpacks,', res)
   }
 }

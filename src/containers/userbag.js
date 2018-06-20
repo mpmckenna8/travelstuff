@@ -173,14 +173,14 @@ class UserBag extends Component {
         </div>
 
         <div className="included">
-          Items in bag:
+          <h2>Items currently in bag:</h2>
         {
           bagCats.map((category, i) => {
             return (
               <div key={i} >
-                <h2>
+                <h3>
                   {category}
-                </h2>
+                </h3>
                 {bagItems[category].map( (item, i )  => {
                   return (
                     <div key={i} className="itemdiv">

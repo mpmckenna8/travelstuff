@@ -15,7 +15,7 @@ function addUserBag(data, cb) {
   let userName = data.userName
   client.query(updateString, [data.bagInfo.coll_id, data.bagInfo.userDescription, []], (err,res) => {
     if(err) {
-      console.log('error adding userpack. ', err)
+      console.log('error adding userpack to username. ', err)
     }
     console.log('tring to update userpacks', res)
 
@@ -31,6 +31,8 @@ function addUserBag(data, cb) {
   }
   else {
     console.log('sorry there was no bag associated with this user.')
+    client.end();
+
   }
 
   //  cb()
