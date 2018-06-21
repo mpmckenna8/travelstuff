@@ -30,18 +30,23 @@ class Home extends Component {
 
         <select defaultValue={itemclass}   onChange={(val) => {
         //      console.log('need to dispach change of bag ', val.target.value)
-              let newClass = 'all'
+              let classID = 'all';
               if(val.target.value !== 'all') {
-                  newClass = this.props.collections.bags.find((d) => {
-
-              //      console.log(d, val.target.value)
-                    return d.up_id == val.target.value
-                  }).up_id
+                
+                  let onBag  = this.props.collections.bags.find((d) => {
+                    console.log(d, val.target.value)
+                    return parseInt(d.up_id, 10) === parseInt(val.target.value,0)
+                  })
+                  
+                  if(onBag) {
+                    
+                    classID = onBag.up_id
+                  }
               }
 
           //    console.log('change selectedItemClass to ', newClass)
 
-              this.props.dispatch(selectItemClass(newClass))
+              this.props.dispatch(selectItemClass(classID))
           }}>
           <option value="all" >All</option>
           {baggies.map((bag, i) => {

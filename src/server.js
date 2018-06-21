@@ -34,8 +34,9 @@ client.connect(function(err) {
     }
     client.query('SELECT NOW() AS "theTime"', function(err, result) {
         if(err) {
-            return console.error('error running query', err);
+            return console.error('error running query for the time', err);
         }
+        console.log('sucessfully queried the database')
         console.log(result.rows[0].theTime);
         //output: Tue Jan 15 2013 19:12:47 GMT-600 (CST)
         client.end();

@@ -49,21 +49,14 @@ class UserBag extends Component {
     return finalList;
   }
   incrementItemQuantity(item) {
-    console.log('increment item quant', this.props)
+    console.log('increment item quant here, the props = ', this.props)
     item.quantity = item.quantity + 1;
-    let currentCollection = this.props.selectedItemClass;
     this.props.dispatch(editItemQuantity(item, this.props.selectedItemClass, this.props.user.name))
 
   }
   decrementItemQuantity(item) {
-
         item.quantity = item.quantity - 1;
-
-        let currentCollection = this.props.selectedItemClass;
-
         this.props.dispatch(editItemQuantity(item, this.props.selectedItemClass, this.props.user.name))
-
-
   }
   addItemToBag(item) {
     let upItem = item;
@@ -75,8 +68,7 @@ class UserBag extends Component {
   changeFilter(filterValue) {
     console.log('change filter,', filterValue);
     // need to hide or show: potentialList and included
-
-  //  document.body.
+    //  document.body.
     if(filterValue === 'all') {
       console.log('set display of both to true');
       document.body.getElementsByClassName('included')[0].style.display = 'flex'
@@ -106,15 +98,13 @@ class UserBag extends Component {
     }
 
     currentBag = this.props.collections.bags.find((d) => {
-      return d.up_id === parseInt(bagId)
+      return d.up_id === parseInt(bagId, 10)
     }) || currentBag;
 
     console.log('current baggie', currentBag);
 
     let availableItems = Object.assign([], this.props.itemsByType.all.items.map((d) => {
       let item = d;
-    //  console.log( 'item = ', item)
-      let subquant = {}
       return item;
     })
   )

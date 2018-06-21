@@ -24,7 +24,7 @@ class AddExistingItem extends Component {
 
     let currentItem = this.props.dbItems.find(function(d) {
       console.log(d.p_id, 'and compared to', currentItemId)
-      return (d.p_id === parseInt(currentItemId));
+      return ( d.p_id === parseInt(currentItemId, 10) );
     })
 
   //  console.log('current item is: ', currentItem)

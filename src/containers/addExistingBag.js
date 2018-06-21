@@ -1,8 +1,5 @@
-
-
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom';
 import {addNewUserBag} from '../actions/collectionactions';
 
 
@@ -30,8 +27,8 @@ class AddExistingBag extends Component {
     console.log('this in existing bag', this);
 
     let bagInfo = this.props.collections.allBags.find( (d) => {
-      console.log('things in allbags, ', d.coll_id === parseInt(this.props.match.params.idnum))
-      return d.coll_id === parseInt(this.props.match.params.idnum);
+      console.log( 'things in allbags, ', d.coll_id === parseInt( this.props.match.params.idnum, 10 ) )
+      return d.coll_id === parseInt( this.props.match.params.idnum, 10 );
     }) || {name: 'no item yet'}
 
     console.log('the baginfo ,', bagInfo)
@@ -60,8 +57,6 @@ class AddExistingBag extends Component {
 
 
 const mapStateToProps = state => {
-  const { collections } = state;
-
   return state;
 }
 

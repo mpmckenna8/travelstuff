@@ -3,8 +3,7 @@ import React from 'react'
 
 const Footer = () => (
   <div className="footerDiv">
-
-    <p><a href="https://github.com/mpmckenna8/travelstuff" target="_blank">Help out with making this better</a></p>
+    <p><a href="https://github.com/mpmckenna8/travelstuff" target="_blank" rel="noopener noreferrer">Help out with making this better</a></p>
   <p>
   Footer stuff goes here
   </p>

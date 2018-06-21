@@ -29,13 +29,11 @@ store.dispatch(setUser('test'))
 
 store.dispatch(selectItemClass('all'));
 
-
 store.dispatch(fetchItemsIfNeeded('all', 'test'))
   .then(() => {
     console.log('doing/did fetch items if needed', store.getState())
 
     store.dispatch(fetchItemsIfNeeded('db', 'test')).then(() => {
-
 
       //store.dispatch(fetchBags())
 

@@ -29,6 +29,10 @@ body {
   background-color:black;
 }
 
+a {
+  color: #ADD8E6
+}
+
 .potentialList {
   flex-direction: column;
 }

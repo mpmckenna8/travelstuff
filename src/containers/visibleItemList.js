@@ -8,17 +8,13 @@ import categorizeItems from '../helpers/categorize.js'
 // visible itemlist to go here interacting with reducer
 class VisibleItemList  extends Component  {
   componentDidMount() {
-  //const {selectedItemClass } = this.props
-  //  console.log('mounted visible item list, thisprops = ', this.props);
-
+    console.log('mounted visible item list, thisprops = ', this.props);
   }
 
   incrementItemQuantity(item) {
 
     console.log('increment item quant', this.props)
     item.quantity = item.quantity + 1;
-
-    let currentCollection = this.props.selectedItemClass;
 
     this.props.dispatch(editItemQuantity(item, this.props.selectedItemClass, this.props.user.name))
 
@@ -29,21 +25,16 @@ class VisibleItemList  extends Component  {
 
   decrementItemQuantity(item) {
     console.log('dec item quant', item);
-
     item.quantity = item.quantity - 1;
-
-    let currentCollection = this.props.selectedItemClass;
-
     this.props.dispatch(editItemQuantity(item, this.props.selectedItemClass, this.props.user.name))
-
 
   }
 
   render() {
     // console.log(this.props.itemsByType look wrongly assigned)
     console.log('rerendering maybe list changed', this.props)
-    let itemarray = (this.props.selectedItemClass === 'all') ? this.props.itemsByType[this.props.selectedItemClass] : this.props.collections.bags.find( (d) => d.up_id === parseInt(this.props.selectedItemClass ) )
-    console.log(itemarray);
+    let itemarray = (this.props.selectedItemClass === 'all') ? this.props.itemsByType[this.props.selectedItemClass] : this.props.collections.bags.find( (d) => parseInt( d.up_id,10 ) === parseInt( this.props.selectedItemClass, 10 ) )
+    console.log('itemarray = ', itemarray);
     var itemCats = {};
   //  console.log('really itemarray', itemarray);
     if(itemarray.items) {

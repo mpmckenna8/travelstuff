@@ -5,8 +5,6 @@ import {Link} from 'react-router-dom'
 import { connect } from 'react-redux'
 
 
-import {selectItemClass} from '../actions/actions'
-
 
 class Collections extends Component {
   render() {
@@ -18,8 +16,6 @@ class Collections extends Component {
 
         <h3>Bags:</h3>
           {bagArray.map((item,i) => {
-        //    console.log('dispatch = ', this.props.dispatch)
-        //    this.props.dispatch(selectItemClass(item.up_id))
           return(
             <Bag bagObj={item} dispatch={this.props.dispatch} key={i} ></Bag>
           )

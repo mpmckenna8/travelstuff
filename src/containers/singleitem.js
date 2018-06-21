@@ -1,14 +1,14 @@
 // a container for a single item to view info and edit
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {Link } from 'react-router-dom'
+//import {Link } from 'react-router-dom'
 import '../style.css'
 import { editItem } from '../actions/actions'
 
 class SingleItem extends Component {
   viewMode(currentItem) {
     console.log('should be going to viewmode')
-    const urlid = parseInt(this.props.match.params.idnum)
+  //  const urlid = parseInt(this.props.match.params.idnum)
 
     let infodivs = document.getElementsByClassName('itemDeets');
 
@@ -40,7 +40,6 @@ class SingleItem extends Component {
 
       }
 
-    let editsaveButton = document.getElementById('editsave')
 
 
     // reput all the stuff where it should be.
@@ -70,22 +69,17 @@ class SingleItem extends Component {
         savingItem.weight = o.querySelector('input').value;
       }
       else if(o.className.includes('quantity')) {
-
-
         savingItem.quantity = o.querySelector('input').value;
-
-        if(savingItem.quanity != currentItem.quantity) {
+        if( savingItem.quanity !== currentItem.quantity ) {
           savingItem.quantityChanged = true;
         }
       }
-
 
     }
 
     console.log('item to be saved now', savingItem)
     this.props.dispatch(editItem(savingItem, this.props.selectedItemClass))
     this.props.history.push('../');
-
   }
 
 
@@ -136,33 +130,32 @@ class SingleItem extends Component {
   render() {
     let editModeBool = false;
     console.log('idnumber passed in from uri', this.props.match.params.idnum)
-    const urlid = parseInt(this.props.match.params.idnum)
+    const urlid = parseInt(this.props.match.params.idnum, 10)
     let currentCollection = this.props.selectedItemClass;
 
     let currentItem = this.props.itemsByType[currentCollection].items.find(function(d){
       console.log(d)
-      return (d.p_id === urlid)
+      return ( parseInt(d.p_id, 10) === parseInt(urlid, 10) )
     });
     if( !currentItem ){
-      currentItem = {name:'not here yet ',
+      currentItem = {
+        name:'not here yet ',
         description:'',
         value:0.00,
         weight:0.00,
-        p_id: 0.00}
+        p_id: 0.00
+      }
     }
 
-    const thispagelink = '/item/' + currentItem.p_id;
     let clickcount = 1;
     //document.getElementById('canceler').className
     console.log('currentItem = ', currentItem)
 
-    let cancelDisplay = 'none';
     return (
       <div className="singleItemDiv">
       <div id="itemContainDiv">
       <ItemView currentItem={currentItem} clickcount={clickcount} />
       </div>
-
         <button id="editsave" onClick={() => {
             if(editModeBool){
                   console.log('dont do edit mode');
@@ -174,13 +167,9 @@ class SingleItem extends Component {
             }
           }
         } >Edit</button>
-
         <button id="canceler" onClick= {() => {
-
-
           this.viewMode(currentItem)
           //let linkforbutton = (<Link to={thispagelink}></Link>)
-
           }}>Cancel</button>
       </div>
     )

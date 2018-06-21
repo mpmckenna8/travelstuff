@@ -80,15 +80,7 @@ export function addItemClass(newItemClass) {
         return dispatch(badAddedToDB(json))
       }
     )
-
   }
-
-  let addItemEvent = {
-    type: ADD_ITEM_CLASS,
-    itemClass: newItemClass
-  }
-
-  return addItemEvent
 }
 
 function badAddedToDB(newbag) {
