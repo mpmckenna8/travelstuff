@@ -51,7 +51,6 @@ class SingleItem extends Component {
     savingItem.quantityChanged = false;
 
     for( let o of inputDivs) {
-
       if(o.className.includes('description') ) {
         savingItem.description = o.querySelector('input').value;
       }
@@ -90,8 +89,6 @@ class SingleItem extends Component {
       for( let o of infodivs) {
         let toinput = o.querySelector('span')
         let texttemp = toinput.innerText
-        console.log('p to change', toinput.innerText)
-
         toinput.innerHTML = '<input type="text" value="' + texttemp + '" >'
       }
 
@@ -116,8 +113,6 @@ class SingleItem extends Component {
 
 
         }
-        console.log('type of onclick ', editsaveButton.onclick)
-
 
 
   }

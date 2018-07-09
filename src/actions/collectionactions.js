@@ -26,13 +26,7 @@ console.log("need to fetch the bags",{'name': 'getall the bags'} )
     return fetch(fetchUrl)
       .then(res => res.json(), error => console.log('error with the bags fetch, ', error))
       .then(json => dispatch(recieveBags(json)))
-    //{
-      //type: RECIEVE_BAGS,
-
-    //}
   }
-
-  //return {"name":'a bag name will end up here'};
 
 }
 
@@ -105,9 +99,7 @@ export function fetchPacks(userPacks) {
 }
 
 export function addNewUserBag(newBag, userName) {
-
   addUserBagToDb(newBag, userName);
-
   return {
     type:"ADD_NEW_USER_BAG",
     newBag: newBag

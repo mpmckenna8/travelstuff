@@ -3,14 +3,12 @@ import { createLogger } from 'redux-logger'
 import { createStore, applyMiddleware } from 'redux'
 import React from 'react'
 import { render } from 'react-dom'
-import { selectItemClass, fetchItemsIfNeeded } from './actions/actions.js'
-import { setUser } from './actions/useracts.js'
-import { fetchBagsIfNeeded} from './actions/collectionactions.js'
-
-
 import rootReducer from './reducers'
 import Root from './components/root'
 
+import { selectItemClass, fetchItemsIfNeeded } from './actions/actions.js'
+import { setUser } from './actions/useracts.js'
+import { fetchBagsIfNeeded} from './actions/collectionactions.js'
 
 //console.log(process.env.NODE_ENV)
 
@@ -32,16 +30,11 @@ store.dispatch(selectItemClass('all'));
 store.dispatch(fetchItemsIfNeeded('all', 'test'))
   .then(() => {
     console.log('doing/did fetch items if needed', store.getState())
-
     store.dispatch(fetchItemsIfNeeded('db', 'test')).then(() => {
-
-      //store.dispatch(fetchBags())
-
     })
   }
 
   )
-
 
 store.dispatch(fetchBagsIfNeeded())
 

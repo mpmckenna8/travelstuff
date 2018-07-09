@@ -101,7 +101,6 @@ function itemsByType(state={}, action) {
       })
     case ADD_ITEM:{
   //    console.log('state in ADD_ITEM itemsByType ,', state)
-  //    console.log('action in additem, ', action)
       let newIt = {name:action.item.name,
                     description:action.item.description,
                     category:action.item.category,
@@ -112,7 +111,6 @@ function itemsByType(state={}, action) {
       tempstate['all'].items.push(newIt);
 
       tempPid = tempPid + 1;
-
       return Object.assign({}, tempstate)
     }
     case "ADD_ITEM_RESPONSE":{
@@ -213,13 +211,9 @@ function collections(state={bags:[], allBags:[], locations:[], needsUpdate:true}
       //  itemIndex = state.bags.find((d) => d.up_id === action.currentCollection)
         currentItems = state.bags.find( (d) => {
       //    console.log('thing in state of bags, ',d)
-
           return d.up_id.toString() === action.currentCollection });
-
         console.log('current items in bag edit, ', currentItems)
         //.items.findIndex(action.newItem.p_id).toString();
-      //  currentItem = state.bags.find( (d) => d.up_id === action.currentCollection).items[itemIndex]
-
       }
       console.log('newstate is, ', state.bags)
       return Object.assign({}, state)
@@ -231,14 +225,15 @@ function collections(state={bags:[], allBags:[], locations:[], needsUpdate:true}
 
       let mobags = state.allBags.concat([action.newbag.data]);
       state.allBags = mobags;
-      console.log('current bag', action.newbag.data)
+      let myBagger = state.bags.concat([action.newbag.data]);
+      console.log('current bag', action.newbag.data);
+      state.bags = myBagger;
       return Object.assign({}, state)
       //curbag.coll_id = action.data.coll_id
     default:
       return state;
   }
 }
-
 
 
 
