@@ -24,7 +24,7 @@ class AddExistingBag extends Component {
   }
   render() {
 
-    console.log('this in existing bag', this);
+    console.log('this is rendering in add existing bag, this = ', this);
 
     let bagInfo = this.props.collections.allBags.find( (d) => {
       console.log( 'things in allbags, ', d.coll_id === parseInt( this.props.match.params.idnum, 10 ) )

@@ -166,7 +166,7 @@ module.exports = function(app, passport) {
 
       addUserBag(data, function(bag_id) {
         console.log('bag_id = ', bag_id)
-        res.send('need to actually update still')
+        res.send(JSON.stringify(data))
     })
   })
 

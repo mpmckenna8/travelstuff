@@ -32,7 +32,6 @@ export function invalidateItemClass(itemClass) {
 export const REQUEST_ITEMS = "REQUEST_ITEMS";
 
 export function requestItems(itemClass, userName) {
-
   return {
     type: REQUEST_ITEMS,
     itemClass
@@ -93,8 +92,8 @@ export function fetchItems(itemClass, userName) {
 
 
 const shouldFetchItems = (state, itemClass) => {
-  const items = state.itemsByType[itemClass];
-//  console.log(state.user)
+  const items = state.user_items[itemClass];
+  console.log("should fetch items?")
 
   if(!items){
     return true
@@ -130,10 +129,6 @@ export const editItem = (newItem, currentCollection) => {
 
   updateItemInDb(newItem);
 
-  if(newItem.quantityChanged) {
-    console.log('still need to update item in db')
-  }
-
   return {
     type: "EDIT_ITEM",
     newItem: newItem,
@@ -143,7 +138,6 @@ export const editItem = (newItem, currentCollection) => {
 }
 
 export const editItemQuantity = (item, currentCollection, userName) => {
-
   updateQuantityDb(item, currentCollection, userName);
   console.log('dont know why action dont return', item)
   return {
@@ -162,7 +156,6 @@ function updateQuantityDb(item, currentCollection, userName) {
   let xhr = new XMLHttpRequest();
 
   let updateData = {item: item, collection:currentCollection, user: userName};
-
 
 
   xhr.open('POST','http://localhost:8080/items/editquant', true);

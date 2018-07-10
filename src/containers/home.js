@@ -16,6 +16,7 @@ class Home extends Component {
   //  console.log('this in home = ', this)
   let baggies = this.props.collections.bags || [];
 
+
   let itemclass = this.props.selectedItemClass;
 
   let editLink = "/newitem"
@@ -31,15 +32,16 @@ class Home extends Component {
         <select defaultValue={itemclass}   onChange={(val) => {
         //      console.log('need to dispach change of bag ', val.target.value)
               let classID = 'all';
+
               if(val.target.value !== 'all') {
-                
+
                   let onBag  = this.props.collections.bags.find((d) => {
                     console.log(d, val.target.value)
                     return parseInt(d.up_id, 10) === parseInt(val.target.value,0)
                   })
-                  
+
                   if(onBag) {
-                    
+
                     classID = onBag.up_id
                   }
               }
@@ -68,24 +70,17 @@ class Home extends Component {
 
 function mapStateToProps(state) {
 
-  const { selectedItemClass, itemsByType, collections} = state
+  const { selectedItemClass, user_items, collections} = state
 //  console.log(itemsByType)
-  const {
-    isFetching,
-    lastUpdated,
-    items
-  } = itemsByType[selectedItemClass] || {
-    isFetching: true,
-    items: []
-  }
+  const isFetching = false;
+  let {items, lastUpdated} = user_items
 
   return {
   selectedItemClass,
   items,
   isFetching,
   lastUpdated,
-  collections
-}
+  collections}
 }
 
 Home = connect(mapStateToProps)(Home)

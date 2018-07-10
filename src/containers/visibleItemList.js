@@ -19,8 +19,6 @@ class VisibleItemList  extends Component  {
     this.props.dispatch(editItemQuantity(item, this.props.selectedItemClass, this.props.user.name))
 
 
-
-
   }
 
   decrementItemQuantity(item) {
@@ -33,12 +31,20 @@ class VisibleItemList  extends Component  {
   render() {
     // console.log(this.props.itemsByType look wrongly assigned)
     console.log('rerendering maybe list changed', this.props)
-    let itemarray = (this.props.selectedItemClass === 'all') ? this.props.itemsByType[this.props.selectedItemClass] : this.props.collections.bags.find( (d) => parseInt( d.up_id,10 ) === parseInt( this.props.selectedItemClass, 10 ) )
+    let itemarray = this.props.user_items.items;
+    let onClass = this.props.selectedItemClass;
+
+    if(this.props.selectedItemClass !== "all" ) {
+      itemarray = this.props.collections.bags.find( function(dd) {
+        console.log('dd = ', dd)
+        return (dd.up_id == onClass)
+      }).items
+    }
     console.log('itemarray = ', itemarray);
     var itemCats = {};
   //  console.log('really itemarray', itemarray);
-    if(itemarray.items) {
-      itemCats = categorizeItems(itemarray.items)
+    if(itemarray) {
+      itemCats = categorizeItems(itemarray)
     }
 
     let catArray = Object.keys(itemCats).sort();

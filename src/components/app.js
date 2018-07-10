@@ -24,7 +24,6 @@ const App = ({params}) => {
   return (
     <Router>
       <div id="main">
-
         <HeaderLinks></HeaderLinks>
     <Switch>
       <Route path="/" exact component={Home}/>

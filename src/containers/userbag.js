@@ -13,10 +13,9 @@ class UserBag extends Component {
   itemsNotInBag() {
       let itemsList = []
       // if we've gotten all the items initialized go!
-      if(this.props.itemsByType.all) {
-        itemsList = this.props.itemsByType.all.items;
+      if(this.props.user_items.items) {
+        itemsList = this.props.user_items.items;
         console.log('itemlister, ', itemsList)
-
 
         console.log('bagitems , ', this.props.collections.bags.find((d) => {
           return (d.up_id.toString() === this.props.selectedItemClass)
@@ -37,7 +36,7 @@ class UserBag extends Component {
 //        console.log('itemlister later, ', itemsList)
           itemsList = itemsList.filter( function(d) {
                             return !( itemBag.findIndex( (q) => q.p_id === d.p_id ) >= 0 )
-                  })
+                })
         }
       }
 
@@ -103,7 +102,7 @@ class UserBag extends Component {
 
     console.log('current baggie', currentBag);
 
-    let availableItems = Object.assign([], this.props.itemsByType.all.items.map((d) => {
+    let availableItems = Object.assign([], this.props.user_items.items.map((d) => {
       let item = d;
       return item;
     })

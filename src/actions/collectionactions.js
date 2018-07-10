@@ -99,11 +99,11 @@ export function fetchPacks(userPacks) {
 }
 
 export function addNewUserBag(newBag, userName) {
-  addUserBagToDb(newBag, userName);
-  return {
-    type:"ADD_NEW_USER_BAG",
-    newBag: newBag
-  }
+  return function(dispatch) {
+
+    dispatch(addUserBagToDb(newBag, userName));
+
+}
 
 }
 
@@ -113,6 +113,7 @@ function addUserBagToDb(newBag, userName) {
     bagInfo: newBag,
     userName
   }
+  return function(dispatch) {
   var xhr = new XMLHttpRequest();
   xhr.open('POST', 'http://localhost:8080/userbag/add', true);
 
@@ -123,10 +124,27 @@ function addUserBagToDb(newBag, userName) {
 
   console.log('tried to add to db, , ', newBag, userName)
 
-  xhr.onloadend = function(res) {
-    console.log('sent newbag and got response,', res)
+  let loadcounter = 0;
+  xhr.onloadend = function(e) {
+    loadcounter = loadcounter + 1;
+    console.log('loadcounter = ', loadcounter)
+    console.log('sent newbag and got response,', xhr)
+    if(xhr.response) {
+      dispatch( userBagAddedToDB( JSON.parse(xhr.response) ) )
+    }
   }
 
+  return xhr.onloadend;
+
+}
+}
+
+function userBagAddedToDB(newbag) {
+  return {
+    type: "USER_BAG_ADDED",
+    msg: "Bag added to db and request ended",
+    newbag: newbag
+  }
 }
 
 function addBagToDb(newbag) {
