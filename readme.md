@@ -3,11 +3,8 @@ Travel app
 Right now just an inventory thing.
 
 
+The server for the db backend is using node and postgres.  that directory is in the typical homebrew spot now.
 
-The server for the db backend is using node and postgres.  right now that dir
-is:
-
-/Users/matthewmckenna/Documents/hub/postgresprac
 
 now it's in this directory but all the postgres files are in: /Users/matthewmckenna/Documents/hub/postgresprac/dbdir
 
@@ -38,6 +35,7 @@ A good example of a thunk to do async things is in addItemClass in the file coll
 Basic flow so far:
 
 user loads page:
+  -  in src/index.js user is set,
   Sees main inventory for test user and is logged in as test user to explore and try out the app.
   - src/index.js has all of its stuff fired;
     - The redux store is created, and a few actions are fired.

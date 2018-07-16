@@ -33,6 +33,7 @@
     "react-router-dom": "^4.1.2",
     "redux": "^3.5.2",
     "redux-logger": "^3.0.6",
+    "redux-testkit": "^1.0.6",
     "redux-thunk": "^2.2.0",
     "seamless-immutable": "^7.1.2"
   },

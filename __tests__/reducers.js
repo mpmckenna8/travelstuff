@@ -4,9 +4,13 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme';
 import renderer from 'react-test-renderer'
+import { Thunk } from 'redux-testkit';
+
+import {fetchItems, requestItems, itemAddDBresponse} from '../src/actions/actions.js'
 
 import user from '../src/reducers/user_reducer.js'
 import selectedItemClass from '../src/reducers/selected_item_class_reducer.js'
+
 
 describe('>>>>> testing reducer user :)', () => {
   it('+++ reducer for SET_USER', () => {
@@ -39,4 +43,13 @@ describe('>>>>> testing reducer selectedItemClass: ', () => {
   })
 })
 
-describe(">>>>>>> testing db connectivity. ")
+describe(">>>>>>> testing db connectivity. ", () => {
+  it('+++ test to make sure the database is working properly', async () => {
+    const fetchstuff = await Thunk(fetchItems).execute('all', 'test')
+
+    expect( fetchstuff.length).toBe(2)
+    expect( fetchstuff[0].isPlainObject()).toBe(true)
+    //console.log('trying to test fetching', fetchstuff)
+  });
+
+})

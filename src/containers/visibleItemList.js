@@ -12,20 +12,15 @@ class VisibleItemList  extends Component  {
   }
 
   incrementItemQuantity(item) {
-
     console.log('increment item quant', this.props)
     item.quantity = item.quantity + 1;
-
     this.props.dispatch(editItemQuantity(item, this.props.selectedItemClass, this.props.user.name))
-
-
   }
 
   decrementItemQuantity(item) {
     console.log('dec item quant', item);
     item.quantity = item.quantity - 1;
     this.props.dispatch(editItemQuantity(item, this.props.selectedItemClass, this.props.user.name))
-
   }
 
   render() {
@@ -36,7 +31,7 @@ class VisibleItemList  extends Component  {
 
     if(this.props.selectedItemClass !== "all" ) {
       itemarray = this.props.collections.bags.find( function(dd) {
-        console.log('dd = ', dd)
+        //console.log('dd = ', dd)
         return (dd.up_id == onClass)
       }).items
     }
@@ -60,8 +55,13 @@ class VisibleItemList  extends Component  {
                   {category}
                 </h2>
                 {itemCats[category].map( (item, i )  => {
+                  let haveItem = "haveItem";
+                  console.log('item = ', item)
+                  if(item.quantity <= 0) {
+                    haveItem = "noItem"
+                  }
                   return (
-                    <div key={i} className="itemdiv">
+                    <div key={i} className={ haveItem + " itemdiv" }>
                       <div className="itemNameDiv">
                         <Link to={"item/" + item.p_id}>{item.name}</Link>
                       </div>

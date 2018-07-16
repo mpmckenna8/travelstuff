@@ -151,3 +151,7 @@ a:visited {
 .addSelect {
   flex: 5;
 }
+
+.noItem {
+  background: coral;
+}

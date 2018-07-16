@@ -11,9 +11,7 @@ var conString = "postgres://matthewmckenna@localhost/auth";
 
 // id's should be a
 function userItems(username, cb) {
-
   //console.log(ids.toString())
-
 //  let bagsString = ids.toString();
 
 
@@ -28,15 +26,20 @@ function userItems(username, cb) {
       throw err
     }
 
+
   //  console.log('inventory is', res.rows[0].inventory)
-    let inventory = res.rows[0].inventory;
+    let inventory = [];
+    let quantities = [];
+    let userPacks = [];
+      if(res.rows[0]) {
+        inventory =  res.rows[0].inventory;
 
-    let quantities = res.rows[0].inventoryquantity;
+        quantities = res.rows[0].inventoryquantity;
 
-    let userPacks = res.rows[0].userpacks
+        userPacks = res.rows[0].userpacks
 
-    console.log(inventory.toString())
-
+      console.log(inventory.toString())
+    }
 
     itemqueryString = itemqueryString + inventory.toString() + ');'
     client.query(itemqueryString, (err,res) => {

@@ -47,7 +47,7 @@ export function recieveItems(itemClass, json, userName) {
 
   let userBags = [];
   if(json.data.bags) {
-    console.log('request user packs, json.data =', json.data);
+    //console.log(' recieved items and bags, json.data =', json.data);
       userBags = json.data.bags
   }
 
