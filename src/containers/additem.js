@@ -8,17 +8,14 @@ import AddExistingItemList from "./addExistingItemList.js"
 class AddItem extends Component {
 
   componentDidMount() {
-  //const {selectedItemClass } = this.props
 
-    console.log('mounted Additem, thisprops = ', this.props.selectedItemClass)
-  //  dispatch(addItem('blah',this.props.selectedItemClass ))
 
   }
   addNewItem(thing){
     let dispatch = this.props.dispatch;
 
 //    console.log('in the addNewItem functionthing', thing)
-    dispatch(addItem(thing, this.props.selectedItemClass))
+    dispatch(addItem(thing, this.props.selectedItemClass.onCollection))
 
   }
 
@@ -61,7 +58,6 @@ class AddItem extends Component {
           console.log('new item form submitted, input.value is = ', input.value)
 
           this.addNewItem(newit)
-      //    dispatch(addItem(input.value, this.props.selectedItemClass))
         //  dispatch(addPackingItem(input.value, count.value))
           input.value = '';
           description.value = '';
@@ -150,13 +146,14 @@ class AddItem extends Component {
 }
 
 function mapStateToProps(state) {
-  const { selectedItemClass, user_items} = state;
+  const { user_items} = state;
   //console.log(itemsByType)
   let isFetching = state.user_items.isFetching,
     lastUpdated = state.user_items.lastUpdated,
   items = state.user_items.items;
+  let selectedItemClass = state.selectedItemClass
 
-  if(selectedItemClass !== "all") {
+  if(selectedItemClass.onCollection !== "all") {
     items = []
   }
 

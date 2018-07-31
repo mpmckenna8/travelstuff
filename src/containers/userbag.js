@@ -9,7 +9,6 @@ import {deleteUserBag} from '../actions/collectionactions'
 
 class UserBag extends Component {
   // this function returns all items not in the current bag as in
-  // selectedItemClass
   itemsNotInBag() {
       let itemsList = []
       // if we've gotten all the items initialized go!
@@ -18,16 +17,16 @@ class UserBag extends Component {
         console.log('itemlister, ', itemsList)
 
         console.log('bagitems , ', this.props.collections.bags.find((d) => {
-          return (d.up_id.toString() === this.props.selectedItemClass)
+          return (d.up_id.toString() === this.props.selectedItemClass.onCollection)
         }) )
 
         if ( this.props.collections.bags.find((d) => {
-                return (d.up_id.toString() === this.props.selectedItemClass)
+                return (d.up_id.toString() === this.props.selectedItemClass.onCollection)
             }) )
             {
 
               let itemBag = this.props.collections.bags.find((d) => {
-                return (d.up_id.toString() ===  this.props.selectedItemClass)
+                return (d.up_id.toString() ===  this.props.selectedItemClass.onCollection)
               });
 
               if(itemBag) {
@@ -50,18 +49,18 @@ class UserBag extends Component {
   incrementItemQuantity(item) {
     console.log('increment item quant here, the props = ', this.props)
     item.quantity = item.quantity + 1;
-    this.props.dispatch(editItemQuantity(item, this.props.selectedItemClass, this.props.user.name))
+    this.props.dispatch(editItemQuantity(item, this.props.selectedItemClass.onCollection, this.props.user.name))
 
   }
   decrementItemQuantity(item) {
         item.quantity = item.quantity - 1;
-        this.props.dispatch(editItemQuantity(item, this.props.selectedItemClass, this.props.user.name))
+        this.props.dispatch(editItemQuantity(item, this.props.selectedItemClass.onCollection, this.props.user.name))
   }
   addItemToBag(item) {
     let upItem = item;
     upItem.quantity = 1;
     console.log('need to edit up ', upItem);
-    this.props.dispatch(addItemToPack(upItem, this.props.selectedItemClass, this.props.user.name))
+    this.props.dispatch(addItemToPack(upItem, this.props.selectedItemClass.onCollection, this.props.user.name))
 
   }
   changeFilter(filterValue) {
@@ -81,13 +80,12 @@ class UserBag extends Component {
       document.body.getElementsByClassName('included')[0].style.display = 'flex';
       document.body.getElementsByClassName('potentialList')[0].style.display = 'none';
 
-
     }
 
   }
   deleteBag() {
     console.log('need to delete the bag., thi', this.props)
-    this.props.dispatch(deleteUserBag(this.props.selectedItemClass, this.props.user.id))
+    this.props.dispatch(deleteUserBag(this.props.onCollection, this.props.user.id))
   }
   render() {
     let currentBag = {name:'none yet', description:'none found', items:[]}

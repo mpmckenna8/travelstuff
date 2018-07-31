@@ -187,3 +187,31 @@ export function deleteUserBag(user_bag_id, user_id) {
     user_bag_id: user_bag_id
   }
 }
+
+export const FILTER_UNSTOCKED_ITEMS = "FILTER_UNSTOCKED_ITEMS";
+export function filterUnstockedItems(checked) {
+  return {
+    type: FILTER_UNSTOCKED_ITEMS,
+    msg: "filter all items with 0 quantity",
+    checked: checked
+  }
+}
+
+export const FILTER_STOCKED_ITEMS = "FILTER_STOCKED_ITEMS";
+export function filterStockedItems(checked) {
+  return {
+    type: FILTER_STOCKED_ITEMS,
+    msg: "filter all items with more than 0 quantity",
+    checked: checked
+  }
+}
+
+export const FILTER_COLLECTIONS = "FILTER_COLLECTIONS";
+export function filterCollections(collection, dofilter) {
+  return {
+    type: FILTER_COLLECTIONS,
+    msg: "start filtering by collection",
+    checked: dofilter,
+    collection_id: collection
+  }
+}

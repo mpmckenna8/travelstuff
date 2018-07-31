@@ -7,9 +7,11 @@ import { Link, Redirect, withRouter } from 'react-router-dom';
 // can't get this to work but haven had probs yet
 //import { withRouter } from 'react-router-dom'
 import VisibleItemList from './visibleItemList.js'
+import Inventory_Filter from './inventory_filter.js'
 
 import {selectItemClass} from '../actions/actions'
 import history from '../history';
+
 
 class Home extends Component {
   bagRedirect(bagID) {
@@ -29,7 +31,7 @@ class Home extends Component {
   //  console.log('this in home = ', this)
   let baggies = this.props.collections.bags || [];
 
-  let itemclass = this.props.selectedItemClass;
+  let itemclass = this.props.selectedItemClass.onCollection;
 
   let editLink = "/newitem"
   let navBag = false
@@ -41,6 +43,8 @@ class Home extends Component {
 
       <div className="homeDiv" >
         <h1>Inventory</h1>
+        <Inventory_Filter />
+
         <select defaultValue='all'  onChange={(val) => {
               let classID = 'all';
               if(val.target.value !== 'all') {
@@ -55,9 +59,8 @@ class Home extends Component {
                     classID = onBag.up_id
                   }
               }
-          //    console.log('change selectedItemClass to ', newClass)
             this.props.dispatch(selectItemClass(classID));
-            console.log('should change itemclass and load new view')
+            console.log('should change itemclass and load new view. going to scratch this')
             history.push(bagLink + classID)
 
           }}>
@@ -84,7 +87,6 @@ function mapStateToProps(state) {
 //  console.log(itemsByType)
   const isFetching = false;
   let {items, lastUpdated} = user_items
-
   return {
   selectedItemClass,
   items,

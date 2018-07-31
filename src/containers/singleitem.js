@@ -77,7 +77,7 @@ class SingleItem extends Component {
     }
 
     console.log('item to be saved now', savingItem)
-    this.props.dispatch(editItem(savingItem, this.props.selectedItemClass))
+    this.props.dispatch(editItem(savingItem, this.props.selectedItemClass.onCollection))
     this.props.history.push('../');
   }
 
@@ -126,9 +126,9 @@ class SingleItem extends Component {
     let editModeBool = false;
     console.log('idnumber passed in from uri', this.props.match.params.idnum)
     const urlid = parseInt(this.props.match.params.idnum, 10)
-    let currentCollection = this.props.selectedItemClass;
-
-    let currentItem = this.props.itemsByType[currentCollection].items.find(function(d){
+    let currentCollection = this.props.selectedItemClass.onCollection;
+    console.log('current collection is', this.props)
+    let currentItem = this.props.user_items.items.find(function(d){
       console.log(d)
       return ( parseInt(d.p_id, 10) === parseInt(urlid, 10) )
     });
