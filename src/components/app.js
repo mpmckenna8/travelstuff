@@ -1,7 +1,7 @@
 import React from 'react'
 
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
   Route,
 //  Link,
   Switch,
@@ -18,15 +18,18 @@ import NewBag from '../containers/newBag'
 import AddExistingItem from '../containers/addExistingItem';
 import AddExistingBag from '../containers/addExistingBag'
 import UserBag from '../containers/userbag';
+import history from '../history';
 
 
 const App = ({params}) => {
   return (
-    <Router>
+    <BrowserRouter history={history} forceRefresh={true}>
       <div id="main">
         <HeaderLinks></HeaderLinks>
     <Switch>
       <Route path="/" exact component={Home}/>
+      <Route path="/home" component={Home}/>
+
       <Route path="/addexistingitem/:idnum" component={AddExistingItem}/>
       <Route path="/addexistingbag/:idnum" component={AddExistingBag}/>
       <Route path="/newitem" component={AddItem}/>
@@ -38,7 +41,7 @@ const App = ({params}) => {
     </Switch>
     <Footer />
     </div>
-  </Router>
+  </BrowserRouter>
   )
 }
 

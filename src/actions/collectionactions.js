@@ -11,8 +11,6 @@ export const fetchBagsIfNeeded = () => (dispatch, getState) => {
 }
 
 
-
-
 // query the db for all the appropriate bags
 // for now gets all bags, in future only user appropriate bags hopefully
 export const FETCH_BAGS = "FETCH_BAGS";
@@ -147,30 +145,9 @@ function userBagAddedToDB(newbag) {
   }
 }
 
+
 function addBagToDb(newbag) {
-
-/* weird comments because of the headers
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://localhost:8080/collections/add', true);
-
-  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-
-//  newbag.description = 'a bag';
-  //newbag.weight_capacity = 20.0;
-  // send the collected data as JSON
-  xhr.send(JSON.stringify(newbag));
-
-  xhr.onloadend = function (res) {
-    // done
-    console.log('sent it of to db and got a res')
-    console.log(res)
-
-
-  };
-
-*/
 console.log('new bag added to db', newbag)
-
 
   return {
     type:"ADD_BAG_TO_DB",
@@ -178,4 +155,35 @@ console.log('new bag added to db', newbag)
     newbag: newbag
   }
 
+}
+
+export const DELETE_USER_BAG = "DELETE_USER_BAG";
+
+export function deleteUserBag(user_bag_id, user_id) {
+
+  console.log('need to delete bag in the db')
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'http://localhost:8080/collections/deleteuserbag', true);
+
+  let del_bag_data = {
+    bag_id: user_bag_id,
+    user_id: user_id
+  }
+
+  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  xhr.setRequestHeader('Accept', '*/*');
+
+  xhr.send(JSON.stringify(del_bag_data));
+
+  xhr.onloadend = function(e) {
+    if(xhr.response) {
+      console.log('response from deleting bag',  JSON.parse(xhr.response) )
+    }
+  }
+
+  return {
+    type: DELETE_USER_BAG,
+    msg: "user bag should be deleted",
+    user_bag_id: user_bag_id
+  }
 }

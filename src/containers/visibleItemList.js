@@ -43,8 +43,6 @@ class VisibleItemList  extends Component  {
     }
 
     let catArray = Object.keys(itemCats).sort();
-    console.log('item categories', catArray.sort())
-
     return (
       <div className="itemListDiv">
         {
@@ -56,7 +54,7 @@ class VisibleItemList  extends Component  {
                 </h2>
                 {itemCats[category].map( (item, i )  => {
                   let haveItem = "haveItem";
-                  console.log('item = ', item)
+                  //console.log('item = ', item)
                   if(item.quantity <= 0) {
                     haveItem = "noItem"
                   }

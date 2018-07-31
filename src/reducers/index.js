@@ -55,22 +55,9 @@ function items(
 
 let tempPid = 1000000;
 
-
-function user_items(state={items:[], lastUpdated: 0, isFetching: false }, action) {
+// should delete the items from this maybe
+function user_items(state={ items:[], lastUpdated: 0, isFetching: false }, action) {
   switch (action.type) {
-    case INVALIDATE_ITEM_CLASS:
-    case 'ADD_ITEM_TO_PACK':
-      let tempState = state;
-      let temItem = Object.assign({}, action.item);
-      temItem['quantity'] = 1;
-
-      console.log('item trying to add', temItem)
-      tempState[action.itemClass].items.push(temItem);
-      return Object.assign({}, tempState)
-    case "USER_BAG_ADDED":
-        console.log('action in user bag added ', action)
-        state.action.newbag.bagInfo.up_id = (action.newbag.bagInfo);
-        return Object.assign({}, state)
     case RECIEVE_ITEMS:
       console.log('action in recieve items user_items,', action);
       state.items = action.items;
@@ -99,38 +86,42 @@ function user_items(state={items:[], lastUpdated: 0, isFetching: false }, action
       return Object.assign({}, tempstate)
     }
     case "ADD_ITEM_RESPONSE":{
-
-      console.log('item id', action);
+  //    console.log('in Add_ITEM_RESPONSE, item id', action);
       let itemname = action.item.name;
+      let tempstate = state;
+      let allitems = tempstate.user_items.items;
 
-    let tempstate = state;
-    let allitems = tempstate['all'].items;
-
-    let itemIndex = allitems.findIndex((d) => {
+      let itemIndex = allitems.findIndex((d) => {
         return d.name = itemname
-  //    return d.name = action.newItem.name
     })
 
 
-    console.log('item index = ', itemIndex)
-      tempstate['all'].items[itemIndex].p_id = action.itemID.data.item_id;
-
-      console.log('all items after update', tempstate['all'].items)
+    //console.log('item index = ', itemIndex)
+      tempstate.user_items.items[itemIndex].p_id = action.itemID.data.item_id;
 
       return Object.assign({}, tempstate)
     }
     case EDIT_ITEM:{
-    //  console.log('need to editItem with action = ', action)
-    //    console.log('state in here, ', state)
+      console.log('need to editItem with action = ', action)
+        console.log('state in Edit_ITEM, ', state)
         let tempstate = state;
-        let edItem = tempstate[action.currentCollection].items.findIndex((d) => {
-          return d.p_id === action.newItem.p_id;
+/*
+        console.log(tempstate.collections)
+    //    let bagIndex = tempstate.collections.bags.findIndex(function(d) {
+          console.log('find the bag index', d, action.currentCollection)
+          return d.up_id == action.currentCollection;
         })
+        console.log('bag item index is, ', bagIndex)
+
+      //  let edItemIndex = tempstate.collections.bags[bagIndex].items.findIndex( (d) => {
+    //      return d.p_id === action.newItem.p_id;
+      //  })
       //  console.log('still need to update in the db')
       //  edItem.description = action.newItem.description;
-        tempstate[action.currentCollection].items[edItem] = action.newItem;
+    //    tempstate.collections.bags[bagIndex].items[edItemIndex] = action.newItem;
       //  console.log(edItem);
       return Object.assign({}, tempstate);
+      */
     }
 
     case "ADD_EXISTING_ITEM": {
@@ -162,11 +153,35 @@ function collections(state={
         }
          state.bags.push(newUserBag)
          return Object.assign({}, state)
+      case "DELETE_USER_BAG":
+             let tempstate = state;
+             let bagInd = tempstate.bags.findIndex(function(d) {
+               return d.up_id.toString() === action.user_bag_id
+             })
+             console.log('need to delet bag in array at position: ', bagInd)
+             tempstate.bags.splice(bagInd, 1)
+
+             return Object.assign({},tempstate)
 
       case ADD_ITEM_CLASS:
         state.bags.push(action['itemClass']);
         state.allBags.push(action['itemClass']);
         return Object.assign({}, state)
+      case 'ADD_ITEM_TO_PACK':
+          let tempState = state;
+          let temItem = Object.assign({}, action.item);
+          temItem['quantity'] = 1;
+//          console.log('tempState in add item to pack')
+//          console.log('item trying to add', temItem, 'itemclass = ', action.itemClass)
+          let bagsArray = tempState.bags;
+          let bagIndex = bagsArray.findIndex(function(d) {
+            return d.up_id.toString() == action.itemClass
+          })
+    //      console.log('bagsArray = ', bagsArray)
+      //    console.log('bags Index', bagIndex)
+          tempState.bags[bagIndex].items.push(temItem);
+          return Object.assign({}, tempState)
+
       case RECIEVE_BAGS:
         console.log('recived some bags, ', action.bags)
         let combBags = []
@@ -210,15 +225,24 @@ function collections(state={
       case "EDIT_ITEM":
         let currentItems = [];
         console.log('dont know if editing items really works')
-
         if(action.currentCollection !== 'all') {
       //    console.log(action)
         //  itemIndex = state.bags.find((d) => d.up_id === action.currentCollection)
+        let tempstate = state;
+
+        let bagIndex = tempstate.bags.findIndex(function(d) {
+          console.log('find the bag index', d, action.currentCollection)
+          return d.up_id == action.currentCollection;
+        })
+
+        console.log('bag item index is, ', bagIndex)
+
           currentItems = state.bags.find( (d) => {
             return d.up_id.toString() === action.currentCollection });
           console.log('current items in bag edit, ', currentItems)
         }
         console.log('newstate is, ', state.bags)
+
         return Object.assign({}, state)
       case "ADD_BAG_TO_DB":
         console.log('need to add the bag to the list of stuff too', action);

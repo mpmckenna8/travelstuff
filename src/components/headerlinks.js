@@ -12,7 +12,7 @@ class HeaderLinks extends Component {
     return (
       <div className="headerLinkDiv">
         <div className="headLink">
-          <Link id="homelink" to="/">Home</Link>
+          <Link id="homelink" to="/home">Home</Link>
         </div>
         <div className="headLink">
           <Link to="/newitem">New Item</Link>

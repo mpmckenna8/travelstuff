@@ -150,15 +150,14 @@ class AddItem extends Component {
 }
 
 function mapStateToProps(state) {
-  const { selectedItemClass, itemsByType} = state
+  const { selectedItemClass, user_items} = state;
   //console.log(itemsByType)
-  const {
-    isFetching,
-    lastUpdated,
-    items
-  } = itemsByType[selectedItemClass] || {
-    isFetching: true,
-    items: []
+  let isFetching = state.user_items.isFetching,
+    lastUpdated = state.user_items.lastUpdated,
+  items = state.user_items.items;
+
+  if(selectedItemClass !== "all") {
+    items = []
   }
 
   return {

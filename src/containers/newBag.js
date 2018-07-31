@@ -14,7 +14,7 @@ class AddBag extends Component {
     e.preventDefault()
     console.log('this', this)
     let dispatch = this.props.dispatch;
-      let form = document.getElementById('bagForm');
+    let form = document.getElementById('bagForm');
       let formData = new FormData(form)
     //  console.log('formdata = ', formData.keys())
       /*
@@ -26,7 +26,6 @@ class AddBag extends Component {
       let formobj = {name: formData.get('name'),
                       weight_capacity: formData.get('weightCap'),
                       description:formData.get('description')};
-
       if(!formobj.name){
         console.log('no name input found');
       }
@@ -45,7 +44,10 @@ class AddBag extends Component {
       <div>
 
         <h3>Add a new bag</h3>
-
+        <div>
+          <h4>Choose from an existing bag type or create a new collection type below.</h4>
+          <AddExistingBagList></AddExistingBagList>
+        </div>
         <form onSubmit={this.formsub.bind(this)}
               id="bagForm"
               name="bagform">
@@ -96,8 +98,6 @@ class AddBag extends Component {
             <button type="submit">Add new bag</button>
 
         </form>
-
-        <AddExistingBagList></AddExistingBagList>
 
       </div>
     )

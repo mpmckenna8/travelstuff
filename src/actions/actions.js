@@ -273,7 +273,6 @@ function addExistingItemToDb(item, user) {
   let sendjson = {item:item, user: user}
   let urlend = urlStart + "existingitem"
   xhr.open('POST', urlend, true);
-
   xhr.setRequestHeader("Content-Type", 'application/json; charset=UTF-8');
 
   xhr.send(JSON.stringify(sendjson));

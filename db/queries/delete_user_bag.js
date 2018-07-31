@@ -53,4 +53,4 @@ function delete_user_bag(u_id, upid) {
 
 module.exports = delete_user_bag;
 
- delete_user_bag(1,11);
+ //delete_user_bag(1,11);

@@ -14,7 +14,7 @@ let getUserBags = require('../queries/userbags')
 const editUserPackQuantity = require('../queries/editUserPackQuantity');
 const addUserBag = require('../queries/addUserBag');
 const addItemToBag = require('../queries/addItemToBag')
-
+const delete_user_bag = require('../queries/delete_user_bag')
 
 let updateUserInventory = require('../queries/updateUserInventory.js')
 
@@ -314,6 +314,14 @@ app.get('/userpacks', function(req, res) {
 
 
       res.send('hooba')
+    })
+
+    app.post('/collections/deleteuserbag', function(req, res) {
+
+      let del_bag_data = req.body;
+      console.log('should be deleting the userbag')
+
+      delete_user_bag( del_bag_data.user_id, del_bag_data.bag_id )
     })
 
 

@@ -20,12 +20,14 @@ The database structure: see db/createtables.sql file to see structure
 
 
 todos:
-Fix adding items to collections so they are in arrays.
-restyle:
-  add item page
-  editing item PAGE
-
+  -Fix adding items to collections so they are in arrays.
+  restyle:
+    add item page
+    editing item PAGE
+    delete colletion somehow
 clean up logging
+
+
 
 
 A good example of a thunk to do async things is in addItemClass in the file collectionactions.js

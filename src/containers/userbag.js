@@ -1,11 +1,11 @@
 
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import {Link} from 'react-router-dom'
+import {Link, Redirect, withRouter} from 'react-router-dom'
 
 import categorizeItems from '../helpers/categorize.js'
 import {selectItemClass, editItemQuantity, addItemToPack} from '../actions/actions'
-
+import {deleteUserBag} from '../actions/collectionactions'
 
 class UserBag extends Component {
   // this function returns all items not in the current bag as in
@@ -85,22 +85,30 @@ class UserBag extends Component {
     }
 
   }
+  deleteBag() {
+    console.log('need to delete the bag., thi', this.props)
+    this.props.dispatch(deleteUserBag(this.props.selectedItemClass, this.props.user.id))
+  }
   render() {
     let currentBag = {name:'none yet', description:'none found', items:[]}
-    console.log('items not yet in bag, ', this.props);
-
+  //  console.log('this.props in userbag render =  ', this.props);
     let bagId = 0;
 
     if(this.props.match.params.idnum) {
       bagId = this.props.match.params.idnum;
-      this.props.dispatch(selectItemClass(bagId))
+      console.log('setting item class in userBag to , ', bagId)
     }
 
     currentBag = this.props.collections.bags.find((d) => {
       return d.up_id === parseInt(bagId, 10)
     }) || currentBag;
 
-    console.log('current baggie', currentBag);
+    if(currentBag.name ==="none yet") {
+      this.props.dispatch(selectItemClass('all'))
+    }
+    else {
+      this.props.dispatch(selectItemClass(bagId))
+    }
 
     let availableItems = Object.assign([], this.props.user_items.items.map((d) => {
       let item = d;
@@ -119,9 +127,12 @@ class UserBag extends Component {
 
     let bagCats = Object.keys(bagItems).sort();
 
+console.log('should be rendering userbag')
     return (
+
       <div>
-        <h3>{currentBag.name}</h3>
+
+        <h3>{ currentBag.name ==='none yet'? <Redirect push to="/" /> : (currentBag.name) }</h3>
         <select defaultValue="all" className="filterSelect" onChange={(e) => {
             this.changeFilter(e.target.value);
           }} >
@@ -129,38 +140,14 @@ class UserBag extends Component {
           <option value="possible">Items not in bag</option>
           <option value="inbag">Items included in bag</option>
         </select>
-        <div className="potentialList">
-        Items not yet in this bag:
-        {catArray.map((category, i) => {
-          return (
-            <div key={i} >
-              <h2>
-                {category}
-              </h2>
-              {availableItems[category].map( (item, i )  => {
-                return (
-                  <div key={i} className="itemdiv">
-                    <div className="itemNameDiv">
-                      {item.name}
-                    </div>
-                      <div className="itemQuantDiv">
-                        <div>
-                          0
-                        <button onClick={(e) => {
-                            this.addItemToBag(item);
-                          }}>+</button>
-                      </div>
 
-                      </div>
-                  </div>
-                )
-              })
-            }
-            </div>
-          )
-        })}
-        </div>
+<button onClick={(e) => {
+  if( window.confirm("Are you sure you want to delete the bag? Cannot be undone.") ) {
+    console.log('need to delete the bag')
+    this.deleteBag();
 
+  }
+}}>Delete Bag</button>
         <div className="included">
           <h2>Items currently in bag:</h2>
         {
@@ -198,6 +185,40 @@ class UserBag extends Component {
           })
         }
         </div>
+        <div className="potentialList">
+          <h2>Items not yet in this bag:</h2>
+        {catArray.map((category, i) => {
+          return (
+            <div key={i} >
+              <h2>
+                {category}
+              </h2>
+              {availableItems[category].map( (item, i )  => {
+                return (
+                  <div key={i} className="itemdiv">
+                    <div className="itemNameDiv">
+                      {item.name}
+                    </div>
+                      <div className="itemQuantDiv">
+
+                          <div>
+                          0
+                          <button onClick={(e) => {
+                            this.addItemToBag(item);
+                          }}>+</button>
+
+                          </div>
+
+                      </div>
+                  </div>
+                )
+              })
+            }
+            </div>
+          )
+        })}
+        </div>
+
       </div>)
   }
 
@@ -209,4 +230,4 @@ const mapStateToProps = state => {
 
 
 
-export default connect(mapStateToProps)(UserBag);
+export default withRouter(connect(mapStateToProps)(UserBag));
