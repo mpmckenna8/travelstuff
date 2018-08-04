@@ -89,7 +89,7 @@ function user_items(state={ items:[], lastUpdated: 0, isFetching: false }, actio
   //    console.log('in Add_ITEM_RESPONSE, item id', action);
       let itemname = action.item.name;
       let tempstate = state;
-      let allitems = tempstate.user_items.items;
+      let allitems = tempstate.items;
 
       let itemIndex = allitems.findIndex((d) => {
         return d.name = itemname
@@ -97,7 +97,7 @@ function user_items(state={ items:[], lastUpdated: 0, isFetching: false }, actio
 
 
     //console.log('item index = ', itemIndex)
-      tempstate.user_items.items[itemIndex].p_id = action.itemID.data.item_id;
+      tempstate.items[itemIndex].p_id = action.itemID.data.item_id;
 
       return Object.assign({}, tempstate)
     }
@@ -105,23 +105,17 @@ function user_items(state={ items:[], lastUpdated: 0, isFetching: false }, actio
       console.log('need to editItem with action = ', action)
         console.log('state in Edit_ITEM, ', state)
         let tempstate = state;
-/*
-        console.log(tempstate.collections)
-    //    let bagIndex = tempstate.collections.bags.findIndex(function(d) {
-          console.log('find the bag index', d, action.currentCollection)
-          return d.up_id == action.currentCollection;
-        })
-        console.log('bag item index is, ', bagIndex)
 
-      //  let edItemIndex = tempstate.collections.bags[bagIndex].items.findIndex( (d) => {
-    //      return d.p_id === action.newItem.p_id;
-      //  })
-      //  console.log('still need to update in the db')
-      //  edItem.description = action.newItem.description;
-    //    tempstate.collections.bags[bagIndex].items[edItemIndex] = action.newItem;
+
+        let edItemIndex = tempstate.items.findIndex(  (d) => {
+          return d.p_id === action.newItem.p_id;
+        })
+        console.log('still need to update in the db')
+        let edItem = tempstate.items[edItemIndex];
+        edItem = action.newItem;
       //  console.log(edItem);
       return Object.assign({}, tempstate);
-      */
+
     }
 
     case "ADD_EXISTING_ITEM": {

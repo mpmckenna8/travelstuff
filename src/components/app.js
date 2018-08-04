@@ -23,7 +23,7 @@ import history from '../history';
 
 const App = ({params}) => {
   return (
-    <BrowserRouter history={history} forceRefresh={true}>
+    <BrowserRouter history={history} forceRefresh={false}>
       <div id="main">
         <HeaderLinks></HeaderLinks>
     <Switch>
