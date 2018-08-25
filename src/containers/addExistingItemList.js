@@ -14,12 +14,13 @@ class AddExistingItemList extends Component {
   itemsUserDontHave() {
       let itemsList = []
 
-      if(this.props.selectedItemClass) {
+      if(this.props.collections.bags) {
       let bagIndex = this.props.collections.bags.findIndex( (d) => {
-        return d.up_id.toString() === this.props.selectedItemClass.toString()
+        return d.up_id.toString() === this.props.selectedItemClass.onCollection.toString()
       })
+
       if(this.props.user_items.items) {
-          if(this.props.selectedItemClass !== "all") {
+          if(this.props.selectedItemClass.onCollection !== "all") {
               itemsList = this.props.collections.bags[bagIndex];
             }
           else {

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { addItem } from '../actions/actions'
+import { addItem } from '../actions/actions';
+import {setReturnHome} from '../actions/useracts'
 import { connect } from 'react-redux'
+import {Redirect, withRouter} from 'react-router-dom'
 
 import AddExistingItemList from "./addExistingItemList.js"
 
@@ -13,6 +15,7 @@ class AddItem extends Component {
   }
   addNewItem(thing){
     let dispatch = this.props.dispatch;
+    dispatch(setReturnHome(true))
 
 //    console.log('in the addNewItem functionthing', thing)
     dispatch(addItem(thing, this.props.selectedItemClass.onCollection))
@@ -58,7 +61,6 @@ class AddItem extends Component {
           console.log('new item form submitted, input.value is = ', input.value)
 
           this.addNewItem(newit)
-        //  dispatch(addPackingItem(input.value, count.value))
           input.value = '';
           description.value = '';
           weight.value = 1.0;
@@ -140,6 +142,8 @@ class AddItem extends Component {
         <div>Add existing item</div>
         <AddExistingItemList/>
       </div>
+      {this.props.returnHome ? ( <Redirect to="/home" /> ): (<span></span>)}
+
     </div>
     )
   }
@@ -156,14 +160,16 @@ function mapStateToProps(state) {
   if(selectedItemClass.onCollection !== "all") {
     items = []
   }
+  let returnHome = state.user.returnHome;
 
   return {
   selectedItemClass,
   items,
   isFetching,
-  lastUpdated
+  lastUpdated,
+  returnHome
 }
 }
 
 
-export default connect(mapStateToProps)(AddItem);
+export default withRouter(connect(mapStateToProps)(AddItem));

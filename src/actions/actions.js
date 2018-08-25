@@ -93,7 +93,7 @@ export function fetchItems(itemClass, userName) {
 
 const shouldFetchItems = (state, itemClass) => {
   const items = state.user_items[itemClass];
-  console.log("should fetch items?")
+  console.log("should fetch items?", state.user_items)
 
   if(!items){
     return true
@@ -182,12 +182,9 @@ export const addItem = (item, className) => (dispatch, getState) => {
   console.log('getstate in additem, ', getState())
   console.log('adding item', item, className)
 
-
-
   dispatch( addItemToDb(item, getState().user.name), className.toString)
 
 }
-
 
 
 

@@ -24,13 +24,15 @@ class VisibleItemList  extends Component  {
   }
 
   // will make a list of all the items applying the filters from selected_item_class_reducer
-  filteredItems() {
+  filteredItems(itemL) {
+    console.log('applying filters')
+    let itemList = itemL
     let filters = this.props.selectedItemClass.filters;
-    let itemList = this.props.user_items.items;
     let tempList = []
 
 
     let bagFilterList = filters.bags;
+
     if(!filters.bags.includes('all')) {
       for(let bagID of bagFilterList) {
         let onFilterBag = this.props.collections.bags.find( (d) => {
@@ -39,7 +41,7 @@ class VisibleItemList  extends Component  {
         console.log('need to get items from ,', onFilterBag)
         for(let includeItem of onFilterBag.items) {
             if( !tempList.includes( d => d.p_id === includeItem.p_id) ) {
-              tempList.push( itemList.find((d)=> d.p_id.toString() === includeItem.p_id.toString()) )
+              tempList.push( itemList.find( (d) => d.p_id.toString() === includeItem.p_id.toString()) )
             }
         }
       }
@@ -60,8 +62,21 @@ class VisibleItemList  extends Component  {
     if(filters.instock === false && filters.outofstock === false) {
       itemList = []
     }
-    console.log('filtered items are, ', itemList)
+    //console.log('filtered items are, but still need to filter categories', itemList, filters.categories)
 
+
+    if( filters.categories.length > 0 ) {
+      itemList = itemList.filter( (d) => {
+
+        console.log('filtering items by category', d, filters.categories.includes(d.category)
+      )
+
+        return filters.categories.includes(d.category)
+      })
+    }
+    else {
+      itemList = []
+    }
 
     return itemList
 
@@ -69,21 +84,22 @@ class VisibleItemList  extends Component  {
 
   render() {
     // console.log(this.props.itemsByType look wrongly assigned)
-    console.log('rerendering maybe list changed', this.filteredItems())
-
-    let itemarray = this.filteredItems();
+    let itemarray = this.props.user_items.items;
     let onClass = this.props.selectedItemClass.onCollection;
 
     if(onClass !== "all" ) {
       itemarray = this.props.collections.bags.find( function(dd) {
         //console.log('dd = ', dd)
-        return (dd.up_id == onClass)
+        return (dd.up_id.toString() === onClass.toString())
       }).items
     }
+
+    itemarray = this.filteredItems(itemarray);
   //  console.log('itemarray = ', itemarray);
     var itemCats = {};
   //  console.log('really itemarray', itemarray);
-    if(itemarray) {
+    if(itemarray.length > 0) {
+
       itemCats = categorizeItems(itemarray)
     }
 

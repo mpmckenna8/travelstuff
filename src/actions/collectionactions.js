@@ -1,6 +1,16 @@
 // actions having to do with the bags/collections
 import fetch from 'isomorphic-fetch'
 
+export const filterByCategories = function(category) {
+
+  return {
+    category: category.category,
+    active: category.active,
+    type:"FILTER_CATEGORY"
+  }
+
+}
+
 
 export const fetchBagsIfNeeded = () => (dispatch, getState) => {
 

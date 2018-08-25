@@ -17,7 +17,7 @@ class SingleItem extends Component {
   //  cancelEdit(descdiv, currentItem.description);
 
     for( let o of infodivs) {
-      console.log(o.className)
+  //    console.log(o.className)
       if((o.className).includes('description')){
           cancelEdit(o, currentItem.description)
         }
@@ -83,7 +83,7 @@ class SingleItem extends Component {
 
 
   editMode(editBool, currentItem) {
-      console.log('need to make things editable more', this);
+    //  console.log('need to make things editable more', this);
       let infodivs = document.getElementsByClassName('itemDeets');
 
       for( let o of infodivs) {
@@ -104,9 +104,7 @@ class SingleItem extends Component {
       editsaveButton.innerText = "Save"
 
       editsaveButton.onclick = () => {
-          console.log('need to pass in thing to call itemupdate action or something')
           console.log('really need to update the current item in like redux land')
-          //this.editMode(true);
           editsaveButton.style = {display:"none"}
           this.saveChanges(infodivs, currentItem)
           this.viewMode(currentItem);

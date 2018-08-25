@@ -4,6 +4,7 @@ let categorizeItems = function(itemarray) {
 
   for ( let o of itemarray ) {
   //  console.log(o.category === null)
+  if(o) {
     if(itemCats[o.category]) {
         itemCats[o.category].push(o)
     }
@@ -26,6 +27,7 @@ let categorizeItems = function(itemarray) {
         }
         else itemCats[o.category] = [o];
       }
+    }
     }
   }
   return itemCats;

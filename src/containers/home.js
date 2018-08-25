@@ -10,6 +10,8 @@ import VisibleItemList from './visibleItemList.js'
 import Inventory_Filter from './inventory_filter.js'
 
 import {selectItemClass} from '../actions/actions'
+import {setReturnHome} from '../actions/useracts'
+
 import history from '../history';
 
 
@@ -26,6 +28,7 @@ class Home extends Component {
   }
   componentDidMount() {
      this.props.dispatch(selectItemClass('all'))
+     this.props.dispatch(setReturnHome(false))
   }
   render() {
   //  console.log('this in home = ', this)
@@ -45,36 +48,11 @@ class Home extends Component {
         <h1>Inventory</h1>
         <Inventory_Filter />
 
-        <select defaultValue='all'  onChange={(val) => {
-              let classID = 'all';
-              if(val.target.value !== 'all') {
-                  let onBag  = this.props.collections.bags.find((d) => {
-                    console.log(d, val.target.value)
-                    return parseInt(d.up_id, 10) === parseInt(val.target.value,0)
-                  })
-                navBag=true;
-
-                  if(onBag) {
-
-                    classID = onBag.up_id
-                  }
-              }
-            this.props.dispatch(selectItemClass(classID));
-            console.log('should change itemclass and load new view. going to scratch this')
-            history.push(bagLink + classID)
-
-          }}>
-          <option value="all" >All</option>
-          {baggies.map((bag, i) => {
-            return (<option key={i} value={bag.up_id || 'all'} >
-                        {bag.name}</option>)
-          })}
-
-        </select>
-
         <span> <Link to={editLink}>add items</Link></span>
         <VisibleItemList>
         </VisibleItemList>
+        <span> <Link to={editLink}>add items</Link></span>
+
       </div>
     )
   }

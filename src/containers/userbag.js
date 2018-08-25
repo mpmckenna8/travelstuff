@@ -9,16 +9,17 @@ import {deleteUserBag} from '../actions/collectionactions'
 
 class UserBag extends Component {
   // this function returns all items not in the current bag as in
+  componentDidMount() {
+    console.log('the id for the bag from url, ', this.props.match.params.idnum)
+    var bagID = this.props.match.params.idnum.toString();
+
+    this.props.dispatch(selectItemClass(bagID ))
+  }
   itemsNotInBag() {
       let itemsList = []
       // if we've gotten all the items initialized go!
       if(this.props.user_items.items) {
         itemsList = this.props.user_items.items;
-        console.log('itemlister, ', itemsList)
-
-        console.log('bagitems , ', this.props.collections.bags.find((d) => {
-          return (d.up_id.toString() === this.props.selectedItemClass.onCollection)
-        }) )
 
         if ( this.props.collections.bags.find((d) => {
                 return (d.up_id.toString() === this.props.selectedItemClass.onCollection)
@@ -94,7 +95,7 @@ class UserBag extends Component {
 
     if(this.props.match.params.idnum) {
       bagId = this.props.match.params.idnum;
-      console.log('setting item class in userBag to , ', bagId)
+      //console.log('setting item class in userBag to , ', bagId)
     }
 
     currentBag = this.props.collections.bags.find((d) => {
@@ -102,10 +103,10 @@ class UserBag extends Component {
     }) || currentBag;
 
     if(currentBag.name ==="none yet") {
-      this.props.dispatch(selectItemClass('all'))
+      //this.props.dispatch(selectItemClass('all'))
     }
     else {
-      this.props.dispatch(selectItemClass(bagId))
+      //this.props.dispatch(selectItemClass(bagId))
     }
 
     let availableItems = Object.assign([], this.props.user_items.items.map((d) => {
@@ -125,7 +126,7 @@ class UserBag extends Component {
 
     let bagCats = Object.keys(bagItems).sort();
 
-console.log('should be rendering userbag')
+//console.log('should be rendering userbag')
     return (
 
       <div>

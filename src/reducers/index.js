@@ -80,24 +80,21 @@ function user_items(state={ items:[], lastUpdated: 0, isFetching: false }, actio
                     p_id: tempPid};
 
       let tempstate = state;
-      tempstate['all'].items.push(newIt);
+      tempstate.items.push(newIt);
 
       tempPid = tempPid + 1;
       return Object.assign({}, tempstate)
     }
     case "ADD_ITEM_RESPONSE":{
   //    console.log('in Add_ITEM_RESPONSE, item id', action);
-      let itemname = action.item.name;
+      let item = action.item;
+
+      item.p_id = action.itemID.data.item_id
+
       let tempstate = state;
-      let allitems = tempstate.items;
-
-      let itemIndex = allitems.findIndex((d) => {
-        return d.name = itemname
-    })
-
+      tempstate.items.push(item);
 
     //console.log('item index = ', itemIndex)
-      tempstate.items[itemIndex].p_id = action.itemID.data.item_id;
 
       return Object.assign({}, tempstate)
     }

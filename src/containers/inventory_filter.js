@@ -6,7 +6,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import {selectItemClass} from '../actions/actions';
-import {filterUnstockedItems, filterStockedItems, filterCollections} from '../actions/collectionactions'
+import {filterUnstockedItems, filterStockedItems, filterCollections, filterByCategories} from '../actions/collectionactions'
 
 class Inventory_Filter extends Component {
   filterCollection(e) {
@@ -18,16 +18,39 @@ class Inventory_Filter extends Component {
 
 
   }
+  filterByCategory(e, disp) {
+  //  console.log('need to make and fire a category filter', e.target, 'this = ', this)
+
+    var changed_category = e.target.value;
+    var active_category = e.target.checked;
+    disp(filterByCategories({category: changed_category,
+                            active:active_category}))
+  }
   filterStock(e) {
     this.props.dispatch(filterStockedItems(e.checked))
   }
   filterUnstocked(e) {
     console.log('checkbox val ', e.checked)
     this.props.dispatch(filterUnstockedItems(e.checked))
+  }
 
+  category_Array() {
+
+    let itemlist = this.props.user_items.items;
+    let itemCategories = [];
+    for(let u of itemlist) {
+      if( itemCategories.every( (d) => { return d !== u.category })) {
+        itemCategories.push(u.category)
+      }
+    }
+//    console.log('the item categories are. ', itemCategories);
+    return itemCategories;
   }
   render() {
     let baggies = this.props.collections.bags || [];
+    let categories = this.category_Array();
+    let cat_filter = this.filterByCategory;
+    let disp = this.props.dispatch;
 
     return (
       <div>
@@ -50,7 +73,7 @@ class Inventory_Filter extends Component {
           <br />
           {
             baggies.map((bag, i) => {
-              console.log(bag)
+          //    console.log(bag)
               let bagname = bag.name;
               return (
                 <span key={"bagfilter" + bagname}>
@@ -68,27 +91,44 @@ class Inventory_Filter extends Component {
                 )
           })}
         </div>
+
+
         <div>
           <h4>Quantities</h4>
           <label>In Stock
-          <input
-            type="checkbox"
-            defaultChecked='true'
-            value='notZeroed'
-            onChange={e => this.filterStock(e.target)} />
-            </label>
+            <input
+              type="checkbox"
+              defaultChecked='true'
+              value='notZeroed'
+              onChange={e => this.filterStock(e.target)} />
+          </label>
             <br />
-            <label>Out of Stock
-          <input
+          <label>Out of Stock
+            <input
               type="checkbox"
               defaultChecked='true'
               value='zeroed'
               onChange={e => this.filterUnstocked(e.target)} />
             </label>
 
-            </div>
+          </div>
 
-
+          <div>
+            <h4>Category</h4>
+              {
+                categories.map(function(d) {
+                return (
+                  <span key={"blah"+d}>
+                  <label>{d}</label>
+                  <input  type="checkbox"
+                          defaultChecked="true"
+                          value={d}
+                          onChange={ e => cat_filter(e, disp) } />
+                  <br />
+                  </span>  )
+              })
+            }
+          </div>
       </div>
     )
   }

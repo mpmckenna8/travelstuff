@@ -11,3 +11,11 @@ export function setUser(username) {
     name: username
   }
 }
+
+
+export function setReturnHome(returnBool) {
+  return {
+    type: "SET_RETURN_HOME",
+    returnBool: returnBool
+  }
+}

@@ -36,8 +36,7 @@ describe('>>>>> testing reducer user :)', () => {
 
 describe('>>>>> testing reducer selectedItemClass: ', () => {
   it('+++ reducer for SELECT_ITEM_CLASS, used to set bag currently using', () => {
-    let state = 'boo';
-    state = selectedItemClass(state, {type:"SELECT_ITEM_CLASS", itemClass:"trashbag"})
+    let state = selectedItemClass(state, {type:"SELECT_ITEM_CLASS", itemClass:"trashbag"})
 
     expect(state).toEqual("trashbag")
   })
