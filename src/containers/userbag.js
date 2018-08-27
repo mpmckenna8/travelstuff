@@ -7,10 +7,14 @@ import categorizeItems from '../helpers/categorize.js'
 import {selectItemClass, editItemQuantity, addItemToPack} from '../actions/actions'
 import {deleteUserBag} from '../actions/collectionactions'
 
+
+import Inventory_Filter from './inventory_filter.js'
+
+
 class UserBag extends Component {
   // this function returns all items not in the current bag as in
   componentDidMount() {
-    console.log('the id for the bag from url, ', this.props.match.params.idnum)
+//    console.log('the id for the bag from url, ', this.props.match.params.idnum)
     var bagID = this.props.match.params.idnum.toString();
 
     this.props.dispatch(selectItemClass(bagID ))
@@ -48,7 +52,7 @@ class UserBag extends Component {
     return finalList;
   }
   incrementItemQuantity(item) {
-    console.log('increment item quant here, the props = ', this.props)
+  //  console.log('increment item quant here, the props = ', this.props)
     item.quantity = item.quantity + 1;
     this.props.dispatch(editItemQuantity(item, this.props.selectedItemClass.onCollection, this.props.user.name))
 
@@ -60,12 +64,12 @@ class UserBag extends Component {
   addItemToBag(item) {
     let upItem = item;
     upItem.quantity = 1;
-    console.log('need to edit up ', upItem);
+  //  console.log('need to edit up ', upItem);
     this.props.dispatch(addItemToPack(upItem, this.props.selectedItemClass.onCollection, this.props.user.name))
 
   }
   changeFilter(filterValue) {
-    console.log('change filter,', filterValue);
+//    console.log('change filter,', filterValue);
     // need to hide or show: potentialList and included
     //  document.body.
     if(filterValue === 'all') {
@@ -85,8 +89,64 @@ class UserBag extends Component {
 
   }
   deleteBag() {
-    console.log('need to delete the bag., thi', this.props)
+    console.log('need to delete the bag., this.props = ', this.props)
     this.props.dispatch(deleteUserBag(this.props.onCollection, this.props.user.id))
+  }
+  apply_filters(items_array) {
+    let itemList = items_array;
+    let filters = this.props.selectedItemClass.filters;
+    let tempList = []
+
+
+    let bagFilterList = filters.bags;
+
+    if(!filters.bags.includes('all')) {
+      for(let bagID of bagFilterList) {
+        let onFilterBag = this.props.collections.bags.find( (d) => {
+          return d.up_id.toString() === bagID.toString()
+        })
+      //  console.log('need to get items from ,', onFilterBag)
+        for(let includeItem of onFilterBag.items) {
+            if( !tempList.includes( d => d.p_id === includeItem.p_id) ) {
+              tempList.push( itemList.find( (d) => d.p_id.toString() === includeItem.p_id.toString()) )
+            }
+        }
+      }
+      itemList = tempList;
+
+    }
+    // apply the instock out of stock filter
+    if(filters.instock && filters.outofstock === false) {
+      itemList = itemList.filter( (d) => {
+        return d.quantity > 0;
+      })
+    }
+    if(filters.instock === false && filters.outofstock) {
+      itemList = itemList.filter( (d) => {
+        return d.quantity <= 0;
+      })
+    }
+    if(filters.instock === false && filters.outofstock === false) {
+      itemList = []
+    }
+    //console.log('filtered items are, but still need to filter categories', itemList, filters.categories)
+
+
+    if( filters.categories.length > 0 && itemList ) {
+      itemList = itemList.filter( (d) => {
+
+      //  console.log('filtering items by category', d, filters.categories.includes(d.category)
+      //)
+
+        return filters.categories.includes(d.category)
+      })
+    }
+    else {
+      itemList = []
+    }
+
+    return itemList
+
   }
   render() {
     let currentBag = {name:'none yet', description:'none found', items:[]}
@@ -116,13 +176,16 @@ class UserBag extends Component {
   )
 
     let addableItems = this.itemsNotInBag();
+    addableItems = this.apply_filters( addableItems )
+
 
     console.log('available items for this bag', addableItems)
 
     availableItems = categorizeItems(addableItems);
     let catArray = Object.keys(availableItems).sort();
 
-    let bagItems = categorizeItems(currentBag.items);
+    let bagItems = categorizeItems(this.apply_filters(currentBag.items));
+
 
     let bagCats = Object.keys(bagItems).sort();
 
@@ -147,6 +210,10 @@ class UserBag extends Component {
 
   }
 }}>Delete Bag</button>
+
+<div className="bagFilters">
+<Inventory_Filter />
+</div>
         <div className="included">
           <h2>Items currently in bag:</h2>
         {

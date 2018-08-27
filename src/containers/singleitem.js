@@ -4,17 +4,15 @@ import { connect } from 'react-redux'
 //import {Link } from 'react-router-dom'
 import '../style.css'
 import { editItem } from '../actions/actions'
+import { Link } from 'react-router-dom'
 
 class SingleItem extends Component {
   viewMode(currentItem) {
-    console.log('should be going to viewmode')
-  //  const urlid = parseInt(this.props.match.params.idnum)
 
     let infodivs = document.getElementsByClassName('itemDeets');
 
   //  let descdiv = infodivs.getElementsByClassName('description')
 
-  //  cancelEdit(descdiv, currentItem.description);
 
     for( let o of infodivs) {
   //    console.log(o.className)
@@ -34,15 +32,12 @@ class SingleItem extends Component {
           let toinfo = o.querySelector('span');
           let texttemp = toinfo.querySelector('input').value
 
-//      console.log(toinfo)
           toinfo.innerHTML = "<p>" + texttemp + '</p>'
         }
 
       }
 
 
-
-    // reput all the stuff where it should be.
   }
   saveChanges(inputDivs, currentItem) {
 
@@ -108,10 +103,7 @@ class SingleItem extends Component {
           editsaveButton.style = {display:"none"}
           this.saveChanges(infodivs, currentItem)
           this.viewMode(currentItem);
-
-
         }
-
 
   }
   componentDidMount() {
@@ -127,7 +119,7 @@ class SingleItem extends Component {
     let currentCollection = this.props.selectedItemClass.onCollection;
     console.log('current collection is', this.props)
     let currentItem = this.props.user_items.items.find(function(d){
-      console.log(d)
+    //  console.log(d)
       return ( parseInt(d.p_id, 10) === parseInt(urlid, 10) )
     });
     if( !currentItem ){
@@ -143,11 +135,27 @@ class SingleItem extends Component {
     let clickcount = 1;
     //document.getElementById('canceler').className
     console.log('currentItem = ', currentItem)
+    console.log('this.props = ', this.props)
+    let userbags = this.props.collections.bags;
+
+    let inbags = [];
+
+    for( let bag of userbags ) {
+      console.log(bag)
+      for( let bagitem of bag.items ) {
+      //  console.log('bagItem = ', bagitem)
+        if( bagitem.name === currentItem.name) {
+          console.log('item in bag, bag', bag)
+          var bageditem = { bag_name: bag.name, bagID: bag.up_id, quantity: bagitem.quantity };
+          inbags.push(bageditem);
+        }
+      }
+    }
 
     return (
       <div className="singleItemDiv">
       <div id="itemContainDiv">
-      <ItemView currentItem={currentItem} clickcount={clickcount} />
+      <ItemView currentItem={currentItem} clickcount={clickcount} inbags={inbags} />
       </div>
         <button id="editsave" onClick={() => {
             if(editModeBool){
@@ -181,9 +189,9 @@ function cancelEdit(catdiv, value) {
 
 
 
-function ItemView({currentItem}) {
+function ItemView({currentItem, clickcount, inbags}) {
 
-  console.log(currentItem, 'item to get rendered')
+  console.log(currentItem, 'item to get rendered', inbags )
   return (
     <div>
   <h2 className="itemHeader">{currentItem.name}</h2>
@@ -220,6 +228,24 @@ function ItemView({currentItem}) {
     <span>
       <p>{currentItem.weight}</p>
     </span>
+  </div>
+
+  <div className="itemBags">
+  <h4>In bags</h4>
+    {
+      inbags.map( (itemBag, index) => {
+
+        return (
+          <div className="itemBag">
+            <Link to={"/userbag/" + itemBag.bagID} ><div className="itemBagName">
+            {itemBag.bag_name}
+              </div></Link>
+              <div className="ItemBagQuantity"> quantity: {itemBag.quantity}
+              </div>
+            </div>
+        )
+      })
+    }
   </div>
   </div>
 )

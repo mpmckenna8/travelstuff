@@ -52,9 +52,15 @@ class Inventory_Filter extends Component {
     let cat_filter = this.filterByCategory;
     let disp = this.props.dispatch;
 
+    console.log('this props in inventory filter, ', this);
+    let show_collections = (this.props.selectedItemClass.onCollection === "all")
+
     return (
       <div>
         A bunch of stuff to filter the items.
+
+{
+      show_collections ? (
         <div id="bagFilters">
           <h4>Bag</h4>
           <span>
@@ -91,6 +97,9 @@ class Inventory_Filter extends Component {
                 )
           })}
         </div>
+      ) : ""
+
+  }
 
 
         <div>

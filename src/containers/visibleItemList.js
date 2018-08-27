@@ -25,7 +25,7 @@ class VisibleItemList  extends Component  {
 
   // will make a list of all the items applying the filters from selected_item_class_reducer
   filteredItems(itemL) {
-    console.log('applying filters')
+  //  console.log('applying filters')
     let itemList = itemL
     let filters = this.props.selectedItemClass.filters;
     let tempList = []
@@ -38,7 +38,7 @@ class VisibleItemList  extends Component  {
         let onFilterBag = this.props.collections.bags.find( (d) => {
           return d.up_id.toString() === bagID.toString()
         })
-        console.log('need to get items from ,', onFilterBag)
+      //  console.log('need to get items from ,', onFilterBag)
         for(let includeItem of onFilterBag.items) {
             if( !tempList.includes( d => d.p_id === includeItem.p_id) ) {
               tempList.push( itemList.find( (d) => d.p_id.toString() === includeItem.p_id.toString()) )
@@ -65,11 +65,11 @@ class VisibleItemList  extends Component  {
     //console.log('filtered items are, but still need to filter categories', itemList, filters.categories)
 
 
-    if( filters.categories.length > 0 ) {
+    if( filters.categories.length > 0 && itemList ) {
       itemList = itemList.filter( (d) => {
 
-        console.log('filtering items by category', d, filters.categories.includes(d.category)
-      )
+      //  console.log('filtering items by category', d, filters.categories.includes(d.category)
+      //)
 
         return filters.categories.includes(d.category)
       })
@@ -88,10 +88,14 @@ class VisibleItemList  extends Component  {
     let onClass = this.props.selectedItemClass.onCollection;
 
     if(onClass !== "all" ) {
+
       itemarray = this.props.collections.bags.find( function(dd) {
         //console.log('dd = ', dd)
         return (dd.up_id.toString() === onClass.toString())
-      }).items
+      })
+      if(itemarray ) {
+        itemarray = itemarray.items
+      }
     }
 
     itemarray = this.filteredItems(itemarray);

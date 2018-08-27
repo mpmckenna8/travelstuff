@@ -155,3 +155,16 @@ a:visited {
 .noItem {
   background: coral;
 }
+
+.itemBag {
+  display: flex;
+  flex-direction: row;
+}
+
+.itemBagName {
+  flex: 4;
+}
+
+.ItemBagQuantity {
+  flex: 1;
+}
