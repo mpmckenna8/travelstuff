@@ -113,6 +113,7 @@ class SingleItem extends Component {
   }
 
   render() {
+
     let editModeBool = false;
     console.log('idnumber passed in from uri', this.props.match.params.idnum)
     const urlid = parseInt(this.props.match.params.idnum, 10)
@@ -122,6 +123,7 @@ class SingleItem extends Component {
     //  console.log(d)
       return ( parseInt(d.p_id, 10) === parseInt(urlid, 10) )
     });
+
     if( !currentItem ){
       currentItem = {
         name:'not here yet ',
@@ -236,7 +238,7 @@ function ItemView({currentItem, clickcount, inbags}) {
       inbags.map( (itemBag, index) => {
 
         return (
-          <div className="itemBag">
+          <div className="itemBag" key={ "bagsitem" + index }>
             <Link to={"/userbag/" + itemBag.bagID} ><div className="itemBagName">
             {itemBag.bag_name}
               </div></Link>

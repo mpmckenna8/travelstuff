@@ -144,7 +144,7 @@ class AddItem extends Component {
       </div>
       {this.props.returnHome ? ( <Redirect to="/home" /> ): (<span></span>)}
 
-    </div>
+      </div>
     )
   }
 }

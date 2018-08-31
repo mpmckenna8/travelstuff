@@ -1,7 +1,11 @@
 // make a new bag containers
 import React, { Component } from 'react'
-import { addItemClass } from '../actions/collectionactions'
 import { connect } from 'react-redux'
+import {Redirect, withRouter} from 'react-router-dom'
+
+
+import { addItemClass } from '../actions/collectionactions'
+import {setReturnHome} from '../actions/useracts'
 
 
 import AddExistingBagList from './addExistingBagList';
@@ -15,7 +19,7 @@ class AddBag extends Component {
     console.log('this', this)
     let dispatch = this.props.dispatch;
     let form = document.getElementById('bagForm');
-      let formData = new FormData(form)
+    let formData = new FormData(form)
     //  console.log('formdata = ', formData.keys())
       /*
       for(let i of formData.keys()) {
@@ -30,7 +34,8 @@ class AddBag extends Component {
         console.log('no name input found');
       }
 
-      dispatch(addItemClass(formobj))
+      dispatch(addItemClass(formobj));
+      dispatch(setReturnHome(true));
 
       console.log('need to handle form submission', formobj)
   }
@@ -42,6 +47,12 @@ class AddBag extends Component {
 
     return (
       <div>
+
+        {this.props.user.returnHome ? (
+           <Redirect to="/home" />
+         ): (
+           <span></span>)
+         }
 
         <h3>Add a new bag</h3>
         <div>

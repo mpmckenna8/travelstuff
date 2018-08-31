@@ -52,34 +52,57 @@ class Inventory_Filter extends Component {
     let cat_filter = this.filterByCategory;
     let disp = this.props.dispatch;
 
-    console.log('this props in inventory filter, ', this);
+
+    let collection_filters = this.props.selectedItemClass.filters.bags;
+
+//console.log(collection_filters.includes('all'))
     let show_collections = (this.props.selectedItemClass.onCollection === "all")
+
+    let category_filters = this.props.selectedItemClass.filters.categories;
+
+//        console.log('this props in inventory filter, ', this, 'categories = ', categories);
 
     return (
       <div>
-        A bunch of stuff to filter the items.
+        Filters
+
+        <div>
+          <h4>Category</h4>
+            {
+              categories.map(function(d) {
+              //  console.log(d, category_filters.includes(d) );
+              return (
+                <span key={"blah"+d}>
+                <label>{d}</label>
+                <input  type="checkbox"
+                        defaultChecked={ category_filters.includes(d) }
+                        value={d}
+                        onChange={ e => cat_filter(e, disp) } />
+                <br />
+                </span>  )
+            })
+          }
+        </div>
 
 {
       show_collections ? (
         <div id="bagFilters">
           <h4>Bag</h4>
           <span>
-          <label>
-            All
-          <input
-            type="checkbox"
-            defaultChecked='false'
-            value='all'
-            onChange={e => this.filterCollection(e)} >
-          </input>
-          </label>
-
+            <label>
+              All
+            <input
+              type="checkbox"
+              checked={ collection_filters.includes('all') }
+              value='all'
+              onChange={e => this.filterCollection(e)} >
+            </input>
+            </label>
           </span>
-
           <br />
           {
             baggies.map((bag, i) => {
-          //    console.log(bag)
+              console.log('bag in map ', bag)
               let bagname = bag.name;
               return (
                 <span key={"bagfilter" + bagname}>
@@ -87,8 +110,8 @@ class Inventory_Filter extends Component {
                   {bagname}
                   <input
                     type="checkbox"
-                //    defaultChecked='false'
-                    value={bag.up_id || 'all'}
+                    checked={collection_filters.includes(bag.up_id)}
+                    value={ bag.up_id }
                     onChange={(e) => this.filterCollection(e)} >
                   </input>
                 </label>
@@ -122,26 +145,27 @@ class Inventory_Filter extends Component {
 
           </div>
 
-          <div>
-            <h4>Category</h4>
-              {
-                categories.map(function(d) {
-                return (
-                  <span key={"blah"+d}>
-                  <label>{d}</label>
-                  <input  type="checkbox"
-                          defaultChecked="true"
-                          value={d}
-                          onChange={ e => cat_filter(e, disp) } />
-                  <br />
-                  </span>  )
-              })
-            }
-          </div>
+
       </div>
     )
   }
 }
+
+
+
+          /* The selection for all bags which I decided not to use
+          <label>
+            All
+          <input
+            type="checkbox"
+            defaultChecked='false'
+            value='all'
+            onChange={e => this.filterCollection(e)} >
+          </input>
+          </label>
+
+          */
+
 
 function mapStateToProps(state) {
   return state

@@ -14,7 +14,7 @@ export const filterByCategories = function(category) {
 
 export const fetchBagsIfNeeded = () => (dispatch, getState) => {
 
-  console.log('after fetchbags if needed', getState());
+//  console.log('after fetchbags if needed', getState());
   if(getState().collections.needsUpdate) {
     return dispatch(fetchBags())
   }
@@ -41,7 +41,7 @@ console.log("need to fetch the bags",{'name': 'getall the bags'} )
 export const REQUEST_BAGS = "REQUEST_BAGS";
 
 export function requestBags(){
-  console.log('requesting bags')
+//  console.log('requesting bags')
   return {
     type:REQUEST_BAGS
   }
@@ -50,7 +50,7 @@ export function requestBags(){
 export const RECIEVE_BAGS = "RECIEVE_BAGS"
 
 export const recieveBags = function(bags) {
-  console.log('recieved the bags from req i think,', bags)
+//  console.log('recieved the bags from req i think,', bags)
   return {
     type:RECIEVE_BAGS,
     bags: bags
@@ -62,7 +62,7 @@ export const ADD_ITEM_CLASS = "ADD_ITEM_CLASS";
 
 // note in the db and display this will be collections or bags or something else
 export function addItemClass(newItemClass) {
-  console.log('also need to add bag to db', newItemClass)
+//  console.log('also need to add bag to db', newItemClass)
 
   return function (dispatch) {
     dispatch(addBagToDb(newItemClass));
@@ -86,7 +86,7 @@ export function addItemClass(newItemClass) {
 }
 
 function badAddedToDB(newbag) {
-  console.log('added new bag to db', newbag)
+//  console.log('added new bag to db', newbag)
   return {
     type:"ADDED_BAG_TO_DB",
     mesg: "maybe worked",
@@ -95,7 +95,7 @@ function badAddedToDB(newbag) {
 }
 
 export function fetchPacks(userPacks) {
-  console.log('fetching user packs')
+//  console.log('fetching user packs')
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'http://localhost:8080/userpacks', true);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
@@ -135,8 +135,8 @@ function addUserBagToDb(newBag, userName) {
   let loadcounter = 0;
   xhr.onloadend = function(e) {
     loadcounter = loadcounter + 1;
-    console.log('loadcounter = ', loadcounter)
-    console.log('sent newbag and got response,', xhr)
+  //  console.log('loadcounter = ', loadcounter)
+  //  console.log('sent newbag and got response,', xhr)
     if(xhr.response) {
       dispatch( userBagAddedToDB( JSON.parse(xhr.response) ) )
     }
@@ -171,7 +171,7 @@ export const DELETE_USER_BAG = "DELETE_USER_BAG";
 
 export function deleteUserBag(user_bag_id, user_id) {
 
-  console.log('need to delete bag in the db')
+//  console.log('need to delete bag in the db')
   var xhr = new XMLHttpRequest();
   xhr.open('POST', 'http://localhost:8080/collections/deleteuserbag', true);
 

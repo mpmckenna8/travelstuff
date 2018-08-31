@@ -89,7 +89,7 @@ class UserBag extends Component {
 
   }
   deleteBag() {
-    console.log('need to delete the bag., this.props = ', this.props)
+  //  console.log('need to delete the bag., this.props = ', this.props)
     this.props.dispatch(deleteUserBag(this.props.onCollection, this.props.user.id))
   }
   apply_filters(items_array) {
@@ -137,8 +137,12 @@ class UserBag extends Component {
 
       //  console.log('filtering items by category', d, filters.categories.includes(d.category)
       //)
-
-        return filters.categories.includes(d.category)
+      if(d) {
+        return filters.categories.includes(d.category);
+      }
+      else {
+        return false;
+      }
       })
     }
     else {
@@ -215,7 +219,7 @@ class UserBag extends Component {
 <Inventory_Filter />
 </div>
         <div className="included">
-          <h2>Items currently in bag:</h2>
+          <h2>Items currently in collection:</h2>
         {
           bagCats.map((category, i) => {
             return (
@@ -252,7 +256,7 @@ class UserBag extends Component {
         }
         </div>
         <div className="potentialList">
-          <h2>Items not yet in this bag:</h2>
+          <h2>Items not yet in this collection:</h2>
         {catArray.map((category, i) => {
           return (
             <div key={i} >

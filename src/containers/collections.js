@@ -20,22 +20,24 @@ class Collections extends Component {
             <Bag bagObj={item} dispatch={this.props.dispatch} key={i} ></Bag>
           )
         })}
-        <p>default should be all or something</p>
+        <Link to="/newbag"><p>Add a new bag</p></Link>
       </div>
     )
   }
 }
 
 const Bag = ( bagObj, dispatch, key ) => {
-  console.log('bagobj = ', bagObj, dispatch)
+  //console.log('bagobj = ', bagObj, dispatch)
 
-
-  return (<div onClick={() => {
+  return (
+    <div onClick={() => {
   //  dispatch(selectItemClass(bagObj.bagObj.up_id))
-  }}> <Link to={ '/userbag/' +  bagObj.bagObj.up_id }  >
+    }}>
+        <Link to={ '/userbag/' +  bagObj.bagObj.up_id }  >
                   {bagObj.bagObj.name}
-                  </Link>
-          </div>)
+        </Link>
+    </div>
+    )
 }
 
 

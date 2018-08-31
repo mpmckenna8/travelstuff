@@ -1,14 +1,19 @@
 // reducer for the selected clientclass
 import {SELECT_ITEM_CLASS} from  '../actions/actions'
+import { RECIEVE_BAGS} from '../actions/collectionactions'
+
 
 function selectedItemClass(state={onCollection:'all', filters:{
     instock:true,
     outofstock:true,
-    bags:['all'],
+    bags:[],
     all:true,
     categories:[]
 }}, action) {
   switch (action.type) {
+    case RECIEVE_BAGS:
+      console.log('recieved bags need to set up the collections filter', action);
+      return Object.assign({}, state);
     case SELECT_ITEM_CLASS:
       state.onCollection = action.itemClass
       return Object.assign({}, state)
@@ -24,7 +29,7 @@ function selectedItemClass(state={onCollection:'all', filters:{
         state.filters.bags.push(action.collection_id)
       }
       else {
-        state.filters.bags = state.filters.bags.filter( (d) =>  d !== action.collection_id)
+        state.filters.bags = state.filters.bags.filter( (d) =>   d.toString() !== action.collection_id.toString())
       }
       return Object.assign({}, state)
     case "DELETE_USER_BAG":
@@ -49,7 +54,13 @@ function selectedItemClass(state={onCollection:'all', filters:{
 
       case "RECIEVE_ITEMS":
           console.log('need to make some categories in the filter', action);
-          let categories =[]
+          let categories =[];
+
+          // also get all the bags
+          state.filters.bags = action.userPacks.map( (d) => d.up_id);
+          state.filters.bags.push('all');
+
+
           action.items.forEach( (x) => {
             if(!categories.includes(x.category)) {
               categories.push(x.category)
@@ -57,7 +68,7 @@ function selectedItemClass(state={onCollection:'all', filters:{
           })
         state.filters.categories = categories;
 
-        return state;
+        return Object.assign({}, state);
     default:
       return state;
   }

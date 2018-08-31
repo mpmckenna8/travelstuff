@@ -32,22 +32,26 @@ class VisibleItemList  extends Component  {
 
 
     let bagFilterList = filters.bags;
+    console.log('bagfilterList = ', bagFilterList)
+    if( !bagFilterList.includes('all') ) {
+    for(let bagID of bagFilterList) {
 
-    if(!filters.bags.includes('all')) {
-      for(let bagID of bagFilterList) {
         let onFilterBag = this.props.collections.bags.find( (d) => {
           return d.up_id.toString() === bagID.toString()
         })
+        if(onFilterBag) {
       //  console.log('need to get items from ,', onFilterBag)
-        for(let includeItem of onFilterBag.items) {
+          for(let includeItem of onFilterBag.items) {
             if( !tempList.includes( d => d.p_id === includeItem.p_id) ) {
               tempList.push( itemList.find( (d) => d.p_id.toString() === includeItem.p_id.toString()) )
             }
+          }
         }
       }
       itemList = tempList;
-
     }
+
+
     // apply the instock out of stock filter
     if(filters.instock && filters.outofstock === false) {
       itemList = itemList.filter( (d) => {
@@ -91,7 +95,12 @@ class VisibleItemList  extends Component  {
 
       itemarray = this.props.collections.bags.find( function(dd) {
         //console.log('dd = ', dd)
-        return (dd.up_id.toString() === onClass.toString())
+        if(dd && onClass) {
+          return (dd.up_id.toString() === onClass.toString())
+        }
+        else {
+          return false
+        }
       })
       if(itemarray ) {
         itemarray = itemarray.items

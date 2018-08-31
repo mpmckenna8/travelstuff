@@ -40,7 +40,7 @@ function items(
     case ADD_ITEM:
     // want to actually add the item to the db in the action not here
   //    console.log('add item act', action)
-      console.log('addit state, ', state)
+  //    console.log('addit state, ', state)
       return Object.assign({}, state, {
         isFetching:false,
         didInvalidate:false,
