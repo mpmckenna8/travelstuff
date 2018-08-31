@@ -6,16 +6,18 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import {selectItemClass} from '../actions/actions';
-import {filterUnstockedItems, filterStockedItems, filterCollections, filterByCategories} from '../actions/collectionactions'
+import {filterUnstockedItems, filterStockedItems, filterCollections, filterByCategories, toggleFilterDisplay} from '../actions/collectionactions'
 
 class Inventory_Filter extends Component {
+  toggleFilterVisibility() {
+    this.props.dispatch(toggleFilterDisplay())
+  }
   filterCollection(e) {
-    console.log(e.value)
+    //console.log(e.value)
     let collection_id = e.target
     console.log('need to filter collection by', collection_id.value);
     console.log('is it checked', collection_id.checked)
     this.props.dispatch(filterCollections(collection_id.value, collection_id.checked))
-
 
   }
   filterByCategory(e, disp) {
@@ -30,7 +32,7 @@ class Inventory_Filter extends Component {
     this.props.dispatch(filterStockedItems(e.checked))
   }
   filterUnstocked(e) {
-    console.log('checkbox val ', e.checked)
+  //  console.log('checkbox val ', e.checked)
     this.props.dispatch(filterUnstockedItems(e.checked))
   }
 
@@ -62,27 +64,39 @@ class Inventory_Filter extends Component {
 
 //        console.log('this props in inventory filter, ', this, 'categories = ', categories);
 
+    let maximize = "+";
+    let minimize = "-"
+
+    let visibleFilters = this.props.selectedItemClass.filters.visible;
     return (
       <div>
-        Filters
-
-        <div>
-          <h4>Category</h4>
-            {
-              categories.map(function(d) {
-              //  console.log(d, category_filters.includes(d) );
-              return (
-                <span key={"blah"+d}>
-                <label>{d}</label>
-                <input  type="checkbox"
-                        defaultChecked={ category_filters.includes(d) }
-                        value={d}
-                        onChange={ e => cat_filter(e, disp) } />
-                <br />
-                </span>  )
-            })
+        <h2 onClick={(e) => {
+            //console.log('clicked ', e)
+            this.toggleFilterVisibility()
           }
-        </div>
+        } >
+          Filters { visibleFilters ? minimize : maximize }
+        </h2>
+
+        <div className={  "itemFilters " + (visibleFilters ? 'visibleFilters' : 'invisibleFilters')}>
+
+          <div>
+            <h4>Category</h4>
+              {
+                categories.map(function(d) {
+                  //  console.log(d, category_filters.includes(d) );
+                  return (
+                    <span key={"blah"+d}>
+                <label>{d}</label>
+                  <input  type="checkbox"
+                          defaultChecked={ category_filters.includes(d) }
+                          value={d}
+                          onChange={ e => cat_filter(e, disp) } />
+                  <br />
+                  </span>  )
+              })
+            }
+          </div>
 
 {
       show_collections ? (
@@ -102,7 +116,7 @@ class Inventory_Filter extends Component {
           <br />
           {
             baggies.map((bag, i) => {
-              console.log('bag in map ', bag)
+            //  console.log('bag in map ', bag)
               let bagname = bag.name;
               return (
                 <span key={"bagfilter" + bagname}>
@@ -145,7 +159,7 @@ class Inventory_Filter extends Component {
 
           </div>
 
-
+          </div>
       </div>
     )
   }

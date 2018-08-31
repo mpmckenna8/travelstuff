@@ -19,6 +19,9 @@ import AddExistingItem from '../containers/addExistingItem';
 import AddExistingBag from '../containers/addExistingBag'
 import UserBag from '../containers/userbag';
 import history from '../history';
+import Login from '../login/login.js'
+
+import Signup from '../login/signup.jsx'
 
 
 const App = ({params}) => {
@@ -37,6 +40,10 @@ const App = ({params}) => {
       <Route path="/newbag" component={NewBag}/>
       <Route path="/item/:idnum" component={SingleItem}/>
       <Route path="/userbag/:idnum" component={UserBag}/>
+      <Route path="/userbag/:idnum" component={UserBag}/>
+      <Route path="/login" component={Login}/>
+      <Route path="/signup" component={Signup}/>
+
       <Route component={NoMatch}/>
     </Switch>
     <Footer />

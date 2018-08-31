@@ -225,3 +225,10 @@ export function filterCollections(collection, dofilter) {
     collection_id: collection
   }
 }
+
+export function toggleFilterDisplay() {
+
+  return {
+    type: "TOGGLE_FILTER_DISPLAY"
+  }
+}

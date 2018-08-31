@@ -38,9 +38,9 @@ module.exports = function(app, passport) {
     // =====================================
     // show the login form
     app.get('/login', function(req, res) {
-
+        console.log('trying to log in a user')
         // render the page and pass in any flash data if it exists
-    //    res.render('login.ejs', { message: req.flash('loginMessage') });
+        res.sendFile( path.join(__dirname,'../../','src/login/login.html') );
     });
 
     // process the login form only really works from same domain
@@ -90,7 +90,7 @@ module.exports = function(app, passport) {
     app.get('/signup', function(req, res) {
 
         // render the page and pass in any flash data if it exists
-    //    res.render('signup.ejs', { message: req.flash('signupMessage') });
+        res.sendFile( path.join(__dirname,'../../','src/login/signup.html') );
     });
 
     // process the signup form

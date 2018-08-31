@@ -3,12 +3,14 @@ import {SELECT_ITEM_CLASS} from  '../actions/actions'
 import { RECIEVE_BAGS} from '../actions/collectionactions'
 
 
-function selectedItemClass(state={onCollection:'all', filters:{
+function selectedItemClass(state={onCollection:'all',
+  filters:{
     instock:true,
     outofstock:true,
     bags:[],
     all:true,
-    categories:[]
+    categories:[],
+    visible: false
 }}, action) {
   switch (action.type) {
     case RECIEVE_BAGS:
@@ -38,6 +40,10 @@ function selectedItemClass(state={onCollection:'all', filters:{
 
       return Object.assign({},state)
 
+    case "TOGGLE_FILTER_DISPLAY":
+
+      state.filters.visible = !state.filters.visible;
+      return Object.assign({}, state);
 
       case "FILTER_CATEGORY":
         let category = action.category;
