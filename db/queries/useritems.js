@@ -16,9 +16,12 @@ function userItems(username, cb) {
 
 
   let client = new pg.Client(conString)
-  client.connect();
   let userquerystring = 'SELECT * FROM users where name=$1';
   let itemqueryString = 'SELECT * FROM items where p_id in (';
+
+
+
+  client.connect();
 
   client.query(userquerystring, [username],function(err, res) {
     if(err) {
@@ -40,6 +43,9 @@ function userItems(username, cb) {
 
       console.log(inventory.toString())
     }
+
+    console.log(inventory)
+    if( inventory.length > 0 ) {
 
     itemqueryString = itemqueryString + inventory.toString() + ');'
     client.query(itemqueryString, (err,res) => {
@@ -66,6 +72,11 @@ function userItems(username, cb) {
 
       client.end();
     })
+  }
+  else {
+    client.end()
+    cb("no items",{items:[], packs: []} )
+  }
   })
 }
 

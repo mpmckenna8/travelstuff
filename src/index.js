@@ -6,7 +6,7 @@ import { render } from 'react-dom'
 import rootReducer from './reducers'
 import Root from './components/root'
 
-import { selectItemClass, fetchItemsIfNeeded } from './actions/actions.js'
+import { selectItemClass, fetchItemsIfNeeded, getEveryItem } from './actions/actions.js'
 import { setUser } from './actions/useracts.js'
 import { fetchBagsIfNeeded} from './actions/collectionactions.js'
 
@@ -23,18 +23,19 @@ const store = createStore(
 );
 
 
-store.dispatch(setUser('test'))
+//store.dispatch(setUser('test'))
 
 store.dispatch(selectItemClass('all'));
 
 store.dispatch(fetchItemsIfNeeded('all', 'test'))
-  .then(() => {
+
+
+store.dispatch(fetchBagsIfNeeded("all", 'test'))
+.then(() => {
     console.log('should have fetched the items')
-  }
+  })
 
-  )
-
-store.dispatch(fetchBagsIfNeeded())
+store.dispatch(getEveryItem())
 
 
 render(

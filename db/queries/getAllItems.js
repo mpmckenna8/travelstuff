@@ -18,7 +18,7 @@ function getAllItems(cb){
         console.log('error with the db query', err)
         client.end()
       }
-  //    console.log(res.rows)
+    //  console.log('all items should be ', res.rows)
       cb(err, res.rows)
       client.end()
 

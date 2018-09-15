@@ -12,29 +12,16 @@ import { Link } from 'react-router-dom'
 class AddExistingItemList extends Component {
 
   itemsUserDontHave() {
-      let itemsList = []
-
-      if(this.props.collections.bags) {
-      let bagIndex = this.props.collections.bags.findIndex( (d) => {
-        return d.up_id.toString() === this.props.selectedItemClass.onCollection.toString()
-      })
-
-      if(this.props.user_items.items) {
-          if(this.props.selectedItemClass.onCollection !== "all") {
-              itemsList = this.props.collections.bags[bagIndex];
-            }
-          else {
-            itemsList = this.props.user_items.items
-          }
+        let itemsList = this.props.user_items.all.items
 
           let userItems = this.props.user_items.items;
 
-          itemsList = userItems.filter( function(d) {
-          //  console.log(( userItems.findIndex( (q) => q.p_id === d.p_id ) ))
+          itemsList = itemsList.filter( function(d) {
+            //  console.log(( userItems.findIndex( (q) => q.p_id === d.p_id ) ))
             return !( userItems.findIndex( (q) => (q.p_id === d.p_id) ) >= 0 )
           })
-        }
-      }
+
+          console.log('itemlist after filter', itemsList)
 
     return itemsList
   }
@@ -43,6 +30,7 @@ class AddExistingItemList extends Component {
         //console.log('hopefully items user dont have', this.itemsUserDontHave())
         let dbItems = this.itemsUserDontHave() //this.props.itemsByType.db;
 
+  //      console.log('the dbItems', dbItems)
 
       return (
         <div>

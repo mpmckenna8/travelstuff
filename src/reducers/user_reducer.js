@@ -3,7 +3,7 @@
 import {SET_USER} from '../actions/useracts.js'
 
 
-function user(state={name:"test", id: 1, returnHome: false}, action) {
+function user(state={name:"test", id: 1, returnHome: false, loggingIn: false, needsRefresh: false}, action) {
 
   switch(action.type) {
     case SET_USER:{
@@ -18,6 +18,13 @@ function user(state={name:"test", id: 1, returnHome: false}, action) {
     }
     case "SET_RETURN_HOME": {
       state.returnHome = action.returnBool;
+      return Object.assign({}, state)
+    }
+    case "LOGIN_SUCCESS": {
+      state.name = action.user.email;
+      state.id = action.user.u_id;
+      state.loggingIn = true;
+
       return Object.assign({}, state)
     }
 

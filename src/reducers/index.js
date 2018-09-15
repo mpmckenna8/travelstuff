@@ -56,7 +56,7 @@ function items(
 let tempPid = 1000000;
 
 // should delete the items from this maybe
-function user_items(state={ items:[], lastUpdated: 0, isFetching: false }, action) {
+function user_items(state={all:{items:[]}, items:[], lastUpdated: 0, isFetching: false }, action) {
   switch (action.type) {
     case RECIEVE_ITEMS:
       console.log('action in recieve items user_items,', action);
@@ -120,6 +120,14 @@ function user_items(state={ items:[], lastUpdated: 0, isFetching: false }, actio
       state.all.items.push(action.newItem);
 
       return Object.assign({},state);
+    }
+    case 'RECIEVED_ALL_ITEMS': {
+      console.log('action items for all items, ', action.items)
+      let tempstate = state;
+      tempstate.all.items = action.items;
+
+      return Object.assign({},tempstate);
+
     }
     default:
       return state;

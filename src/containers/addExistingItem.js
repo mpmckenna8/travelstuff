@@ -19,11 +19,11 @@ class AddExistingItem extends Component {
   }
 
   render() {
-    console.log('props in addexiting item', this.props);
+    console.log('props in addexisting item', this.props);
     let currentItemId = this.props.match.params.idnum;
-
+  //  console.log('this.props.dbItems', this.props.dbItems)
     let currentItem = this.props.dbItems.find(function(d) {
-      console.log(d.p_id, 'and compared to', currentItemId)
+    //  console.log(d.p_id, 'and compared to', currentItemId)
       return ( d.p_id === parseInt(currentItemId, 10) );
     })
 
@@ -51,9 +51,11 @@ const mapStateToProps = state => {
     dbItems:[],
     user: state.user
   }
-  if(state.itemsByType.db){
-    dbItems.dbItems = state.itemsByType.db.items;
+  if(state.user_items.all.items){
+    dbItems.dbItems = state.user_items.all.items;
   }
+
+  console.log(dbItems)
   return dbItems;
 }
 

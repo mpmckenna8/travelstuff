@@ -6,10 +6,11 @@ import { shallow, mount } from 'enzyme';
 import renderer from 'react-test-renderer'
 import { Thunk } from 'redux-testkit';
 
-import {fetchItems, requestItems, itemAddDBresponse} from '../src/actions/actions.js'
+import {fetchItems, requestItems, itemAddDBresponse} from '../actions/actions.js'
+import {attemptLogIn , signupUser} from '../actions/useracts.js'
 
-import user from '../src/reducers/user_reducer.js'
-import selectedItemClass from '../src/reducers/selected_item_class_reducer.js'
+import user from '../reducers/user_reducer.js'
+import selectedItemClass from '../reducers/selected_item_class_reducer.js'
 
 
 describe('>>>>> testing reducer user :)', () => {
@@ -31,14 +32,33 @@ describe('>>>>> testing reducer user :)', () => {
 
   })
 
-})
+
+  it("+++ Test to log a user on, ", () => {
+    let state = {name:"test", id: 1, returnHome: false, loggingIn: false, needsRefresh: false}
+
+    state = user(state, {type:"LOGIN_SUCCESS",  user:{email:'admin', u_id: 4}})
+
+    expect(state).toEqual({"id": 4, "loggingIn": true, "name": "admin", "needsRefresh": false, "returnHome": false})
+
+    })
+
+    it("+++ Test to a log a on with the db, ", async () => {
+      const Signon = await Thunk(attemptLogIn).execute({name: "admin", password:"pass"})
+
+      //console.log(Signon)
+      expect( Signon.length ).toBe(1);
+    })
+
+
+  })
+
 
 
 describe('>>>>> testing reducer selectedItemClass: ', () => {
   it('+++ reducer for SELECT_ITEM_CLASS, used to set bag currently using', () => {
     let state = selectedItemClass(state, {type:"SELECT_ITEM_CLASS", itemClass:"trashbag"})
 
-    expect(state).toEqual("trashbag")
+    expect(state.onCollection).toEqual("trashbag")
   })
 })
 
@@ -50,5 +70,16 @@ describe(">>>>>>> testing db connectivity. ", () => {
     expect( fetchstuff[0].isPlainObject()).toBe(true)
     //console.log('trying to test fetching', fetchstuff)
   });
+
+})
+
+describe(">>>>>>> Testing signing up a user.  ", () => {
+
+  it('+++ test to sign up a new user', async () => {
+    const SignupUser = await Thunk(signupUser).execute({name:'k', password: "pass"})
+
+  })
+
+
 
 })

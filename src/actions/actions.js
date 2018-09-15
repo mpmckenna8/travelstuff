@@ -6,7 +6,6 @@ const urlStart = "http://localhost:8080/"
 
 
 // need to think or implement a better way to do this
-let username = 'test';
 
 // actions to get items
 // itemclass will basically be how to query items from the server
@@ -28,13 +27,49 @@ export function invalidateItemClass(itemClass) {
   }
 }
 
+export function getEveryItem() {
+  let getAllurl = 'http://localhost:8080/allitems';
 
+return function(dispatch) {
+  fetch(getAllurl, {
+    //credentials: 'include', //pass cookies, for authentication
+    method: 'GET',
+    headers: {
+    'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+    'Content-Type': 'application/json; charset=UTF-8'
+    },
+    })
+    .then(res =>  res.json())
+    .then(json => {
+        // handle the incoming new items:
+        console.log('actually made a new fetch for ALL items , ', json)
+        return dispatch(recievedAllItems(json))
+        // return dispatch(recievedAllItems(json))
+        }
+      )
+      .catch(function(error) {
+        console.log('There has been a problem with your fetch operation getting the all items which needs to be handeled better: ' + error.message);
+      })
+
+      }
+
+
+}
+
+function recievedAllItems(items) {
+  console.log('recived all items ')
+  return {
+    type:'RECIEVED_ALL_ITEMS',
+    items:items.items
+  }
+}
 export const REQUEST_ITEMS = "REQUEST_ITEMS";
 
 export function requestItems(itemClass, userName) {
   return {
     type: REQUEST_ITEMS,
-    itemClass
+    itemClass,
+    userName
   }
 }
 
@@ -43,7 +78,7 @@ export function requestItems(itemClass, userName) {
 export const RECIEVE_ITEMS = "RECIEVE_ITEMS";
 
 export function recieveItems(itemClass, json, userName) {
-//  console.log('recieved items json = ', json);
+  //console.log('recieved items json = ', json, 'for , ', userName);
 
   let userBags = [];
   if(json.data.bags) {
@@ -66,23 +101,36 @@ export function recieveItems(itemClass, json, userName) {
 // a thunk action creator to fetch our items
 export function fetchItems(itemClass, userName) {
   // wierd thunk think is you do all the stuff in a callback like:
+//  console.log('need to fetch items for , ', userName)
   return function(dispatch) {
     //updates state to show an api call happening
-    dispatch(requestItems(itemClass));
+
+    dispatch(requestItems(itemClass, userName));
 
     if(itemClass === 'db') {
       userName = 'all'
     }
-    let fetchUrl = 'http://localhost:8080/items/' +  userName;
+
+    console.log('fetching items for: ', userName)
+
+
+    var fetchUrl = 'http://localhost:8080/items/' +  userName;
+    console.log('fetching items for: ', fetchUrl);
+
+    let USERNAME = userName;
+
     // we return our fetch promise and it's result
+
     return fetch(fetchUrl)
-      .then(res => res.json())
-      .then(json =>
+      .then(res =>  res.json())
+      .then(json => {
           // handle the incoming new items:
-          dispatch(recieveItems(itemClass, json, userName))
+          console.log('actually made a new fetch for items for, ', USERNAME)
+           return dispatch(recieveItems(itemClass, json, userName))
+          }
         )
         .catch(function(error) {
-          console.log('There has been a problem with your fetch operation which needs to be handeled better: ' + error.message);
+          console.log('There has been a problem with your fetch operation getting the items for a user which needs to be handeled better: ' + error.message);
   });
 
   }
@@ -92,10 +140,10 @@ export function fetchItems(itemClass, userName) {
 
 
 const shouldFetchItems = (state, itemClass) => {
-  const items = state.user_items[itemClass];
+  const items = state.user_items.items;
   console.log("should fetch items?", state.user_items)
 
-  if(!items){
+  if(items.length < 1){
     return true
   }
   if(items.isFetching){
@@ -107,19 +155,19 @@ const shouldFetchItems = (state, itemClass) => {
 
 
 export const fetchItemsIfNeeded = (itemClass, userName) => (dispatch, getState) => {
+  console.log('is it trying to fetch the items? ', itemClass)
+  let shouldFetch = shouldFetchItems(getState(),itemClass);
+  console.log(shouldFetch)
 //  console.log('state in fetch items if needed for ,', itemClass,  getState())
   if(shouldFetchItems(getState(),itemClass)) {
-    username = getState().user.name;
-    return dispatch(fetchItems(itemClass, username))
+    userName = getState().user.name;
+    return dispatch(fetchItems(itemClass, userName))
   }
 }
 
 
 
 export const ADD_ITEM = "ADD_ITEM"
-
-
-
 
 
 export const EDIT_ITEM = "EDIT_ITEM"
@@ -234,9 +282,9 @@ export const itemAddDBresponse = ( res, item ) => {
 
 export const ADD_EXISTING_ITEM = "ADD_EXISTING_ITEM";
 
-export const addExistingItem = (newItem, collection, username) => {
+export const addExistingItem = (newItem, collection, userName) => {
 
-  addExistingItemToDb(newItem, username);
+  addExistingItemToDb(newItem, userName);
 
 
   return {
@@ -275,7 +323,7 @@ function addExistingItemToDb(item, user) {
   xhr.send(JSON.stringify(sendjson));
 
   xhr.onloadend = function(res) {
-    console.log('sent data off and got res,', res)
+    console.log('sent data off and got res for adding the existing item,', res)
   }
 
 }

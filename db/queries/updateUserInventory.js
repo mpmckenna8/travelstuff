@@ -10,17 +10,20 @@ var conString = "postgres://matthewmckenna@localhost/auth";
 
 function updateUserInventory(userName, newItemId, quantity=1) {
 
-  console.log('need to update,', userName, newItemId)
+  console.log('need to update,', userName, newItemId, quantity)
   let client = new pg.Client(conString);
   client.connect();
 
-  let queryStr = 'UPDATE users SET inventory=array_append(inventory, $2), inventoryquantity=array_append(inventoryquantity, $3) WHERE name=$1 RETURNING inventory';
+  let queryStr = 'UPDATE users SET inventory=array_append(inventory, $2), inventoryquantity=array_append(inventoryquantity, $3) WHERE email=$1 RETURNING inventory';
 
 
   client.query(queryStr, [userName, newItemId, quantity],
     function( err, res) {
-      if(err) { console.log('there was an error updateing the thing', err )}
-      console.log('updated userinventory in db ', res)
+      if(err) { console.log('there was an error updateing the thing', err )
+        throw err
+    }
+
+      console.log('updated userinventory in db ', res.rows)
 
       client.end();
     });

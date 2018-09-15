@@ -1,9 +1,13 @@
 //all the routes for our application
 
 var express  = require('express');
+var bodyParser = require('body-parser');
+
+
 var path = require('path')
 var item = require('./models/item.js')
 var Collection = require('./models/collection.js')
+var User = require('./models/user.js')
 
 
 let getAllItems = require('../queries/getAllItems.js')
@@ -22,48 +26,84 @@ let updateInventoryQuantity = require('../queries/updateUserInventoryQuantity.js
 
 module.exports = function(app, passport) {
 
+  // configure the app to use bodyParser()
+  app.use(bodyParser.urlencoded({
+      extended: true
+  }));
+  app.use(bodyParser.json());
     // =====================================
     // HOME PAGE (with login links) ========
     // =====================================
     app.get('/', function(req, res) {
       //  res.render('index.ejs'); // load the index.ejs file
       console.log('blah default thing')
-      res.send('heyo')
+      res.send('heyo');
+
     });
 
+    app.get('/allitems', function(req, res) {
+        getAllItems( (err, items) => {
+          console.log('trying to send ', items)
+          res.json({items:items})
 
+        })
+      console.log('blah default thing')
 
-    // =====================================
-    // LOGIN ===============================
-    // =====================================
-    // show the login form
-    app.get('/login', function(req, res) {
-        console.log('trying to log in a user')
-        // render the page and pass in any flash data if it exists
-        res.sendFile( path.join(__dirname,'../../','src/login/login.html') );
     });
+
 
     // process the login form only really works from same domain
     // app.post('/login', do all our passport stuff here);
     // process the login form
-    app.post('/login', passport.authenticate('local-login', {
-        successRedirect : '/profile', // redirect to the secure profile section
-        failureRedirect : '/login', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
-    }));
+    app.post('/login', function(req, res, next) {
+      console.log('trying to login a peron', typeof req.body)
+
+      let userbod = (req.body)
+      console.log('user = ', userbod)
+      passport.authenticate('local', function(err, user, info) {
+        console.log('err = ', err)
+        console.log('trying to login, ', user)
+    if (err) { return res.send( {fail: err})
+      //next(err);
+    }
+    if (!user) {
+      let failjson = {'login':'fail'}
+      return res.send(JSON.stringify(failjson));
+    }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      console.log('successfully loggig in')
+      // should maybe take out he password
+      return res.send(JSON.stringify(user));
+  //    return res.redirect('/users/' + user.email);
+    });
+  })(req, res, next);
+});
+
+
+
 
     let LocalStrategy = require('passport-local').Strategy;
 
-    passport.use(new LocalStrategy(
-      function(username, password, done) {
+    passport.use(new LocalStrategy({    passReqToCallback: true
+},
+      function(req, user,  password, done) {
+          let userlog = req.body;
+        console.log('trying to do local strategy', userlog)
+        let loginUser = new User();
+        loginUser.email = userlog.username;
+        loginUser.pass = userlog.password;
 
-        console.log('trying to do local strategy')
-        User.findOne({ username: username }, function (err, user) {
-          if (err) { return done(err); }
+        loginUser.findOne({ email: userlog.username }, function (err, user) {
+          if (err) {
+            return done(err);
+          }
+          console.log('user after findone', user)
+
           if (!user) {
             return done(null, false, { message: 'Incorrect username.' });
           }
-          if (!user.validPassword(password)) {
+          if (!user.validPassword(userlog.password)) {
             return done(null, false, { message: 'Incorrect password.' });
           }
           return done(null, user);
@@ -71,17 +111,49 @@ module.exports = function(app, passport) {
         });
       }
     ));
+    // secial login for my app
+      app.post('/authorize', function(req, res){
+                  console.log('req coma through')
+            //    console.log(JSON.stringify(req))
+                  console.log(req.headers)
+                  console.log('req bodiop =  ', (req.body))
 
+                  req.on('data', function(chunk){
+                    console.log('got some req data')
+                    buf += chunk
+                  });
+
+                  req.on('end', function(data) {
+                    console.log('req ended')
+                  })
+
+
+                  res.json({"userName": "test"})
+                  }
+                );
 
 // secial login for my app
   app.post('/auth/login', function(req, res){
               console.log('req coma through')
         //    console.log(JSON.stringify(req))
-              console.log(req.headers)
-              console.log(req.body)
+           let data = req.body;
+
+              console.log('REQ HEADERS', req.headers)
+              console.log('req bodiop =  ', data)
+
+              req.on('data', function(chunk){
+                console.log('got some req data')
+                buf += chunk
+              });
+
+              req.on('end', function(data) {
+                console.log('req ended')
+              })
+
+
               res.json({"userName": "test"})
               }
-            );
+    );
 
     // =====================================
     // SIGNUP ==============================
@@ -95,11 +167,50 @@ module.exports = function(app, passport) {
 
     // process the signup form
     // app.post('/signup', do all our passport stuff here);
-    app.post('/signup', passport.authenticate('local-signup', {
+    app.post('/signup', function(req, res) {
+      console.log('trying to signup new person thing', typeof req.body)
+      let user = (req.body)
+      console.log(user)
+      let userData = req.body;
+      let PotentialUser = new User();
+      PotentialUser.email = userData.name;
+      PotentialUser.password = userData.password;
+      console.log(PotentialUser)
+       PotentialUser.findOne(PotentialUser, function( available) {
+        console.log('user is available ', available)
+
+
+        if( !user.name ) {
+            res.send(JSON.stringify({"msg":"Something went wrong with the signup please try again."}))
+        }
+        else if(available) {
+          PotentialUser.save((userJSON) => {
+            console.log(userJSON)
+            if(userJSON) {
+              res.json(userJSON)
+            }
+            else {
+              res.send(JSON.stringify({"msg":"Something went wrong with the signup please try again."}))
+            }
+
+          })
+        }
+        else {
+          res.send(JSON.stringify({"msg":"Username already taken please try another."}))
+        }
+
+    })
+
+  }
+
+
+    /*passport.authenticate('local-signup', {
         successRedirect : '/profile', // redirect to the secure profile section
         failureRedirect : '/signup', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
-    }));
+    })
+*/
+  );
 
     // =====================================
     // PROFILE SECTION =====================
@@ -217,7 +328,7 @@ module.exports = function(app, passport) {
 
           getUserBags(dat.packs, (err, bagdata) => {
 
-            console.log('trying to get userbags', bagdata);
+        //    console.log('trying to get userbags', bagdata);
 
             resData.data.bags = bagdata;
             console.log('stuff from the user items get', JSON.stringify(resData))
@@ -349,8 +460,14 @@ app.get('/userpacks', function(req, res) {
       res.sendFile(path.join(__dirname, '../../', 'public', 'index.html'))
   })
 
+  app.post('/experiment', function(req, res) {
+
+    console.log('expericmenting', req.body)
+  })
+
 
 };
+
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {

@@ -41,7 +41,6 @@ client.connect(function(err) {
         //output: Tue Jan 15 2013 19:12:47 GMT-600 (CST)
         client.end();
 
-
     });
 });
 
