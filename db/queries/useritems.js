@@ -16,7 +16,7 @@ function userItems(username, cb) {
 
 
   let client = new pg.Client(conString)
-  let userquerystring = 'SELECT * FROM users where name=$1';
+  let userquerystring = 'SELECT * FROM users where name=$1 OR email=$1';
   let itemqueryString = 'SELECT * FROM items where p_id in (';
 
 
