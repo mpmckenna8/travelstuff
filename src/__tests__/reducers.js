@@ -76,7 +76,7 @@ describe(">>>>>>> testing db connectivity. ", () => {
 describe(">>>>>>> Testing signing up a user.  ", () => {
 
   it('+++ test to sign up a new user', async () => {
-    const SignupUser = await Thunk(signupUser).execute({name:'k', password: "pass"})
+    const SignupUser = await Thunk(signupUser).execute({name:'bob', password: "pass"})
 
   })
 

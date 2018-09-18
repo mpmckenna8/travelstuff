@@ -95,7 +95,7 @@ export function signupUser(userData) {
   return function(dispatch) {
 
 
-    let userName = userData.name;
+    let userName = userData.username;
     let userPass = userData.password;
 
     let sendData = {name:userName, password: userPass}

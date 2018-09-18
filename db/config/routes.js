@@ -155,15 +155,6 @@ module.exports = function(app, passport) {
               }
     );
 
-    // =====================================
-    // SIGNUP ==============================
-    // =====================================
-    // show the signup form
-    app.get('/signup', function(req, res) {
-
-        // render the page and pass in any flash data if it exists
-        res.sendFile( path.join(__dirname,'../../','src/login/signup.html') );
-    });
 
     // process the signup form
     // app.post('/signup', do all our passport stuff here);
@@ -181,7 +172,8 @@ module.exports = function(app, passport) {
 
 
         if( !user.name ) {
-            res.send(JSON.stringify({"msg":"Something went wrong with the signup please try again."}))
+          console.log('somthing went wrong making a new user,')
+            res.send(JSON.stringify({"msg":"Something went wrong with the signup. there is no user please try again."}))
         }
         else if(available) {
           PotentialUser.save((userJSON) => {
@@ -192,7 +184,6 @@ module.exports = function(app, passport) {
             else {
               res.send(JSON.stringify({"msg":"Something went wrong with the signup please try again."}))
             }
-
           })
         }
         else {
@@ -327,11 +318,8 @@ module.exports = function(app, passport) {
 
 
           getUserBags(dat.packs, (err, bagdata) => {
-
-        //    console.log('trying to get userbags', bagdata);
-
             resData.data.bags = bagdata;
-            console.log('stuff from the user items get', JSON.stringify(resData))
+            console.log('stuff from the user bags get', JSON.stringify(resData))
             res.json(resData)
 
           })

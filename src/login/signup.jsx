@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
-import {Redirect, withRouter} from 'react-router-dom'
-import { connect } from 'react-redux'
-import { signupUser } from "../actions/useracts.js"
+import React, { Component } from 'react';
+import {Redirect, withRouter} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { signupUser } from "../actions/useracts.js";
+
 class Signup extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +19,9 @@ class Signup extends Component {
     }
     userdata.username = event.target.querySelector("#signup_email").value;
     userdata.password =  event.target.querySelector("#signup_password").value;
+    console.log('need so submit the signup stuff manually i guess, ', userdata)
 
+    this.props.dispatch(signupUser(userdata))
 
 
   }
@@ -26,7 +29,9 @@ class Signup extends Component {
   render(){
     return (
       <div className="signupDiv">
-        blah
+        {
+          this.props.user.returnHome ? <Redirect to="/" /> : ""
+        }
         <div className="col-sm-6 col-sm-offset-3">
 
             <h1><span className="fa fa-sign-in"></span> Signup</h1>

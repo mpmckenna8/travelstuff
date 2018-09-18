@@ -1,10 +1,7 @@
 // a query to update the quantity in userpack
-
-
 let pg = require('pg');
 
 var conString = "postgres://matthewmckenna@localhost/auth";
-
 
 function editUserPackQuantity(data) {
 
@@ -27,36 +24,17 @@ function editUserPackQuantity(data) {
         i[1] = data.item.quantity;
       }
     }
-
-    console.log('packitems updated ', packItems)
+  //  console.log('packitems updated ', packItems)
 
     client.query(updateString, [packItems, data.collection], function(err, res) {
       if(err) throw err;
       console.log('items should be updated in the userpack', res);
-
       client.end()
-
     })
-
 
   })
 
-
 }
 
-
-/* example function call which worked
-editUserPackQuantity({ item:
-   { p_id: 1,
-     name: 'laptop',
-     description: 'smaller computer',
-     weight: 3,
-     value: 1000,
-     category: 'tool',
-     quantity: 16 },
-  collection: 2,
-  user: 'test' })
-
-  */
 
   module.exports =  editUserPackQuantity;

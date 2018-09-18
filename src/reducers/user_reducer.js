@@ -27,6 +27,13 @@ function user(state={name:"test", id: 1, returnHome: false, loggingIn: false, ne
 
       return Object.assign({}, state)
     }
+    case "SIGNUP_SUCCESS": {
+      state.name = action.user.name;
+      state.returnHome = true;
+      state.id = action.user.u_id;
+      return Object.assign({}, state)
+
+    }
 
     default:
       return state;

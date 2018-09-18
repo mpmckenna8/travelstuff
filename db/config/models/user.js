@@ -16,32 +16,17 @@ function User(){
 
         console.log(this.email +' will be saved');
 
-            client.query('INSERT INTO users(email, name, password, inventory, inventoryquantity, inventorydescription) VALUES($1, $1, $2, $3, $4, $5) returning u_id', [this.email, this.password, "{}", "{}", "{}"], function (err, result) {
+            client.query('INSERT INTO users(email, name, password, inventory, inventoryquantity, inventorydescription) VALUES($1, $1, $2, $3, $4, $5) returning *', [this.email, this.password, "{}", "{}", "{}"], function (err, result) {
                 if(err){
                     console.log(err);
-                    return console.error('error running query', err);
+                    client.end()
+                    return callback(null);
                 }
                 console.log('result of inserting new user', result.rows);
                 client.end()
                 //console.log(this.email);
-            });
+                return callback(result.rows[0]);
 
-            client.query('SELECT * FROM users ORDER BY u_id desc limit 1', null, function(err, result){
-
-                if(err){
-                    return callback(null);
-                }
-                //if no rows were returned from query, then new user
-                if (result.rows.length > 0){
-                    console.log(result.rows[0] + ' is found!');
-                    var user = new User();
-                    user.email= result.rows[0]['email'];
-                    user.password = result.rows[0]['password'];
-                    user.u_id = result.rows[0]['u_id'];
-                    console.log(user.email);
-                    client.end();
-                    return callback(user);
-                }
             });
 
     };

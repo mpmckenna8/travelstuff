@@ -58,6 +58,11 @@ let tempPid = 1000000;
 // should delete the items from this maybe
 function user_items(state={all:{items:[]}, items:[], lastUpdated: 0, isFetching: false }, action) {
   switch (action.type) {
+    case "SIGNUP_SUCCESS": {
+      state.items = [];
+      return Object.assign({}, state)
+    }
+
     case RECIEVE_ITEMS:
       console.log('action in recieve items user_items,', action);
       state.items = action.items;
@@ -102,7 +107,6 @@ function user_items(state={all:{items:[]}, items:[], lastUpdated: 0, isFetching:
   //    console.log('editing Item with action = ', action)
     //    console.log('state in Edit_ITEM, ', state)
         let tempstate = state;
-
 
         let edItemIndex = tempstate.items.findIndex(  (d) => {
           return d.p_id === action.newItem.p_id;
