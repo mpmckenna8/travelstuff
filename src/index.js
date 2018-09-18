@@ -23,7 +23,7 @@ const store = createStore(
 );
 
 
-//store.dispatch(setUser('test'))
+store.dispatch(setUser('test'))
 
 store.dispatch(selectItemClass('all'));
 

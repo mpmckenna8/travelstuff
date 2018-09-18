@@ -99,25 +99,24 @@ function user_items(state={all:{items:[]}, items:[], lastUpdated: 0, isFetching:
       return Object.assign({}, tempstate)
     }
     case EDIT_ITEM:{
-      console.log('need to editItem with action = ', action)
-        console.log('state in Edit_ITEM, ', state)
+  //    console.log('editing Item with action = ', action)
+    //    console.log('state in Edit_ITEM, ', state)
         let tempstate = state;
 
 
         let edItemIndex = tempstate.items.findIndex(  (d) => {
           return d.p_id === action.newItem.p_id;
         })
-        console.log('still need to update in the db')
         let edItem = tempstate.items[edItemIndex];
         edItem = action.newItem;
+        tempstate.items[edItemIndex] = edItem;
       //  console.log(edItem);
       return Object.assign({}, tempstate);
 
     }
 
     case "ADD_EXISTING_ITEM": {
-      console.log('need to update this state for this existing item, dont want 2 but do want to add to specify collection if selected', state)
-      state.all.items.push(action.newItem);
+  //    console.log('need to update this state for this existing item, dont want 2 but do want to add to specify collection if selected', state)
       state.items.push(action.newItem);
 
       return Object.assign({},state);
@@ -216,8 +215,8 @@ function collections(state={
         }
           userPacks[action.userPacks[i].up_id] = userpack;
         }
-        console.log('userpacks after update', userPacks)
-        console.log( 'state in collections after new items', state, ', action = ', action )
+//        console.log('userpacks after update', userPacks)
+//        console.log( 'state in collections after new items', state, ', action = ', action )
         state.bags = state.bags.concat(action.userPacks)
 
         return Object.assign({}, state);
