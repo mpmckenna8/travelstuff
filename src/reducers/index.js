@@ -118,6 +118,7 @@ function user_items(state={all:{items:[]}, items:[], lastUpdated: 0, isFetching:
     case "ADD_EXISTING_ITEM": {
       console.log('need to update this state for this existing item, dont want 2 but do want to add to specify collection if selected', state)
       state.all.items.push(action.newItem);
+      state.items.push(action.newItem);
 
       return Object.assign({},state);
     }

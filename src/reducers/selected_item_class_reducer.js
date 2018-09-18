@@ -13,6 +13,14 @@ function selectedItemClass(state={onCollection:'all',
     visible: false
 }}, action) {
   switch (action.type) {
+    case "ADD_EXISTING_ITEM": {
+        let needNewCat = !state.filters.categories.includes((d) => d === action.newItem.category);
+
+        if(needNewCat) {
+          state.filters.categories.push(action.newItem.category)
+        }
+      return Object.assign({}, state)
+    }
     case RECIEVE_BAGS:
       console.log('recieved bags need to set up the collections filter', action);
       return Object.assign({}, state);

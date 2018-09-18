@@ -14,7 +14,6 @@ class AddExistingItem extends Component {
     // need to to a whole add exiting item action
     this.props.dispatch(addExistingItem(item, 'all', this.props.user.name));
   //  document.querySelector('#homelink').click();
-    console.log(this)
     this.props.history.push('../');
   }
 
