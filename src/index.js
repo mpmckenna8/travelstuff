@@ -26,13 +26,12 @@ const store = createStore(
 store.dispatch(setUser('test'))
 
 store.dispatch(selectItemClass('all'));
-
 store.dispatch(fetchItemsIfNeeded('all', 'test'))
 
 
 store.dispatch(fetchBagsIfNeeded("all", 'test'))
-.then(() => {
-    console.log('should have fetched the items')
+.then((thinger) => {
+    console.log('should have fetched the items', thinger)
   })
 
 store.dispatch(getEveryItem())

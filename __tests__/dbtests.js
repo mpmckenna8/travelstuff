@@ -1,4 +1,7 @@
 // want to test the reducers
+var assert = require('assert');
+
+
 
 var getAllItems = require('../db/queries/getallitems.js');
 let editUserPackQuantity = require('../db/queries/editUserPackQuantity.js')
@@ -20,10 +23,14 @@ broom.category = "tool";
 
 broom.save( (d) => {
  console.log('result from saving broom.', d)
- deleteItemFromDB(d, (err, d) => { console.log('result from deleting stuff, ', err, d)}) })
-// want to delete item {"p_id":76}
+ assert(typeof d !== undefined , 'saving an item returned a thing')
+ deleteItemFromDB(d, (err, q) => { console.log('result from deleting stuff, ', err, q)
+ assert(q >= 1, 'rowcount should be greater than 0 if something was deleted.')
+ console.log('sucessfully added and deleted an item.')
+}) })
 
-//deleteItemFromDB(667, (err, d) => console.log('result from deleting stuff, ', err, d))
+
+
 
 
 //getAllItems( (err,json) => console.log('all items are', json))

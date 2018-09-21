@@ -26,9 +26,11 @@ function Item() {
         function(err, res){
           if(err){
             console.log('there was an err with the insertion of an item', err);
-            throw err
+            cb(null)
+
+          //  throw err
           }
-        console.log('result of insertion = ', JSON.stringify(res.rows), 'should call the callback')
+      //  console.log('result of insertion = ', JSON.stringify(res.rows), 'should call the callback')
           cb(res.rows[0].p_id)
 
 

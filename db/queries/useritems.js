@@ -7,18 +7,13 @@ let pg = require('pg');
 var conString = "postgres://matthewmckenna@localhost/auth";
 
 
- // select * from items where p_id in (1,2,4);
-
 // id can now be username or email
 function userItems(username, cb) {
   //console.log(ids.toString())
-//  let bagsString = ids.toString();
-
 
   let client = new pg.Client(conString)
   let userquerystring = 'SELECT * FROM users where name=$1 OR email=$1';
   let itemqueryString = 'SELECT * FROM items where p_id in (';
-
 
 
   client.connect();

@@ -8,9 +8,8 @@ import {addExistingItem} from "../actions/actions"
 class AddExistingItem extends Component {
   addToInventory(item) {
     console.log('need to add item to thing', item);
-
     var itemquantity = document.body.querySelector('#itemquantity').value;
-    item.quantity = itemquantity;
+    item.quantity = parseInt(itemquantity);
     // need to to a whole add exiting item action
     this.props.dispatch(addExistingItem(item, 'all', this.props.user.name));
   //  document.querySelector('#homelink').click();
