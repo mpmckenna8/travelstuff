@@ -180,6 +180,8 @@ export function deleteUserBag(user_bag_id, user_id) {
     user_id: user_id
   }
 
+  console.log('del_bag_data = ', del_bag_data)
+
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
   xhr.setRequestHeader('Accept', '*/*');
 

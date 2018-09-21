@@ -89,8 +89,8 @@ class UserBag extends Component {
 
   }
   deleteBag() {
-  //  console.log('need to delete the bag., this.props = ', this.props)
-    this.props.dispatch(deleteUserBag(this.props.onCollection, this.props.user.id))
+    console.log('need to delete the bag., this.props = ', this.props)
+    this.props.dispatch(deleteUserBag(this.props.selectedItemClass.onCollection, this.props.user.id))
   }
   apply_filters(items_array) {
     let itemList = items_array;
@@ -198,7 +198,7 @@ class UserBag extends Component {
 
       <div>
 
-        <h3>{ currentBag.name ==='none yet'? <Redirect push to="/" /> : (currentBag.name) }</h3>
+        <h3>{ (currentBag.name ==='none yet') || this.props.user.returnHome ? <Redirect push to="/" /> : (currentBag.name) }</h3>
         <select defaultValue="all" className="filterSelect" onChange={(e) => {
             this.changeFilter(e.target.value);
           }} >
@@ -207,13 +207,13 @@ class UserBag extends Component {
           <option value="inbag">Items included in bag</option>
         </select>
 
-<button onClick={(e) => {
-  if( window.confirm("Are you sure you want to delete the bag? Cannot be undone.") ) {
-    console.log('need to delete the bag')
-    this.deleteBag();
+        <button onClick={(e) => {
+          if( window.confirm("Are you sure you want to delete the bag? Cannot be undone.") ) {
+          //  console.log('need to delete the bag')
+            this.deleteBag();
 
-  }
-}}>Delete Bag</button>
+          }
+        }}>Delete Bag</button>
 
 <div className="bagFilters">
 <Inventory_Filter />
@@ -242,9 +242,7 @@ class UserBag extends Component {
                           <button onClick={(e) => {
                               this.incrementItemQuantity(item);
                             }}>+</button>
-
                         </div>
-
                         </div>
                     </div>
                   )
@@ -257,36 +255,33 @@ class UserBag extends Component {
         </div>
         <div className="potentialList">
           <h2>Items not yet in this collection:</h2>
-        {catArray.map((category, i) => {
-          return (
-            <div key={i} >
-              <h2>
-                {category}
-              </h2>
-              {availableItems[category].map( (item, i )  => {
-                return (
-                  <div key={i} className="itemdiv">
-                    <div className="itemNameDiv">
-                      {item.name}
-                    </div>
-                      <div className="itemQuantDiv">
-
-                          <div>
-                          0
-                          <button onClick={(e) => {
-                            this.addItemToBag(item);
-                          }}>+</button>
-
-                          </div>
-
+          {catArray.map((category, i) => {
+            return (
+              <div key={i} >
+                <h2>
+                  {category}
+                </h2>
+                {availableItems[category].map( (item, i )  => {
+                  return (
+                    <div key={i} className="itemdiv">
+                      <div className="itemNameDiv">
+                        {item.name}
                       </div>
-                  </div>
-                )
-              })
-            }
-            </div>
-          )
-        })}
+                        <div className="itemQuantDiv">
+                            <div>
+                            0
+                            <button onClick={(e) => {
+                              this.addItemToBag(item);
+                            }}>+</button>
+                            </div>
+                        </div>
+                    </div>
+                  )
+                })
+              }
+              </div>
+            )
+          })}
         </div>
 
       </div>)

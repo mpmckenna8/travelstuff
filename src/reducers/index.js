@@ -20,6 +20,8 @@ function items(
   },
   action
 ) {
+
+  console.log('its actually in the items reducter!!!!!')
   switch (action.type) {
     case INVALIDATE_ITEM_CLASS:
       return Object.assign({}, state, {didInvalidate:true})
@@ -147,6 +149,13 @@ function collections(state={
     needsUpdate:true},
   action) {
     switch(action.type) {
+      case "SIGNUP_SUCCESS": {
+        state.bags = [];
+
+
+        return Object.assign({}, state)
+
+      }
       case 'ADD_NEW_USER_BAG':
         let newUserBag = {
           packtype: action.newBag.coll_id,
@@ -196,35 +205,10 @@ function collections(state={
         state.allBags = combBags;
         //  console.log('newbags', combBags)
         return Object.assign({}, state);
-      case RECIEVE_ITEMS:
-        //let userpacksnamed = action.userPacks.map(function(d) {
-      //     d.name = d.name;
-        //   return d;
-        //})
-        let userPacks =  {};
-        for( let i in action.userPacks) {
-        //  console.log('pack to set up', i);
-          let userpack = action.userPacks[i];
-    //      console.log('userpacks')
-          for( let q in userpack.items) {
-            let o = userpack.items[q]
-            let bagitem = Object.assign({}, action.items.find(function(d) {
-  //            console.log('setting up bag', o[0], d.p_id)
-              return d.p_id === o[0];
-            }) )
-
-          bagitem.quantity = o[1];
-  //      console.log('itemin pack', bagitem);
-          userpack.items[q] = bagitem
-        }
-          userPacks[action.userPacks[i].up_id] = userpack;
-        }
-//        console.log('userpacks after update', userPacks)
-//        console.log( 'state in collections after new items', state, ', action = ', action )
-        state.bags = state.bags.concat(action.userPacks)
-
+      case RECIEVE_ITEMS: {
+        state.bags = action.userPacks
         return Object.assign({}, state);
-
+      }
       case "EDIT_ITEM":
         let currentItems = [];
         console.log('dont know if editing items really works')
@@ -247,9 +231,10 @@ function collections(state={
         console.log('newstate is, ', state.bags)
 
         return Object.assign({}, state)
-      case "ADD_BAG_TO_DB":
+      case "USER_BAG_ADDED":
         console.log('need to add the bag to the list of stuff too', action);
-        return state;
+        state.bags.push(action.newbag.bagInfo)
+        return Object.assign({}, state)
       case "ADDED_BAG_TO_DB":
         console.log('need to update the bag id', action)
         let mobags = state.allBags.concat([action.newbag.data]);

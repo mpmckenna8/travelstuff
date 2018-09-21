@@ -25,7 +25,8 @@ function Item() {
       client.query('INSERT INTO items(name, description, weight, category ) VALUES($1, $2, $3, $4) RETURNING p_id', [this.name, this.description, this.weight, this.category],
         function(err, res){
           if(err){
-            console.log('there was an err with the insertion', err)
+            console.log('there was an err with the insertion of an item', err);
+            throw err
           }
         console.log('result of insertion = ', JSON.stringify(res.rows), 'should call the callback')
           cb(res.rows[0].p_id)

@@ -12,7 +12,6 @@ function user(state={name:"test", id: 1, returnHome: false, loggingIn: false, ne
       return Object.assign({}, state)
     }
     case "SET_USER_ID": {
-
       state.id = action.id;
       return Object.assign({}, state);
     }
@@ -34,6 +33,11 @@ function user(state={name:"test", id: 1, returnHome: false, loggingIn: false, ne
       return Object.assign({}, state)
 
     }
+    case "DELETE_USER_BAG" || "USER_BAG_ADDED" || "USER_BAG_ADDED": {
+      state.returnHome = true;
+      return Object.assign({}, state)
+    }
+
 
     default:
       return state;

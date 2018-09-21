@@ -176,8 +176,10 @@ module.exports = function(app, passport) {
             res.send(JSON.stringify({"msg":"Something went wrong with the signup. there is no user please try again."}))
         }
         else if(available) {
-          PotentialUser.save((userJSON) => {
+          PotentialUser.save( (userJSON) => {
             console.log(userJSON)
+
+
             if(userJSON) {
               res.json(userJSON)
             }
@@ -418,7 +420,7 @@ app.get('/userpacks', function(req, res) {
     app.post('/collections/deleteuserbag', function(req, res) {
 
       let del_bag_data = req.body;
-      console.log('should be deleting the userbag')
+      console.log('should be deleting the userbag, bagdata = ', del_bag_data);
 
       delete_user_bag( del_bag_data.user_id, del_bag_data.bag_id )
     })
@@ -436,22 +438,15 @@ app.get('/userpacks', function(req, res) {
 
     })
 
-
     // ...
     app.get('/static', function (req, res) {
   // and drop 'public' in the middle of here
       console.log('should send the public stuff from', path.join(__dirname, 'public') )
 
-
       app.use(express.static(path.join(__dirname, 'public')))
-
       res.sendFile(path.join(__dirname, '../../', 'public', 'index.html'))
   })
 
-  app.post('/experiment', function(req, res) {
-
-    console.log('expericmenting', req.body)
-  })
 
 
 };

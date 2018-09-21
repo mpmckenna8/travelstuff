@@ -9,7 +9,7 @@ var conString = "postgres://matthewmckenna@localhost/auth";
 
  // select * from items where p_id in (1,2,4);
 
-// id's should be a
+// id can now be username or email
 function userItems(username, cb) {
   //console.log(ids.toString())
 //  let bagsString = ids.toString();
@@ -41,10 +41,10 @@ function userItems(username, cb) {
 
         userPacks = res.rows[0].userpacks
 
-      console.log(inventory.toString())
+    //  console.log(inventory.toString())
     }
 
-    console.log(inventory)
+  //  console.log(inventory)
     if( inventory.length > 0 ) {
 
     itemqueryString = itemqueryString + inventory.toString() + ');'
@@ -63,7 +63,7 @@ function userItems(username, cb) {
 
       }
 
-      console.log('user items with quants, ', res.rows)
+    //  console.log('user items with quants, ', res.rows)
 
       var finalData = {items:res.rows, packs: userPacks};
 
