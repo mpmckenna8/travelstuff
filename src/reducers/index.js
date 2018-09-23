@@ -203,10 +203,16 @@ function collections(state={
 
         // maybe should check for duplicate bags
         state.allBags = combBags;
-        //  console.log('newbags', combBags)
+
+
+          console.log('newbags', combBags)
         return Object.assign({}, state);
       case RECIEVE_ITEMS: {
-        state.bags = action.userPacks
+        state.bags = action.userPacks;
+        console.log('action.userPacks', action)
+
+        let bagsWithItems = matchItemsWithIds(action.userPacks, action.items)
+
         return Object.assign({}, state);
       }
       case "EDIT_ITEM":
@@ -259,3 +265,31 @@ const rootReducer = combineReducers({
 })
 
 export default rootReducer;
+
+function matchItemsWithIds(bagsArray, itemArray) {
+  console.log(bagsArray)
+  if(bagsArray.length > 0) {
+    for(let bag = 0; bag < bagsArray.length; bag++) {
+
+      let tempBagItems = [];
+      for( let bagItem of bagsArray[bag].items) {
+
+        console.log('need to match up bagItem', bagItem)
+
+        let itemIndex = itemArray.findIndex( (d) => bagItem[0] === d.p_id )
+        if(itemIndex > 0 ) {
+          tempBagItems.push(itemArray[itemIndex])
+          console.log('bagItem need to still add this item.')
+
+        }
+        //console.log('bagItem', bagItem)
+
+      }
+      bagsArray[bag].items = tempBagItems
+    }
+
+  }
+
+  console.log('bagsArray after matching = ', bagsArray)
+  return bagsArray;
+}

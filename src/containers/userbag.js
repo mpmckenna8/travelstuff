@@ -95,7 +95,10 @@ class UserBag extends Component {
   apply_filters(items_array) {
     let itemList = items_array;
     let filters = this.props.selectedItemClass.filters;
-    let tempList = []
+    let tempList = [];
+
+
+    console.log('itemlist before filters', itemList)
 
 
     let bagFilterList = filters.bags;
@@ -129,14 +132,13 @@ class UserBag extends Component {
     if(filters.instock === false && filters.outofstock === false) {
       itemList = []
     }
-    //console.log('filtered items are, but still need to filter categories', itemList, filters.categories)
 
+    console.log('itemlist in filters = ', itemList)
 
     if( filters.categories.length > 0 && itemList ) {
       itemList = itemList.filter( (d) => {
 
-      //  console.log('filtering items by category', d, filters.categories.includes(d.category)
-      //)
+      console.log('filtering items by category', d, filters.categories.includes(d.category))
       if(d) {
         return filters.categories.includes(d.category);
       }
@@ -146,8 +148,11 @@ class UserBag extends Component {
       })
     }
     else {
+      console.log('category filter was empty')
       itemList = []
     }
+
+    console.log('filtered items are, but still need to filter categories', itemList, filters)
 
     return itemList
 

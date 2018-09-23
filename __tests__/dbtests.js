@@ -8,6 +8,8 @@ let editUserPackQuantity = require('../db/queries/editUserPackQuantity.js')
 let deletUserCollection = require('../db/queries/delete_user_bag.js')
 let userItems = require('../db/queries/useritems.js')
 
+let getUserBags = require('../db/queries/userbags.js')
+
 let Item = require('../db/config/models/item.js');
 
 let deleteItemFromDB = require('../db/queries/deleteitemfromdb.js')
@@ -28,6 +30,8 @@ broom.save( (d) => {
  assert(q >= 1, 'rowcount should be greater than 0 if something was deleted.')
  console.log('sucessfully added and deleted an item.')
 }) })
+
+getUserBags([6], (err, d) => console.log(d))
 
 
 

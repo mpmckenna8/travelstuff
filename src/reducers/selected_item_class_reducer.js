@@ -23,6 +23,8 @@ function selectedItemClass(state={onCollection:'all',
     }
     case RECIEVE_BAGS:
       console.log('recieved bags need to set up the collections filter', action);
+
+
       return Object.assign({}, state);
     case SELECT_ITEM_CLASS:
       state.onCollection = action.itemClass
@@ -81,6 +83,8 @@ function selectedItemClass(state={onCollection:'all',
             }
           })
         state.filters.categories = categories;
+        console.log('state in recieve items = ', state)
+
 
         return Object.assign({}, state);
     default:
