@@ -4,7 +4,8 @@ let pg = require('pg');
 var conString = "postgres://matthewmckenna@localhost/auth";
 
 
-function removeItemFromBag(pack_id, item_id) {
+// removes all the items with the given item_id from the collection with the pack_id
+function removeItemFromBag(pack_id, item_id, cb) {
     console.log('at least queriying ', pack_id)
 
   let client = new pg.Client(conString);
@@ -18,17 +19,21 @@ function removeItemFromBag(pack_id, item_id) {
         console.log('error with query', err)
         throw err;
       }
-      console.log('query worked')
-      console.log(res.rows)
+      //console.log('query worked')
+      //console.log(res.rows)
+
       let packitems = res.rows[0].items.filter(function(element, index, array) {
         console.log('item_id, element_id', item_id, element)
-        return element[0] !==  item_id
+        return parseInt(element[0]) !==  parseInt(item_id)
       });
 
       let updateString = 'UPDATE userpack SET items=$1 where up_id=$2;';
 
       client.query(updateString, [packitems, pack_id], function(err, res) {
         console.log('should have deleted the item with id,', item_id)
+        if(cb) {
+          cb(item_id)
+        }
         client.end();
 
       })
@@ -38,4 +43,6 @@ function removeItemFromBag(pack_id, item_id) {
 
 }
 
-removeItemFromBag(1,1000000);
+module.exports = removeItemFromBag;
+
+//removeItemFromBag(1,1000000);

@@ -6,7 +6,7 @@ let pg = require('pg');
 var conString = "postgres://matthewmckenna@localhost/auth";
 
 
-function addItemToBag(data) {
+function addItemToBag(data, cb) {
 
   let client = new pg.Client(conString);
   client.connect();
@@ -19,7 +19,8 @@ function addItemToBag(data) {
   client.query(updateString, [ [itemInfo], packId], function(err, res) {
     if(err) console.log('err updating bag,', err)
 
-    console.log('hopfully updated the userpack with new item', res);
+  //  console.log('hopfully updated the userpack with new item', res);
+    if(cb) cb(data)
     client.end();
 
   });

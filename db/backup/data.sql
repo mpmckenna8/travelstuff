@@ -274,9 +274,7 @@ COPY items (p_id, name, description, weight, value, category) FROM stdin;
 5	e-reader	Tablet like device for reading.	2	\N	electronics
 9	scarf	neck warming wear	0.5	\N	clothing
 10	Coffee mug	Vessel for keeping coffee warm and seals well	2	\N	potion
-11	Pen	ink writing utensil.	0.5	\N	tool
 13	Battery for charging electronics	portable batter for charging phones and such.	1	\N	tool
-14	incense	stuff that burns to smell good	1	\N	other
 15	beer	a mildly intoxicating beverage.	1	\N	potion
 16	paneer	delicious indian style cheesey goodness	1	\N	comestible
 17	hard candy	candy made of mostly sugar which is hard	1	\N	comestible
@@ -298,6 +296,7 @@ COPY items (p_id, name, description, weight, value, category) FROM stdin;
 31	Mandarin	A small sweet orange.	0.100000000000000006	\N	comestible
 32	Socks	Apparel to slide over feet and keep them warm.	0.100000000000000006	\N	clothing
 33	lighter	a hand held device to make fire.	0.100000000000000006	\N	tool
+61	notebook	thing for writing things	1	\N	tool
 3	rain jacket	dull yellow light windbreaker type thing	1	\N	clothing
 34	flip flops	thin laptop	4.29999999999999982	\N	clothing
 35	t-shirt	A shirt that kind of makes the shape of a t when unfolded.	0.200000000000000011	\N	clothing
@@ -322,6 +321,34 @@ COPY items (p_id, name, description, weight, value, category) FROM stdin;
 55	trail mix	A snack mix usually with nuts and other stuff	1	\N	comestible
 56	Rear bike light (red)	A bike light designed to face backwards on a bicycle	0.200000000000000011	\N	tool
 57	iPhone6	A model of the Apple iPhone	1	\N	electronics
+58	U Lock	A lock in the shape of a U, often used for locking bicycles	4	\N	tool
+59	multicolored programable bike light	Bike light i made from an arduino clone and an adafruit jewel.	0.100000000000000006	\N	tool
+60	notebook	notebook for administrating	1	\N	tool
+62	wrench	adding a thing	1	\N	tool
+63	Arduino Nano Clone	Clone of a tiny arduino, in a little black mailing bag.	0.100000000000000006	\N	electronics
+64	Mountain bike kickstand	kickstand from my diamond back mountain bike	1	\N	almost junk
+65	Cliff bar		0.200000000000000011	\N	comestible
+67	tunafish can	a little can of tunafish	1	\N	comestible
+68	matchbook	a little thing containing matches	0.100000000000000006	\N	tool
+69	record	thing for playing music on a turntable	1	\N	fun
+70	keys	used to open locks	1	\N	tool
+72	aloe	stuff to make skin feel better	1	\N	potion
+73	headphones	Things used for listening to stuff that fit overear	1	\N	tool
+74	Dried Figs	figs that have had a lot of their moisture removed	1	\N	comestible
+14	incense	stuff that burns to smell good	0.100000000000000006	\N	other
+75	cereal	A breakfast type food, often eaten with milk.	1	\N	comestible
+77	brooomer	sweeper thign	3	\N	tool
+11	Pen	ink writing utensil.	0.5	\N	tool
+80	brooomer	sweeper thign	3	\N	tool
+85	Pancake mix	mix for making pancakes where you just need to add egg and water.	2	\N	comestible
+86	mixed nuts	A package of micked nuts	1	\N	comestible
+87	tote bag	A little bag you can sling over your shoulder	1	\N	tool
+88	green bell pepper	A sweet pepper shaped like a bell	0.299999999999999989	\N	comestible
+89	bread	loaf of bread	1	\N	comestible
+90	cookies	A little sweet treat in multiple	1	\N	comestible
+91	peanut butter	peanuts smushed into a paste.	1	\N	comestible
+92	Snack bar	A little snack thing like a granola bar or chocolate bar.	0.100000000000000006	\N	comestible
+93	raspberry jam	Jelly like stuff made from raspberries	1	\N	comestible
 \.
 
 
@@ -364,17 +391,19 @@ COPY places (p_id, name, city, country, description) FROM stdin;
 --
 
 COPY userpack (up_id, name, packtype, items) FROM stdin;
+6	bookbag	13	{{9,1},{29,1},{22,1},{1,0},{6,1},{11,2},{13,1},{20,1},{30,0},{33,0},{4,0},{15,0},{45,1},{46,1},{28,1},{48,1},{47,1},{49,0},{21,0},{50,1},{51,0},{53,0},{55,1},{56,1},{58,0},{59,1},{71,1},{62,1},{11,1},{70,1},{46,1},{47,1},{52,1},{56,1},{33,1},{6,1},{28,1},{86,1},{30,1},{53,1},{87,1},{1,1},{58,1},{22,1},{13,1},{59,1},{15,1},{22,1},{23,1},{2,1},{9,1}}
 2	sachel	1	{{2,1}}
-8	nb locker	22	{{26,1}}
 27	lib bag	13	{}
-6	bookbag	13	{{9,0},{29,1},{22,1},{1,0},{6,1},{11,2},{13,1},{20,1},{30,0},{23,1},{33,0},{4,0},{3,0},{15,0},{45,1},{46,1},{28,1},{48,1},{47,1},{49,1},{21,1},{50,1},{51,0},{53,0},{55,1},{56,1}}
-38	Room where the SFBC valets bicycles at the San Francisco Giants Stadium.	24	{{1,1},{53,1},{47,1},{9,1},{51,1},{10,1},{3,1},{22,1},{4,1},{7,1},{50,1}}
+38	Room where the SFBC valets bicycles at the San Francisco Giants Stadium.	24	{{1,1},{53,0},{47,0},{9,0},{51,1},{10,1},{3,1},{22,0},{4,0},{7,0},{50,0},{57,0},{55,0},{15,2},{2,0},{54,1},{74,1},{23,1},{28,0}}
+39	locker at nb	22	{}
 33	daker	4	{}
 34	dfakl;jdaker	4	{}
 36	sadadafda	9	{}
 37	kppakdsjfa	9	{}
+40	nb grocery	15	{}
+41	grocer	15	{}
+8	nb locker	22	{{26,1},{63,1},{64,1}}
 9	big suity	9	{{3,0},{32,0},{35,0},{36,0},{37,0},{38,0},{39,0},{40,0},{41,0},{42,0}}
-15	boolll	9	{{3,0},{23,0},{9,0},{2,0},{12,0},{27,0}}
 7	Pannier	3	{{27,0}}
 20	loads	9	{}
 22	bag info	9	{}
@@ -389,7 +418,17 @@ COPY userpack (up_id, name, packtype, items) FROM stdin;
 --
 
 COPY users (u_id, name, email, password, photo, inventory, inventoryquantity, inventorydescription, location, userpacks) FROM stdin;
-1	test	test	1.0	none.jpg	{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,19,20,21,22,23,24,25,26,27,1,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57}	{1,0,1,2,1,1,1,1,3,1,4,0,3,0,0,0,1,1,1,1,2,1,2,1,0,1,1,2,0,0,7,2,1,1,1,2,2,1,1,2,1,1,0,1,1,2,1,1,1,1,1,1,0,1,1,1}	\N	\N	{0,15,6,7,8,9,32,2,38}
+1	test	test	1.0	none.jpg	{2,70,8,23,1,4,58,15,6,19,14,28,5,47,53,50,75,85,11,46,52,21,56,33,30,86,87,51,22,3,13,59,54,24,88,89,90,91,55,92,93,9}	{6,1,1,2,1,2,1,1,1,1,4,1,1,1,1,1,1,1,56,1,1,1,1,2,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,11,1,1}	\N	\N	{0,6,7}
+2	\N	admin	pass	\N	{2,70}	{1,1}	\N	\N	\N
+3	\N	dooby	howdy	\N	{2,70}	{1,1}	\N	\N	\N
+4	\N	boop	pass	\N	{2,70}	{1,1}	\N	\N	\N
+5	\N	k	pass	\N	{2}	{1}	{}	\N	\N
+6	bebop	bebop	pass	\N	{}	{}	{}	\N	\N
+7	igor	igor	pass	\N	{}	{}	{}	\N	\N
+8	igorj	igorj	pass	\N	{}	{}	{}	\N	\N
+9	bo	bo	pass	\N	{}	{}	{}	\N	\N
+10	bob	bob	pass	\N	{}	{}	{}	\N	\N
+11	nb	nb	p	\N	{20,45,33}	{1,1,1}	{}	\N	{39,40}
 \.
 
 
@@ -397,7 +436,7 @@ COPY users (u_id, name, email, password, photo, inventory, inventoryquantity, in
 -- Name: items_p_id_seq; Type: SEQUENCE SET; Schema: public; Owner: matthewmckenna
 --
 
-SELECT pg_catalog.setval('items_p_id_seq', 57, true);
+SELECT pg_catalog.setval('items_p_id_seq', 102, true);
 
 
 --
@@ -418,14 +457,14 @@ SELECT pg_catalog.setval('places_p_id_seq', 1, true);
 -- Name: userpack_up_id_seq; Type: SEQUENCE SET; Schema: public; Owner: matthewmckenna
 --
 
-SELECT pg_catalog.setval('userpack_up_id_seq', 38, true);
+SELECT pg_catalog.setval('userpack_up_id_seq', 43, true);
 
 
 --
 -- Name: users_u_id_seq; Type: SEQUENCE SET; Schema: public; Owner: matthewmckenna
 --
 
-SELECT pg_catalog.setval('users_u_id_seq', 1, true);
+SELECT pg_catalog.setval('users_u_id_seq', 11, true);
 
 
 --

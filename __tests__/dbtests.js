@@ -13,7 +13,9 @@ let getUserBags = require('../db/queries/userbags.js')
 let Item = require('../db/config/models/item.js');
 
 let deleteItemFromDB = require('../db/queries/deleteitemfromdb.js')
+let addItemToBag = require('../db/queries/addItemToBag.js')
 
+let removeItemFromBag = require('../db/queries/removeItemFromBag.js');
 
 let broom = new Item()
 broom.name = 'brooomer';
@@ -35,6 +37,10 @@ getUserBags([6], (err, d) => console.log(d))
 
 
 
+//addItemToBag( { item:{p_id: 3, quantity: 4}, itemClass: 6}, (d) => console.log('result from adding item to bag', d) )
+
+// be careful as this will delete all items with that p_id
+//removeItemFromBag( 6, 2, (deletedItem) => console.log('should have deleted item ' , deletedItem,  ' from the bag.') )
 
 
 //getAllItems( (err,json) => console.log('all items are', json))
