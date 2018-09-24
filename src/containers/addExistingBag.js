@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import {addNewUserBag} from '../actions/collectionactions';
 
+import {Redirect} from "react-router-dom";
 
 class AddExistingBag extends Component {
   constructor(props) {
@@ -32,7 +33,9 @@ class AddExistingBag extends Component {
     }) || {name: 'no item yet'}
 
     console.log('the baginfo ,', bagInfo)
-    return (<div className="bagInfo">bag info
+    return (<div className="bagInfo">
+      {this.props.user.returnHome ? <Redirect to="/" /> : ""}
+              <h2>bag info</h2>
               <div className="bagdeetDiv">
                 <h4 className="bagInfoHeader">Name:</h4>
                 <span className="bagDetails">{bagInfo.name}</span>

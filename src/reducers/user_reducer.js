@@ -23,7 +23,6 @@ function user(state={name:"test", id: 1, returnHome: false, loggingIn: false, ne
       state.name = action.user.email;
       state.id = action.user.u_id;
       state.loggingIn = true;
-
       return Object.assign({}, state)
     }
     case "SIGNUP_SUCCESS": {
@@ -33,10 +32,17 @@ function user(state={name:"test", id: 1, returnHome: false, loggingIn: false, ne
       return Object.assign({}, state)
 
     }
-    case "DELETE_USER_BAG" || "USER_BAG_ADDED" || "USER_BAG_ADDED": {
+    case "DELETE_USER_BAG" || "USER_BAG_ADDED": {
       state.returnHome = true;
       return Object.assign({}, state)
     }
+    case  "USER_BAG_ADDED": {
+
+      console.log('added user bag reduser is active')
+      state.returnHome = true;
+      return Object.assign({}, state)
+    }
+
 
 
     default:
