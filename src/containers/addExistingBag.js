@@ -20,6 +20,12 @@ class AddExistingBag extends Component {
 
     console.log('trying to add bag, bagger=', bagger, '; username = ', this.props.user.name)
 
+    bagger.collection_name = bagger.name;
+    bagger.name = userDescription.value;
+
+    console.log('trying to add bag, bagger=', bagger, '; username = ', this.props.user.name)
+
+
     this.props.dispatch(addNewUserBag(bagger, this.props.user.name))
 
   }
@@ -34,8 +40,8 @@ class AddExistingBag extends Component {
 
     console.log('the baginfo ,', bagInfo)
     return (<div className="bagInfo">
-      {this.props.user.returnHome ? <Redirect to="/" /> : ""}
-              <h2>bag info</h2>
+      {this.props.selectedItemClass.onCollection !== "all" ? <Redirect to={"/userbag/" + this.props.selectedItemClass.onCollection.toString() } /> : ""}
+              <h2>Collection details</h2>
               <div className="bagdeetDiv">
                 <h4 className="bagInfoHeader">Name:</h4>
                 <span className="bagDetails">{bagInfo.name}</span>
@@ -50,7 +56,7 @@ class AddExistingBag extends Component {
               </div>
 
               <div className="bagdeetDiv">
-                <h4 className="bagInfoHeader">Custom bag name:</h4>
+                <h4 className="bagInfoHeader">Custom collection name:</h4>
                 <input id="userBagDesc" type="text" className="wideInput"/>
               </div>
               <button onClick={(e) => {this.addBag(bagInfo)}}>Add bag</button>

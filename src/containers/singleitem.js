@@ -143,7 +143,7 @@ class SingleItem extends Component {
     let inbags = [];
 
     for( let bag of userbags ) {
-      console.log(bag)
+      //console.log(bag)
       for( let bagitem of bag.items ) {
       //  console.log('bagItem = ', bagitem)
         if( bagitem.name === currentItem.name) {

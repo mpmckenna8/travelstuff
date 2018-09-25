@@ -37,9 +37,13 @@ class UserBag extends Component {
               if(itemBag) {
                 itemBag = itemBag.items
               };
-//        console.log('itemlister later, ', itemsList)
+        console.log('itemlister later, ', itemsList, 'itembag = ', itemBag)
           itemsList = itemsList.filter( function(d) {
+
+                            if (d) {
+
                             return !( itemBag.findIndex( (q) => q.p_id === d.p_id ) >= 0 )
+                          }
                 })
         }
       }
@@ -138,7 +142,7 @@ class UserBag extends Component {
     if( filters.categories.length > 0 && itemList ) {
       itemList = itemList.filter( (d) => {
 
-      console.log('filtering items by category', d, filters.categories.includes(d.category))
+    //  console.log('filtering items by category', d, filters.categories.includes(d.category))
       if(d) {
         return filters.categories.includes(d.category);
       }
@@ -152,7 +156,7 @@ class UserBag extends Component {
       itemList = []
     }
 
-    console.log('filtered items are, but still need to filter categories', itemList, filters)
+  //  console.log('filtered items are, but still need to filter categories', itemList, filters)
 
     return itemList
 
@@ -188,7 +192,7 @@ class UserBag extends Component {
     addableItems = this.apply_filters( addableItems )
 
 
-    console.log('available items for this bag', addableItems)
+    //console.log('available items for this bag', addableItems)
 
     availableItems = categorizeItems(addableItems);
     let catArray = Object.keys(availableItems).sort();
@@ -198,8 +202,10 @@ class UserBag extends Component {
 
     let bagCats = Object.keys(bagItems).sort();
 
-//console.log('should be rendering userbag')
+console.log('should be rendering userbag. does the current bag have a name? ,', currentBag)
+
     return (
+
 
       <div>
 
@@ -236,7 +242,7 @@ class UserBag extends Component {
                   return (
                     <div key={i} className="itemdiv">
                       <div className="itemNameDiv">
-                        <Link to={"item/" + item.p_id}>{item.name}</Link>
+                        <Link to={"/item/" + item.p_id}>{item.name}</Link>
                       </div>
                         <div className="itemQuantDiv">
                           <div>

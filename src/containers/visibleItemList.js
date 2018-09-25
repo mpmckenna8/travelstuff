@@ -135,7 +135,7 @@ class VisibleItemList  extends Component  {
                   return (
                     <div key={i} className={ haveItem + " itemdiv" }>
                       <div className="itemNameDiv">
-                        <Link to={"item/" + item.p_id}>{item.name}</Link>
+                        <Link to={"item/" + item.p_id} >{item.name}</Link>
                       </div>
                         <div className="itemQuantDiv">
                           <div>

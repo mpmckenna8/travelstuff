@@ -41,9 +41,13 @@ function delete_user_bag(u_id, upid, cb) {
         client.query(deleteuserpack, [upid], function(err, res) {
           if(err) {
             console.log('error deleting userbag row from userpacks, ', err)
+            if(cb) {
             cb(err, null);
+            }
           }
-
+          if(cb) {
+            cb(err, res.rows)
+          }
           client.end()
           console.log('pack ', upid, " should be deleted.")
         })

@@ -208,10 +208,13 @@ function collections(state={
           console.log('newbags', combBags)
         return Object.assign({}, state);
       case RECIEVE_ITEMS: {
-        state.bags = action.userPacks;
+        //state.bags = action.userPacks;
         console.log('action.userPacks', action)
 
         let bagsWithItems = matchItemsWithIds(action.userPacks, action.items)
+
+        console.log('bagsWithItems', bagsWithItems)
+        state.bags = bagsWithItems;
 
         return Object.assign({}, state);
       }
@@ -239,7 +242,9 @@ function collections(state={
         return Object.assign({}, state)
       case "USER_BAG_ADDED":
         console.log('need to add the bag to the list of stuff too', action);
+
         state.bags.push(action.newbag.bagInfo)
+
         return Object.assign({}, state)
       case "ADDED_BAG_TO_DB":
         console.log('need to update the bag id', action)
@@ -267,23 +272,21 @@ const rootReducer = combineReducers({
 export default rootReducer;
 
 function matchItemsWithIds(bagsArray, itemArray) {
-  console.log(bagsArray)
+  console.log('matching Items. bagsArray = ',  bagsArray)
   if(bagsArray.length > 0) {
     for(let bag = 0; bag < bagsArray.length; bag++) {
 
       let tempBagItems = [];
       for( let bagItem of bagsArray[bag].items) {
-
-        console.log('need to match up bagItem', bagItem)
-
+        //console.log('need to match up bagItem', bagItem)
         let itemIndex = itemArray.findIndex( (d) => bagItem[0] === d.p_id )
         if(itemIndex > 0 ) {
+          let toBeBagged = itemArray[itemIndex];
+          toBeBagged.quantity = bagItem[1];
+
           tempBagItems.push(itemArray[itemIndex])
           console.log('bagItem need to still add this item.')
-
         }
-        //console.log('bagItem', bagItem)
-
       }
       bagsArray[bag].items = tempBagItems
     }

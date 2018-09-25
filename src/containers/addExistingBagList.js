@@ -11,7 +11,7 @@ class AddExistingBagList extends Component {
     console.log('existing baglist this.props = ', this.props)
 
     return (
-      <div>Existing bags:
+      <div>Existing Collections:
         {existingBags.map( (bag, i) => {
       //    console.log('existing bag,', bag)
           return (<div key={i}> <Link to={"/addexistingBag/"+ bag.coll_id} >{bag.name} </Link></div>)

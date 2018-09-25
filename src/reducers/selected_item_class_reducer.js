@@ -29,6 +29,7 @@ function selectedItemClass(state={onCollection:'all',
     case SELECT_ITEM_CLASS:
       state.onCollection = action.itemClass
       return Object.assign({}, state)
+
     case 'FILTER_UNSTOCKED_ITEMS':
       state.filters.outofstock = action.checked;
       return Object.assign({}, state)
@@ -69,24 +70,24 @@ function selectedItemClass(state={onCollection:'all',
         return Object.assign({},state);
 
       case "RECIEVE_ITEMS":
-          console.log('need to make some categories in the filter', action);
+    //      console.log('need to make some categories in the filter', action);
           let categories =[];
 
           // also get all the bags
           state.filters.bags = action.userPacks.map( (d) => d.up_id);
           state.filters.bags.push('all');
-
-
           action.items.forEach( (x) => {
             if(!categories.includes(x.category)) {
               categories.push(x.category)
             }
           })
         state.filters.categories = categories;
-        console.log('state in recieve items = ', state)
-
-
+      //  console.log('state in recieve items = ', state)
         return Object.assign({}, state);
+      case "USER_BAG_ADDED": {
+        state.onCollection = action.newbag.bagInfo.up_id
+        return Object.assign({}, state);
+      }
     default:
       return state;
   }

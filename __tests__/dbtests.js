@@ -17,6 +17,8 @@ let addItemToBag = require('../db/queries/addItemToBag.js')
 
 let removeItemFromBag = require('../db/queries/removeItemFromBag.js');
 
+let deleteUserBag = require('../db/queries/delete_user_bag');
+
 let broom = new Item()
 broom.name = 'brooomer';
 broom.description = "sweeper thign"
@@ -40,7 +42,9 @@ getUserBags([6], (err, d) => console.log(d))
 //addItemToBag( { item:{p_id: 3, quantity: 4}, itemClass: 6}, (d) => console.log('result from adding item to bag', d) )
 
 // be careful as this will delete all items with that p_id
-//removeItemFromBag( 6, 2, (deletedItem) => console.log('should have deleted item ' , deletedItem,  ' from the bag.') )
+
+// takes pack_id = up_id and item_id = p_id
+//removeItemFromBag( 6, 30, (deletedItem) => console.log('should have deleted item ' , deletedItem,  ' from the bag.') )
 
 
 //getAllItems( (err,json) => console.log('all items are', json))
@@ -52,7 +56,7 @@ getUserBags([6], (err, d) => console.log(d))
 
 //deletUserCollection(1, 15, (err, d) => {  console.log('deleted collection') });
 
-
+//deleteUserBag(1, 49, (dbres) => console.log('cb from deleteUserBag returns', dbres))
 /* example function call which worked
 editUserPackQuantity({ item:
    { p_id: 1,

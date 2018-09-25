@@ -265,11 +265,13 @@ module.exports = function(app, passport) {
 
   app.post('/userbag/add', function(req, res) {
     let data = req.body;
-
     console.log('need to update in db, ', data)
-
       addUserBag(data, function(bag_id) {
         console.log('bag_id = ', bag_id)
+
+        data.bagInfo.up_id = bag_id;
+        data.bagInfo.items = [];
+
         res.send(JSON.stringify(data))
     })
   })
@@ -422,7 +424,9 @@ app.get('/userpacks', function(req, res) {
       let del_bag_data = req.body;
       console.log('should be deleting the userbag, bagdata = ', del_bag_data);
 
-      delete_user_bag( del_bag_data.user_id, del_bag_data.bag_id )
+      delete_user_bag( del_bag_data.user_id, del_bag_data.bag_id, (dbres) => res.json(dbres) )
+
+
     })
 
 

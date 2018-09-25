@@ -83,10 +83,10 @@ class Inventory_Filter extends Component {
           <div>
             <h4>Category</h4>
               {
-                categories.map(function(d) {
+                categories.map(function(d,i) {
                   //  console.log(d, category_filters.includes(d) );
                   return (
-                    <span key={"blah"+d}>
+                    <span key={"blah"+d + i}>
                 <label>{d}</label>
                   <input  type="checkbox"
                           defaultChecked={ category_filters.includes(d) }
@@ -119,7 +119,7 @@ class Inventory_Filter extends Component {
             //  console.log('bag in map ', bag)
               let bagname = bag.name;
               return (
-                <span key={"bagfilter" + bagname}>
+                <span key={"bagfilter" + bagname + i}>
                 <label>
                   {bagname}
                   <input

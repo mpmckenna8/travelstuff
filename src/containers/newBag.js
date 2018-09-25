@@ -4,14 +4,17 @@ import { connect } from 'react-redux'
 import {Redirect, withRouter} from 'react-router-dom'
 
 
-import { addItemClass } from '../actions/collectionactions'
+import { addItemClass} from '../actions/collectionactions'
 import {setReturnHome} from '../actions/useracts'
 
+import {selectItemClass} from '../actions/actions'
 
 import AddExistingBagList from './addExistingBagList';
 
 class AddBag extends Component {
-
+  componentDidMount() {
+    this.props.dispatch(selectItemClass('all'))
+  }
 
   formsub(e) {
     //  console.log(this, e)

@@ -17,19 +17,20 @@ function addUserBag(data, cb) {
     if(err) {
       console.log('error adding userpack to username. ', err)
     }
-    console.log('tring to update userpacks', res)
+    console.log('tring to update userpacks', res.rows[0])
 
     if(res ) {
-    let bag_id = res.rows[0].up_id;
-    client.query(updateUserString, [bag_id, userName], (err, res) => {
+      let bag_id = res.rows[0].up_id;
+      client.query(updateUserString, [bag_id, userName], (err, res) => {
 
-      if(err) throw err;
-      client.end();
-      cb(bag_id)
+        if(err) throw err;
+        client.end();
+        cb(bag_id)
     })
 
   }
   else {
+    cb("bag add failure somehow without an error")
     console.log('sorry there was no bag associated with this user.')
     client.end();
 

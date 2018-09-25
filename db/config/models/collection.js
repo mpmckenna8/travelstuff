@@ -11,6 +11,7 @@ function Collection(obj) {
   this.name = obj.name || '';
   this.weight_capacity = obj.weight_capacity || 20;
   this.description = obj.description || 'a bag';
+  
 
   this.save = function(cb) {
     var client = new pg.Client(conString);

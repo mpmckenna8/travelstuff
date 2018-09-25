@@ -119,7 +119,7 @@ export function addNewUserBag(newBag, userName) {
 function addUserBagToDb(newBag, userName) {
   let data = {
     bagInfo: newBag,
-    userName
+    userName: userName
   }
   return function(dispatch) {
   var xhr = new XMLHttpRequest();
@@ -136,7 +136,7 @@ function addUserBagToDb(newBag, userName) {
   xhr.onloadend = function(e) {
     loadcounter = loadcounter + 1;
   //  console.log('loadcounter = ', loadcounter)
-  //  console.log('sent newbag and got response,', xhr)
+    console.log('sent newbag and got response,', xhr.response)
     if(xhr.response) {
       dispatch( userBagAddedToDB( JSON.parse(xhr.response) ) )
     }
@@ -148,6 +148,8 @@ function addUserBagToDb(newBag, userName) {
 }
 
 function userBagAddedToDB(newbag) {
+
+
   return {
     type: "USER_BAG_ADDED",
     msg: "Bag added to db and request ended",
