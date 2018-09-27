@@ -72,3 +72,6 @@ INSERT INTO users values (DEFAULT, 'test', 'test', '1.0', 'none.jpg', '{1,2,3,4,
 -- INSERT INTO userpack VALUES(DEFAULT, 1, '{{ 1,2 }, {2,4}}');
 
 -- UPDATE users SET inventory='{1,2,3,4,5,6}', inventoryquantity='{1,1,1,1,1,1}' WHERE name='test';
+
+-- want to add a column to userpack to add the location
+ALTER TABLE userpack ADD COLUMN location numeric;

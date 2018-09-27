@@ -18,6 +18,7 @@ let addItemToBag = require('../db/queries/addItemToBag.js')
 let removeItemFromBag = require('../db/queries/removeItemFromBag.js');
 
 let deleteUserBag = require('../db/queries/delete_user_bag');
+let emptyBag = require('../db/queries/emptyBag.js')
 
 let broom = new Item()
 broom.name = 'brooomer';
@@ -26,6 +27,7 @@ broom.weight = 3;
 broom.value = 10;
 broom.category = "tool";
 
+/*
 
 broom.save( (d) => {
  console.log('result from saving broom.', d)
@@ -37,6 +39,10 @@ broom.save( (d) => {
 
 getUserBags([6], (err, d) => console.log(d))
 
+*/
+
+// emptyBag has to options for mode, setToZero and emptyArray
+emptyBag(38, {mode:"setToZero"}, function(err, d) { console.log(d) })
 
 
 //addItemToBag( { item:{p_id: 3, quantity: 4}, itemClass: 6}, (d) => console.log('result from adding item to bag', d) )
