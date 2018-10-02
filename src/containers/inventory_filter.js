@@ -16,7 +16,7 @@ class Inventory_Filter extends Component {
     //console.log(e.value)
     let collection_id = e.target
     console.log('need to filter collection by', collection_id.value);
-    console.log('is it checked', collection_id.checked)
+  //  console.log('is it checked', collection_id.checked)
     this.props.dispatch(filterCollections(collection_id.value, collection_id.checked))
 
   }

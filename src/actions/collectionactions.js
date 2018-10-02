@@ -1,6 +1,57 @@
 // actions having to do with the bags/collections
 import fetch from 'isomorphic-fetch'
 
+export const EMPTY_COLLECTION = "EMPTY_COLLECTION";
+export const emptyUserCollection = function(uc_id, options) {
+  let emptyData = {uc_id:uc_id, options:options.mode}
+  return function(dispatch) {
+
+
+  let emptyURI = "http://localhost:8080/emptycollection/" + uc_id
+
+  console.log('empty data stuff', emptyData)
+
+  fetch(emptyURI, {
+    method:"POST",
+    mode: 'cors',
+    cache: 'default',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'    },
+    body: JSON.stringify(emptyData)
+  }).then(res => {
+    console.log('res back,', res)
+
+    return dispatch(emptiedCollection(options.mode, uc_id, res.json()))
+  })
+  .catch(err => dispatch(emptyCollectionFail(err)) )
+
+
+  }
+}
+
+
+function emptyCollectionFail(msg) {
+
+  return {
+    type: "EMPTY_COLLECTION_FAIL",
+    msg: msg
+  }
+}
+
+function emptiedCollection(mode, up_id, msg) {
+
+  console.log('mode', mode, up_id, 'msg = ', msg)
+
+  return {
+    type:EMPTY_COLLECTION,
+    mode: mode,
+    up_id:up_id
+
+  }
+}
+
+
 export const filterByCategories = function(category) {
 
   return {

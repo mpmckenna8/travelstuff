@@ -5,7 +5,7 @@ import {Link, Redirect, withRouter} from 'react-router-dom'
 
 import categorizeItems from '../helpers/categorize.js'
 import {selectItemClass, editItemQuantity, addItemToPack} from '../actions/actions'
-import {deleteUserBag} from '../actions/collectionactions'
+import {deleteUserBag, emptyUserCollection} from '../actions/collectionactions'
 
 
 import Inventory_Filter from './inventory_filter.js'
@@ -161,6 +161,35 @@ class UserBag extends Component {
     return itemList
 
   }
+  emptyItems() {
+      //
+      this.props.dispatch(emptyUserCollection( this.props.selectedItemClass.onCollection, { mode:"emptyArray"} ))
+      this.closeDialogue();
+
+  }
+  setUserPackItemsToZero() {
+    this.props.dispatch(emptyUserCollection( this.props.selectedItemClass.onCollection, { mode:"setToZero"} ))
+
+
+    this.closeDialogue();
+  }
+
+  emptyBag() {
+
+    console.log('need to empty the collection', this.props.selectedItemClass.onCollection)
+
+  //  this.props.dispatch(emptyUserCollection( this.props.selectedItemClass.onCollection, { mode:"setToZero"} ))
+
+    let emptyDialogue = document.getElementById('empty_Collection_Dialog')
+    emptyDialogue.showModal();
+  }
+
+  closeDialogue() {
+    console.log('need to close the modal')
+
+    let emptyDialogue = document.getElementById('empty_Collection_Dialog')
+    emptyDialogue.close();
+  }
   render() {
     let currentBag = {name:'none yet', description:'none found', items:[]}
   //  console.log('this.props in userbag render =  ', this.props);
@@ -231,6 +260,22 @@ console.log('should be rendering userbag. does the current bag have a name? ,', 
 </div>
         <div className="included">
           <h2>Items currently in collection:</h2>
+          <button onClick={ this.emptyBag.bind(this) }>Empty collection</button>
+
+          <dialog id="empty_Collection_Dialog">
+            <p>Set item quantities to zero or empty all items?</p>
+            <button onClick={ this.setUserPackItemsToZero.bind(this)}>Set Quantities to zero
+            </button>
+            <button onClick={this.emptyItems.bind(this)}>
+              Empty items
+            </button>
+            <button onClick={this.closeDialogue}>
+              Cancel
+            </button>
+
+          </dialog>
+
+
         {
           bagCats.map((category, i) => {
             return (

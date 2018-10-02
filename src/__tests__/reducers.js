@@ -9,6 +9,8 @@ import { Thunk } from 'redux-testkit';
 import {fetchItems, requestItems, itemAddDBresponse} from '../actions/actions.js'
 import {attemptLogIn , signupUser} from '../actions/useracts.js'
 
+import {emptyUserCollection} from "../actions/collectionactions.js"
+
 import user from '../reducers/user_reducer.js'
 import selectedItemClass from '../reducers/selected_item_class_reducer.js'
 
@@ -72,6 +74,17 @@ describe(">>>>>>> testing db connectivity. ", () => {
   });
 
 })
+
+describe(">>>>>>> Testing actions related to bags.", () => {
+  it('+++ test to empty a collection of all items', () => {
+    let emptyCollection = emptyUserCollection;
+
+    let expectedOutcome = {"mode": "setToZero", "type": "EMPTY_COLLECTION", "up_id": "55"};
+    expect( emptyCollection('55', {mode:"setToZero"}) ).toEqual(expectedOutcome)
+  })
+})
+
+
 
 describe(">>>>>>> Testing signing up a user.  ", () => {
 

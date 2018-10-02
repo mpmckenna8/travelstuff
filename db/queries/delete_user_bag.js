@@ -11,6 +11,7 @@ let updateString = 'UPDATE users SET userpacks=$1 where u_id=$2';
 let deleteuserpack = "DELETE FROM userpack WHERE up_id=$1"
 
 // Delects the bag from the user table and userpack table
+
 function delete_user_bag(u_id, upid, cb) {
     let client = new pg.Client(conString);
     let userId = u_id;

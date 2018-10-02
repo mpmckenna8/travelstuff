@@ -18,7 +18,8 @@ let getUserBags = require('../queries/userbags')
 const editUserPackQuantity = require('../queries/editUserPackQuantity');
 const addUserBag = require('../queries/addUserBag');
 const addItemToBag = require('../queries/addItemToBag')
-const delete_user_bag = require('../queries/delete_user_bag')
+const delete_user_bag = require('../queries/delete_user_bag');
+const emptyCollection = require('../queries/emptyBag.js')
 
 let updateUserInventory = require('../queries/updateUserInventory.js')
 
@@ -398,6 +399,17 @@ app.get('/userpacks', function(req, res) {
 
 
     })
+
+    app.post('/emptycollection/*', function(req, res) {
+
+      console.log('got a post to empty collection, ', req.body)
+      let reqdata = (req.body)
+      emptyCollection(reqdata.uc_id, {mode: reqdata.options}, (err, dbres) => {
+        res.json(JSON.stringify({msg:"should be deleted"}))
+
+      })
+    })
+
 
     app.post('/items/edit', function(req, res) {
 

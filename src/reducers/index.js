@@ -149,6 +149,23 @@ function collections(state={
     needsUpdate:true},
   action) {
     switch(action.type) {
+      case "EMPTY_COLLECTION": {
+
+        // find bag and empty it of items or set to zero.
+        let bagIndex = state.bags.findIndex( (d) => parseInt(d.up_id) === parseInt(action.up_id) )
+        console.log('empty collection reducer, action = ', action, 'bagIndex = ', bagIndex, 'state =', state);
+
+        if(action.mode === "setToZero") {
+          for(let op = 0; op < state.bags[bagIndex].length; op++) {
+            state.bags[bagIndex][op].quantity = 0;
+          }
+        }
+        else if( action.mode === 'emptyArray' ) {
+          state.bags[bagIndex] = [];
+        }
+        return Object.assign({}, state)
+
+      }
       case "SIGNUP_SUCCESS": {
         state.bags = [];
 
