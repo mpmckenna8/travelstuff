@@ -41,8 +41,10 @@ getUserBags([6], (err, d) => console.log(d))
 
 */
 
+
+
 // emptyBag has to options for mode, setToZero and emptyArray
-emptyBag(38, {mode:"setToZero"}, function(err, d) { console.log(d) })
+//emptyBag(38, {mode:"setToZero"}, function(err, d) { console.log(d) })
 
 
 //addItemToBag( { item:{p_id: 3, quantity: 4}, itemClass: 6}, (d) => console.log('result from adding item to bag', d) )
@@ -55,7 +57,17 @@ emptyBag(38, {mode:"setToZero"}, function(err, d) { console.log(d) })
 
 //getAllItems( (err,json) => console.log('all items are', json))
 
-//userItems('test', function(err, data) { console.log('data returned by user items = ', data) })
+userItems('test', function(err, data) {
+
+  console.log('data returned by user items = ', data.items.filter(d => d.p_id === 64))
+
+  getUserBags(data.packs, (err, bagdata) => {
+
+    console.log('and the bag data back is, ', bagdata)
+
+  })
+
+})
 
 
 

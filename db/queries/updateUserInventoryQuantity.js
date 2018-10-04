@@ -19,24 +19,33 @@ function updateUserInventoryQuantity(userName, item) {
 
   client.query(queryString, [userName], function(err, res) {
     var userInventory = res.rows[0].inventory;
+    let userinfo = res.rows[0];
 
+    console.log('res.rows = ', res.rows);
+    console.log('inventory length = ', userinfo.inventory.length, ' quantities length = ', userinfo.inventoryquantity.length)
     let itemIndex = userInventory.findIndex(function(d) {
-      console.log(d)
+    //  console.log(d)
       return (d === item.p_id);
     })
 
-    console.log('item index is', itemIndex);
 
     let inventoryQuants = res.rows[0].inventoryquantity;
+    console.log('item index is', itemIndex, 'item quantity is = ', inventoryQuants[itemIndex]);
+
 
     inventoryQuants[itemIndex] = item.quantity;
 
-    let updateString = 'UPDATE users SET inventoryquantity=$1 where name=$2';
+    console.log('updated quanity = ', inventoryQuants[itemIndex])
+
+    let updateString = 'UPDATE users SET inventoryquantity=$1 where name=$2 returning inventoryquantity';
+
+
 
     client.query(updateString, [inventoryQuants, userName ], function(err, res) {
       if(err)console.log('error updating qunat', err)
 
-      console.log('should have updated item quantity', res);
+      console.log('should have updated item quantity its now', res.rows[0].inventoryquantity[itemIndex]);
+
       client.end();
 
     })

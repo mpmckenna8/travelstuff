@@ -44,7 +44,8 @@ module.exports = function(app, passport) {
 
     app.get('/allitems', function(req, res) {
         getAllItems( (err, items) => {
-          console.log('trying to send ', items)
+      //    console.log('trying to send ', items)
+      console.log('sending all items')
           res.json({items:items})
 
         })
@@ -317,14 +318,17 @@ module.exports = function(app, passport) {
         getUserItems(userName, function(err, dat) {
           if(err) console.log(err)
 
-          //console.log('sending user items', dat)
+          console.log('sending user items', dat)
 
           resData.data = dat;
 
 
           getUserBags(dat.packs, (err, bagdata) => {
             resData.data.bags = bagdata;
-            console.log('stuff from the user bags get', JSON.stringify(resData))
+            console.log('stuff from the user bags get',
+             JSON.stringify(resData.data.items.filter(d => d.p_id === 64)) )
+            resData.msg = "ahhh does this work at all"
+            
             res.json(resData)
 
           })

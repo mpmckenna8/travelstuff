@@ -12,49 +12,6 @@ import user from './user_reducer.js'
 import selectedItemClass from './selected_item_class_reducer.js'
 
 
-function items(
-  state={
-    isFetching: false,
-    didInvalidate:false,
-    items:[]
-  },
-  action
-) {
-
-  console.log('its actually in the items reducter!!!!!')
-  switch (action.type) {
-    case INVALIDATE_ITEM_CLASS:
-      return Object.assign({}, state, {didInvalidate:true})
-    case REQUEST_ITEMS:
-      return Object.assign({}, state, {
-        isFetching:true,
-        didInvalidate:false
-      })
-    case RECIEVE_ITEMS:
-  //  console.log('recieved items in reducer', action.items)
-      return Object.assign({}, state, {
-        isFetching:false,
-        didInvalidate:false,
-        items: action.items,
-        user: action.user,
-        lastUpdatedAt: action.recievedAt
-      })
-    case ADD_ITEM:
-    // want to actually add the item to the db in the action not here
-      console.log('add item act', action)
-  //    console.log('addit state, ', state)
-      return Object.assign({}, state, {
-        isFetching:false,
-        didInvalidate:false,
-        items: [...state.items, {name: action.item} ],
-        lastUpdatedAt: action.recievedAt
-      })
-    default:
-      return state;
-
-  }
-}
-
 let tempPid = 1000000;
 
 // should delete the items from this maybe
@@ -68,16 +25,14 @@ function user_items(state={all:{items:[]}, items:[], lastUpdated: 0, isFetching:
     case RECIEVE_ITEMS:
       console.log('action in recieve items user_items,', action);
       state.items = action.items;
+
       state.isFetching = false;
       state.lastUpdated = Date.now()
 
       return Object.assign({}, state)
     case REQUEST_ITEMS:
   //    console.log('request items',state)
-      return Object.assign({}, state, {
-        [action.itemClass]: items(state[action.itemClass], action)
-
-      })
+      return Object.assign({}, state)
     case ADD_ITEM:{
   //    console.log('state in ADD_ITEM user_items ,', state)
       let newIt = {name:action.item.name,
@@ -128,7 +83,7 @@ function user_items(state={all:{items:[]}, items:[], lastUpdated: 0, isFetching:
       return Object.assign({},state);
     }
     case 'RECIEVED_ALL_ITEMS': {
-      console.log('action items for all items, ', action.items)
+    //  console.log('action items for all items, ', action.items)
       let tempstate = state;
       tempstate.all.items = action.items;
 

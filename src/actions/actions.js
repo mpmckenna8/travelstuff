@@ -34,15 +34,20 @@ return function(dispatch) {
   fetch(getAllurl, {
     //credentials: 'include', //pass cookies, for authentication
     method: 'GET',
+    mode: "cors", // no-cors, cors, *same-origin
+
+    cache: 'no-cache',
+
     headers: {
     'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
-    'Content-Type': 'application/json; charset=UTF-8'
+    'Content-Type': 'application/json;',
+
     },
     })
     .then(res =>  res.json())
     .then(json => {
         // handle the incoming new items:
-        console.log('actually made a new fetch for ALL items , ', json)
+        console.log('made a new fetch for ALL items = ', json)
         return dispatch(recievedAllItems(json))
         // return dispatch(recievedAllItems(json))
         }
@@ -86,6 +91,7 @@ export function recieveItems(itemClass, json, userName) {
       userBags = json.data.bags
   }
 
+  console.log('items as recieved, ', json.data.items.filter(d => d.p_id === 64))
   return {
     type: RECIEVE_ITEMS,
     user: userName,
@@ -121,11 +127,19 @@ export function fetchItems(itemClass, userName) {
 
     // we return our fetch promise and it's result
 
-    return fetch(fetchUrl)
+    return fetch(fetchUrl, {
+      cache: 'no-cache',
+      mode: "cors", // no-cors, cors, *same-origin
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+
+    })
       .then(res =>  res.json())
       .then(json => {
           // handle the incoming new items:
-          console.log('actually made a new fetch for items for, ', USERNAME)
+            console.log('actually made a new fetch for items for, ', USERNAME, json)
            return dispatch(recieveItems(itemClass, json, userName))
           }
         )
@@ -141,7 +155,7 @@ export function fetchItems(itemClass, userName) {
 
 const shouldFetchItems = (state, itemClass) => {
   const items = state.user_items.items;
-  console.log("should fetch items?", state.user_items)
+  //console.log("should fetch items?", state.user_items)
 
   if(items.length < 1){
     return true
@@ -337,6 +351,7 @@ export const addItemToPack = (item, itemClass, userName) => {
   fetch(url, {
     //credentials: 'include', //pass cookies, for authentication
     method: 'post',
+    cache: 'no-cache',
     headers: {
     'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
     'Content-Type': 'application/json; charset=UTF-8'

@@ -91,6 +91,8 @@ class VisibleItemList  extends Component  {
     let itemarray = this.props.user_items.items;
     let onClass = this.props.selectedItemClass.onCollection;
 
+    console.log('the items are has the wrong quantities!  ,', itemarray)
+
     if(onClass !== "all" ) {
 
       itemarray = this.props.collections.bags.find( function(dd) {

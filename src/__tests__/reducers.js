@@ -67,20 +67,20 @@ describe('>>>>> testing reducer selectedItemClass: ', () => {
 describe(">>>>>>> testing db connectivity. ", () => {
   it('+++ test to make sure the database is working properly', async () => {
     const fetchstuff = await Thunk(fetchItems).execute('all', 'test')
+    console.log('trying to test fetching', fetchstuff[0].data.items.filter(d => d.p_id === 65))
 
     expect( fetchstuff.length).toBe(2)
     expect( fetchstuff[0].isPlainObject()).toBe(true)
-    //console.log('trying to test fetching', fetchstuff)
   });
 
 })
 
 describe(">>>>>>> Testing actions related to bags.", () => {
-  it('+++ test to empty a collection of all items', () => {
-    let emptyCollection = emptyUserCollection;
+  it('+++ test to empty a collection of all items', async () => {
+    let emptyCollection = await thunk(emptyUserCollection).execute('55', {mode:"setToZero"});
 
     let expectedOutcome = {"mode": "setToZero", "type": "EMPTY_COLLECTION", "up_id": "55"};
-    expect( emptyCollection('55', {mode:"setToZero"}) ).toEqual(expectedOutcome)
+    expect( emptyCollection[0] ).toEqual(expectedOutcome)
   })
 })
 

@@ -24,7 +24,6 @@ function userItems(username, cb) {
       throw err
     }
 
-
   //  console.log('inventory is', res.rows[0].inventory)
     let inventory = [];
     let quantities = [];
@@ -37,7 +36,7 @@ function userItems(username, cb) {
         userPacks = res.rows[0].userpacks
 
     //  console.log(inventory.toString())
-    }
+      }
 
   //  console.log(inventory)
     if( inventory.length > 0 ) {
@@ -58,7 +57,7 @@ function userItems(username, cb) {
 
       }
 
-    //  console.log('user items with quants, ', res.rows)
+      //console.log('user items with quants, ', res.rows)
 
       var finalData = {items:res.rows, packs: userPacks};
 
